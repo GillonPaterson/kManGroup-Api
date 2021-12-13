@@ -13,6 +13,15 @@ public class JobRolesService {
     JobRolesDAO jobRolesDAO = new JobRolesDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
+    public JobRolesService(){
+
+    }
+
+    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector){
+        this.jobRolesDAO = jobRolesDAO;
+        this.databaseConnector = databaseConnector;
+    }
+
     public List<JobRole> getJobRoles() throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobRolesFromDatabase(connection);
