@@ -1,0 +1,10 @@
+logging:
+  level: INFO
+  loggers:
+    com.kainos.ea: DEBUG
+
+prop1: value1
+prop2: value2
+
+swagger:
+  resourcePackage: <com.kainos.ea.resources>
