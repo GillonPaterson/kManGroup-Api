@@ -1,4 +1,4 @@
 # kManGroup-Api
 API for kManGroup
 
-Gillon is kinda bad ngl
+Gillon is a baddie ngl
