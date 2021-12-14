@@ -33,4 +33,17 @@ public class Employee {
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
+
+    @GET
+    @Path("/getJobSpec/{jobRoleID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobSpec(@PathParam("jobRoleID") int jobRoleID){
+        try{
+            List<JobRole> jobRoles= jobRolesService.getJobSpec(jobRoleID);
+            return Response.ok(jobRoles).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
 }
