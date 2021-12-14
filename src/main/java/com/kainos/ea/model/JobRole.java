@@ -4,28 +4,28 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JobRole {
-    public int employeeID;
-    public String employeeRole;
+    public int jobRoleID;
+    public String jobRole;
 
     @JsonCreator
-    public JobRole(@JsonProperty("employeeID") int employeeID, @JsonProperty("employeeRole") String employeeRole) {
-        this.employeeID = employeeID;
-        this.employeeRole = employeeRole;
+    public JobRole(@JsonProperty("jobRoleID") int employeeID, @JsonProperty("jobRole") String employeeRole) {
+        this.jobRoleID = jobRoleID;
+        this.jobRole = jobRole;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getJobRoleID() {
+        return jobRoleID;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setJobRoleID(int jobRoleID) {
+        this.jobRoleID = jobRoleID;
     }
 
-    public String getEmployeeRole() {
-        return employeeRole;
+    public String getJobRole() {
+        return jobRole;
     }
 
-    public void setEmployeeRole(String employeeRole) {
-        this.employeeRole = employeeRole;
+    public void setJobRole(String jobRole) {
+        this.jobRole = jobRole;
     }
 }

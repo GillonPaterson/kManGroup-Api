@@ -18,7 +18,7 @@ public class JobRolesDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobRole jobRole = new JobRole(rs.getInt("employeeID"), rs.getString("employeeRole"));
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"));
             jobRoles.add(jobRole);
         }
         return jobRoles;
