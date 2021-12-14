@@ -38,6 +38,30 @@ class JobRolesServiceTest {
         Mockito.verify(jobRolesDAO).getJobRolesFromDatabase(connection);
 
         assertEquals(jobRoles, returnedList);
+    }
 
+    @Test
+    void testServiceGetSpecCallsDAO() throws SQLException {
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        JobRole jobRole1 = new JobRole(1, "Dev", "Codes");
+        JobRole jobRole2 = new JobRole(2, "Tester", "Tests");
+
+        List<JobRole> jobRoles = new ArrayList<>();
+        jobRoles.add(jobRole1);
+        jobRoles.add(jobRole2);
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        Mockito.when(jobRolesDAO.getJobSpecFromDatabase(connection, 1)).thenReturn(jobRoles);
+
+        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
+        List<JobRole> returnedList = jobRolesService.getJobSpec(1);
+
+        Mockito.verify(connector).getConnection();
+        Mockito.verify(jobRolesDAO).getJobSpecFromDatabase(connection, 1);
+
+        assertEquals(jobRoles, returnedList);
     }
 }
