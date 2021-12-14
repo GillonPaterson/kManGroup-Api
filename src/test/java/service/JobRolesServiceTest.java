@@ -21,8 +21,8 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering");
-        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering");
+        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate");
+        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Apprentice");
 
         List<JobRole> jobRoles = new ArrayList<>();
         jobRoles.add(jobRole1);
@@ -46,8 +46,8 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Codes");
-        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Tests");
+        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate", "Codes");
+        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Apprentice", "Tests");
 
         List<JobRole> jobRoles = new ArrayList<>();
         jobRoles.add(jobRole1);
