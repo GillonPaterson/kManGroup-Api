@@ -1,8 +1,17 @@
-create database kManGroup_gillon;
 
 use kManGroup_gillon;
 
+drop table jobRoles;
+
 create table jobRoles (
-employeeID int auto_increment NOT NULL,
-employeeRole varchar(150) NOT NULL,
-CONSTRAINT pk_Employee_ID PRIMARY KEY (employeeID));
+jobRoleID int auto_increment NOT NULL,
+jobRole varchar(150) NOT NULL,
+CONSTRAINT pk_Job_Role_ID PRIMARY KEY (jobRoleID));
+
+insert into jobRoles(jobRole) values('Software Engineer');
+insert into jobRoles(jobRole) values('Front-End Engineer');
+insert into jobRoles(jobRole) values('Test Engineer');
+
+select * from jobRoles;
+
+
