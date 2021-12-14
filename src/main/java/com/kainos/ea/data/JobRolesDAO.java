@@ -12,13 +12,13 @@ import java.util.List;
 public class JobRolesDAO {
     public List<JobRole> getJobRolesFromDatabase(Connection connection) throws SQLException {
         List<JobRole> jobRoles = new ArrayList<>();
-        String query = "SELECT jobRoleID, jobRole FROM jobRoles";
+        String query = "SELECT jobRoleID, jobRole, jobCapability FROM jobRoles";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"));
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"));
             jobRoles.add(jobRole);
         }
         return jobRoles;
@@ -33,7 +33,7 @@ public class JobRolesDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobSpec"));
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobSpec"));
             jobRoles.add(jobRole);
         }
         return jobRoles;

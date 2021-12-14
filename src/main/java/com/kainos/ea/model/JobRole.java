@@ -6,18 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class JobRole {
     public int jobRoleID;
     public String jobRole;
+    public String jobCapability;
     public String jobSpec;
 
     @JsonCreator
-    public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole) {
+    public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobCapability") String jobCapability) {
         this.jobRoleID = jobRoleID;
         this.jobRole = jobRole;
+        this.jobCapability = jobCapability;
     }
 
     @JsonCreator
-    public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobSpec") String jobSpec) {
+    public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobCapability") String jobCapability, @JsonProperty("jobSpec") String jobSpec) {
         this.jobRoleID = jobRoleID;
         this.jobRole = jobRole;
+        this.jobCapability = jobCapability;
         this.jobSpec = jobSpec;
     }
 
@@ -45,5 +48,14 @@ public class JobRole {
 
     public void setJobSpec(String jobSpec) {
         this.jobSpec = jobSpec;
+    }
+
+
+    public String getJobCapability() {
+        return jobCapability;
+    }
+
+    public void setJobCapability(String jobCapability) {
+        this.jobCapability = jobCapability;
     }
 }
