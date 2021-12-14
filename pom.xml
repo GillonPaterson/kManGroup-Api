@@ -18,6 +18,29 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>2.0.23</dropwizard.version>
         <mainClass>com.kainos.ea.WebServiceApplication</mainClass>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- A -->
+        <appium.version>7.3.0</appium.version>
+        <!-- C -->
+        <commons.version>3.11</commons.version>
+        <cucumber.reporting.version>5.3.1</cucumber.reporting.version>
+        <cucumber.version>6.8.1</cucumber.version>
+        <!-- H -->
+        <hamcrest.version>2.2</hamcrest.version>
+        <!-- L -->
+        <log4j2.version>2.13.3</log4j2.version>
+        <!-- M -->
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
+        <!-- S -->
+        <selenium.version>3.141.59</selenium.version>
+        <spring.version>5.2.9.RELEASE</spring.version>
+        <!-- T -->
+        <testng.version>7.3.0</testng.version>
+        <!-- W -->
+        <webdriver.manager.version>4.2.0</webdriver.manager.version>
+
     </properties>
 
     <dependencyManagement>
@@ -82,7 +105,104 @@
             <artifactId>mockito-core</artifactId>
             <version>4.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>6.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>6.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160212</version>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.version}</version>
+        </dependency>
+
+        <!-- Maven -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${maven.surefire.plugin.version}</version>
+        </dependency>
+
+        <!-- Hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+        </dependency>
+        <!-- Appium -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>*</artifactId>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+        <!-- log4j -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+
     </dependencies>
+
+
 
     <build>
         <plugins>
@@ -198,6 +318,23 @@
                 -->
                 <maven.javadoc.skip>true</maven.javadoc.skip>
             </properties>
+        </profile>
+        <profile>
+            <id>smoke</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.surefire.plugin.version}</version>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>smoke.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
