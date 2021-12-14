@@ -121,17 +121,17 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>6.8.1</version>
+            <version>${cucumber.version}</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
-            <version>6.8.1</version>
+            <version>${cucumber.version}</version>
         </dependency>
         <dependency>
             <groupId>net.masterthought</groupId>
             <artifactId>cucumber-reporting</artifactId>
-            <version>5.3.1</version>
+            <version>${cucumber.reporting.version}</version>
         </dependency>
 
         <!-- JSON -->
@@ -333,6 +333,7 @@
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
+
                 </plugins>
             </build>
         </profile>

@@ -1,10 +1,10 @@
 package com.kainos.ea.seleniumframework.driver.producer;
 
-import uk.kainos.seleniumframework.ProjectEntity;
-import uk.kainos.seleniumframework.log.Log;
-import uk.kainos.seleniumframework.properties.BrowserstackProperties;
-import uk.kainos.seleniumframework.properties.CommonProperties;
-import uk.kainos.seleniumframework.properties.PropertyLoader;
+import com.kainos.ea.seleniumframework.ProjectEntity;
+import com.kainos.ea.seleniumframework.log.Log;
+import com.kainos.ea.seleniumframework.properties.BrowserstackProperties;
+import com.kainos.ea.seleniumframework.properties.CommonProperties;
+import com.kainos.ea.seleniumframework.properties.PropertyLoader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

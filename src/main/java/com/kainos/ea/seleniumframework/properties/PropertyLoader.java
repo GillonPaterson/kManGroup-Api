@@ -1,7 +1,7 @@
 package com.kainos.ea.seleniumframework.properties;
 
-import uk.kainos.seleniumframework.environment.Environment;
-import uk.kainos.seleniumframework.log.Log;
+import com.kainos.ea.seleniumframework.environment.Environment;
+import com.kainos.ea.seleniumframework.log.Log;
 
 import java.io.IOException;
 import java.io.InputStream;

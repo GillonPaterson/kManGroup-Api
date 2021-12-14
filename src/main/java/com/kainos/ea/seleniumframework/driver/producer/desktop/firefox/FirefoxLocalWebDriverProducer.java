@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import uk.kainos.seleniumframework.driver.producer.BaseLocalDriver;
-import uk.kainos.seleniumframework.driver.producer.WebDriverProducer;
+import com.kainos.ea.seleniumframework.driver.producer.BaseLocalDriver;
+import com.kainos.ea.seleniumframework.driver.producer.WebDriverProducer;
 
 public class FirefoxLocalWebDriverProducer extends BaseLocalDriver implements WebDriverProducer {
 

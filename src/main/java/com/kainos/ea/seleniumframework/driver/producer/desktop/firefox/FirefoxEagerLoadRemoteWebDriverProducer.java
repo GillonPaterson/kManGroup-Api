@@ -8,10 +8,10 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import uk.kainos.seleniumframework.ProjectEntity;
-import uk.kainos.seleniumframework.driver.GridUtils;
-import uk.kainos.seleniumframework.driver.producer.BaseRemoteDriver;
-import uk.kainos.seleniumframework.driver.producer.WebDriverProducer;
+import com.kainos.ea.seleniumframework.ProjectEntity;
+import com.kainos.ea.seleniumframework.driver.GridUtils;
+import com.kainos.ea.seleniumframework.driver.producer.BaseRemoteDriver;
+import com.kainos.ea.seleniumframework.driver.producer.WebDriverProducer;
 
 public class FirefoxEagerLoadRemoteWebDriverProducer extends BaseRemoteDriver implements WebDriverProducer {
 

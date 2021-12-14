@@ -5,10 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import uk.kainos.seleniumframework.driver.GridUtils;
-import uk.kainos.seleniumframework.driver.producer.WebDriverProducer;
-import uk.kainos.seleniumframework.properties.CommonProperties;
-import uk.kainos.seleniumframework.properties.PropertyLoader;
+import com.kainos.ea.seleniumframework.driver.GridUtils;
+import com.kainos.ea.seleniumframework.driver.producer.WebDriverProducer;
+import com.kainos.ea.seleniumframework.properties.CommonProperties;
+import com.kainos.ea.seleniumframework.properties.PropertyLoader;
 
 import java.util.HashMap;
 

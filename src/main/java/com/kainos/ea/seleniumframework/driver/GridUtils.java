@@ -1,9 +1,9 @@
 package com.kainos.ea.seleniumframework.driver;
 
-import uk.kainos.seleniumframework.log.Log;
-import uk.kainos.seleniumframework.properties.BrowserstackProperties;
-import uk.kainos.seleniumframework.properties.CommonProperties;
-import uk.kainos.seleniumframework.properties.PropertyLoader;
+import com.kainos.ea.seleniumframework.log.Log;
+import com.kainos.ea.seleniumframework.properties.BrowserstackProperties;
+import com.kainos.ea.seleniumframework.properties.CommonProperties;
+import com.kainos.ea.seleniumframework.properties.PropertyLoader;
 
 import java.net.MalformedURLException;
 import java.net.URL;

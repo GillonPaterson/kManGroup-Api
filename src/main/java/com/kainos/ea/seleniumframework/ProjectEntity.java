@@ -1,7 +1,7 @@
 package com.kainos.ea.seleniumframework;
 
-import uk.kainos.seleniumframework.properties.CommonProperties;
-import uk.kainos.seleniumframework.properties.PropertyLoader;
+import com.kainos.ea.seleniumframework.properties.CommonProperties;
+import com.kainos.ea.seleniumframework.properties.PropertyLoader;
 
 public class ProjectEntity {
 

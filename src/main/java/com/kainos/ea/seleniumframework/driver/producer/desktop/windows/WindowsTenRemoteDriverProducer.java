@@ -5,8 +5,8 @@ import io.appium.java_client.windows.WindowsElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
-import uk.kainos.seleniumframework.driver.GridUtils;
-import uk.kainos.seleniumframework.driver.producer.WebDriverProducer;
+import com.kainos.ea.seleniumframework.driver.GridUtils;
+import com.kainos.ea.seleniumframework.driver.producer.WebDriverProducer;
 
 public class WindowsTenRemoteDriverProducer implements WebDriverProducer {
 

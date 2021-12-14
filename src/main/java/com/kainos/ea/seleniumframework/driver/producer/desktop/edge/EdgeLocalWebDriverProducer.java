@@ -3,8 +3,8 @@ package com.kainos.ea.seleniumframework.driver.producer.desktop.edge;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import uk.kainos.seleniumframework.driver.producer.BaseLocalDriver;
-import uk.kainos.seleniumframework.driver.producer.WebDriverProducer;
+import com.kainos.ea.seleniumframework.driver.producer.BaseLocalDriver;
+import com.kainos.ea.seleniumframework.driver.producer.WebDriverProducer;
 
 public class EdgeLocalWebDriverProducer extends BaseLocalDriver implements WebDriverProducer {
 

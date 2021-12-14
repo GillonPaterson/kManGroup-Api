@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import uk.kainos.seleniumframework.driver.DriverManager;
+import uk.kainos.seleniumframework.site.pageobjects.AmazonHomePage;
 
 import static org.aspectj.bridge.Version.getText;
 

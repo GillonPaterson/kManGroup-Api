@@ -4,8 +4,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import uk.kainos.seleniumframework.driver.producer.BaseLocalDriver;
-import uk.kainos.seleniumframework.driver.producer.WebDriverProducer;
+import com.kainos.ea.seleniumframework.driver.producer.BaseLocalDriver;
+import com.kainos.ea.seleniumframework.driver.producer.WebDriverProducer;
 
 public class ChromeLocalNoSandboxWebDriverProducer extends BaseLocalDriver implements WebDriverProducer {
 
