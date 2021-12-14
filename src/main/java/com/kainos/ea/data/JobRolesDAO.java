@@ -12,13 +12,28 @@ import java.util.List;
 public class JobRolesDAO {
     public List<JobRole> getJobRolesFromDatabase(Connection connection) throws SQLException {
         List<JobRole> jobRoles = new ArrayList<>();
-        String query = "SELECT * FROM jobRoles";
+        String query = "SELECT jobRoleID, jobRole FROM jobRoles";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
             JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"));
+            jobRoles.add(jobRole);
+        }
+        return jobRoles;
+    }
+
+    public List<JobRole> getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
+        List<JobRole> jobRoles = new ArrayList<>();
+        String query = "SELECT * FROM jobRoles WHERE jobRoleID = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, jobRoleID);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobSpec"));
             jobRoles.add(jobRole);
         }
         return jobRoles;

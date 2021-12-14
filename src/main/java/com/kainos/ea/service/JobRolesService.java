@@ -26,4 +26,9 @@ public class JobRolesService {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobRolesFromDatabase(connection);
     }
+
+    public List<JobRole> getJobSpec(int jobRoleID) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
+    }
 }
