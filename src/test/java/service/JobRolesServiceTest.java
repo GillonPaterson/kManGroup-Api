@@ -2,6 +2,7 @@ package service;
 
 import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
@@ -46,22 +47,17 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate", "Codes");
-        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Apprentice", "Tests");
-
-        List<JobRole> jobRoles = new ArrayList<>();
-        jobRoles.add(jobRole1);
-        jobRoles.add(jobRole2);
+        JobSpecModel jobSpecModel = new JobSpecModel("Dev", "Test Spec", "Test Link");
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobSpecFromDatabase(connection, 1)).thenReturn(jobRoles);
+        Mockito.when(jobRolesDAO.getJobSpecFromDatabase(connection, 1)).thenReturn(jobSpecModel);
 
         JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        List<JobRole> returnedList = jobRolesService.getJobSpec(1);
+        JobSpecModel returnedModel = jobRolesService.getJobSpec(1);
 
         Mockito.verify(connector).getConnection();
         Mockito.verify(jobRolesDAO).getJobSpecFromDatabase(connection, 1);
 
-        assertEquals(jobRoles, returnedList);
+        assertEquals(jobSpecModel, returnedModel);
     }
 }
