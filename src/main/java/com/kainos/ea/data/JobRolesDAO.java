@@ -1,6 +1,7 @@
 package com.kainos.ea.data;
 
 import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,8 +25,8 @@ public class JobRolesDAO {
         return jobRoles;
     }
 
-    public List<JobRole> getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
-        List<JobRole> jobRoles = new ArrayList<>();
+    public JobSpecModel getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
+
         String query = "SELECT * FROM jobRoles WHERE jobRoleID = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -33,9 +34,9 @@ public class JobRolesDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobSpec"));
-            jobRoles.add(jobRole);
+            JobSpecModel jobSpecModel = new JobSpecModel(rs.getString("jobRole"), rs.getString("jobSpec"), rs.getString("jobLink"));
+            return jobSpecModel;
         }
-        return jobRoles;
+        throw new SQLException();
     }
 }
