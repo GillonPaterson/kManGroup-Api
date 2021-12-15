@@ -46,4 +46,17 @@ public class Employee {
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
+
+    @GET
+    @Path("/getJobCompetency/{bandLevel}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobComp(@PathParam("bandLevel") String bandLevel){
+        try{
+            List<JobRole> jobRoles= jobRolesService.getJobComp(bandLevel);
+            return Response.ok(jobRoles).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
 }

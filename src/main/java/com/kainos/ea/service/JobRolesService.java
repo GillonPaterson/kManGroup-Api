@@ -31,4 +31,11 @@ public class JobRolesService {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
     }
+
+    public List<JobRole> getJobComp(String bandLevel) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobCompFromDatabase(connection, bandLevel);
+    }
+
+
 }

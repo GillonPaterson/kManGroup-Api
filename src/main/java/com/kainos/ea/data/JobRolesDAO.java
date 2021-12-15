@@ -38,4 +38,21 @@ public class JobRolesDAO {
         }
         return jobRoles;
     }
+
+    public List<JobRole> getJobCompFromDatabase(Connection connection, String bandLevel) throws SQLException {
+        List<JobRole> jobRoles = new ArrayList<>();
+        String query = "SELECT competencyName,competencyData FROM competencies WHERE competencyName = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, bandLevel);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            JobRole jobRole = new JobRole(rs.getString("competencyName"), rs.getString("competencyData"));
+            jobRoles.add(jobRole);
+        }
+        return jobRoles;
+    }
+
+
 }
