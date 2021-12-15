@@ -47,7 +47,7 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        JobSpecModel jobSpecModel = new JobSpecModel("Dev", "Test Spec", "Test Link");
+        JobSpecModel jobSpecModel = new JobSpecModel("Dev", "Test Spec", "Test Link", "Test Responsibility");
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         Mockito.when(jobRolesDAO.getJobSpecFromDatabase(connection, 1)).thenReturn(jobSpecModel);

@@ -7,12 +7,14 @@ public class JobSpecModel {
     public String jobRole;
     public String jobSpec;
     public String jobLink;
+    public String jobResponsibilities;
 
     @JsonCreator
-    public JobSpecModel(@JsonProperty("jobRole") String jobRole, @JsonProperty("jobSpec") String jobSpec, @JsonProperty("jobLink") String jobLink) {
+    public JobSpecModel(@JsonProperty("jobRole") String jobRole, @JsonProperty("jobSpec") String jobSpec, @JsonProperty("jobLink") String jobLink, @JsonProperty("jobResponsibilities") String jobResponsibilities) {
         this.jobRole = jobRole;
         this.jobSpec = jobSpec;
         this.jobLink = jobLink;
+        this.jobResponsibilities = jobResponsibilities;
     }
 
     public String getJobRole() {
@@ -37,5 +39,13 @@ public class JobSpecModel {
 
     public void setJobLink(String jobLink) {
         this.jobLink = jobLink;
+    }
+
+    public String getJobResponsibilities() {
+        return jobResponsibilities;
+    }
+
+    public void setJobResponsibilities(String jobResponsibilities) {
+        this.jobResponsibilities = jobResponsibilities;
     }
 }
