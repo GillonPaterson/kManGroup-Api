@@ -11,8 +11,7 @@ public class JobRole {
     public String jobSpec;
 
     @JsonCreator
-    public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobCapability") String jobCapability, @JsonProperty("jobBandLevel") String jobBandLevel) {
-        this.jobRoleID = jobRoleID;
+    public JobRole(@JsonProperty("jobRole") String jobRole, @JsonProperty("jobCapability") String jobCapability, @JsonProperty("jobBandLevel") String jobBandLevel) {
         this.jobRole = jobRole;
         this.jobCapability = jobCapability;
         this.jobBandLevel = jobBandLevel;
