@@ -1,5 +1,6 @@
 package com.kainos.ea.controller;
 
+import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
 import com.kainos.ea.service.JobRolesService;
@@ -42,6 +43,19 @@ public class Employee {
         try{
             JobSpecModel jobSpecModel= jobRolesService.getJobSpec(jobRoleID);
             return Response.ok(jobSpecModel).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @GET
+    @Path("/getJobCompetency/{jobRoleID}/{bandLevel}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobComp(@PathParam("bandLevel") String bandLevel){
+        try{
+            Competency competency = jobRolesService.getComp(bandLevel);
+            return Response.ok(competency).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
         }

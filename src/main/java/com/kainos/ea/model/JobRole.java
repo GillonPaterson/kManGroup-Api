@@ -8,7 +8,6 @@ public class JobRole {
     public String jobRole;
     public String jobCapability;
     public String jobBandLevel;
-    public String jobSpec;
 
     @JsonCreator
     public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobCapability") String jobCapability, @JsonProperty("jobBandLevel") String jobBandLevel) {
@@ -16,15 +15,6 @@ public class JobRole {
         this.jobRole = jobRole;
         this.jobCapability = jobCapability;
         this.jobBandLevel = jobBandLevel;
-    }
-
-    @JsonCreator
-    public JobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobCapability") String jobCapability, @JsonProperty("jobBandLevel") String jobBandLevel, @JsonProperty("jobSpec") String jobSpec) {
-        this.jobRoleID = jobRoleID;
-        this.jobRole = jobRole;
-        this.jobCapability = jobCapability;
-        this.jobBandLevel = jobBandLevel;
-        this.jobSpec = jobSpec;
     }
 
     public int getJobRoleID() {
@@ -43,16 +33,6 @@ public class JobRole {
     public void setJobRole(String jobRole) {
         this.jobRole = jobRole;
     }
-
-
-    public String getJobSpec() {
-        return jobSpec;
-    }
-
-    public void setJobSpec(String jobSpec) {
-        this.jobSpec = jobSpec;
-    }
-
 
     public String getJobCapability() {
         return jobCapability;

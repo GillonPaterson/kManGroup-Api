@@ -1,5 +1,6 @@
 package com.kainos.ea.data;
 
+import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
 
@@ -34,9 +35,26 @@ public class JobRolesDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobSpecModel jobSpecModel = new JobSpecModel(rs.getString("jobRole"), rs.getString("jobSpec"), rs.getString("jobLink"));
+            JobSpecModel jobSpecModel = new JobSpecModel(rs.getString("jobRole"), rs.getString("jobSpec"), rs.getString("jobLink"), rs.getString("jobResponsibilities"));
             return jobSpecModel;
         }
         throw new SQLException();
     }
+
+    public Competency getJobCompFromDatabase(Connection connection, String bandLevel) throws SQLException {
+
+        String query = "SELECT competencyName,competencyData FROM competencies WHERE competencyName = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, bandLevel);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            Competency competency = new Competency(rs.getString("competencyName"), rs.getString("competencyData"));
+            return competency;
+        }
+        throw new SQLException();
+    }
+
+
 }
