@@ -4,6 +4,7 @@ import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.util.DatabaseConnector;
 import org.checkerframework.checker.units.qual.C;
 
@@ -55,5 +56,10 @@ public class JobRolesService {
             System.out.println("Null response");
             return null;
         }
+    }
+
+    public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobTrainingFromDatabase(connection, bandLevel);
     }
 }

@@ -3,6 +3,7 @@ package com.kainos.ea.data;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,6 +55,20 @@ public class JobRolesDAO {
             return competency;
         }
         throw new SQLException();
+    }
+
+    public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
+        List<JobTraining> training = new ArrayList<>();
+        String query = "SELECT bandLevels.jobBandLevel, training.trainingLink FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE jobBandLevel = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, bandLevel);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingLink"));
+            training.add(jobTraining);
+        }
+        return training;
     }
 
 
