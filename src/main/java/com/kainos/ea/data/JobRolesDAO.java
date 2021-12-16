@@ -16,6 +16,7 @@ public class JobRolesDAO {
     public List<JobRole> getJobRolesFromDatabase(Connection connection) throws SQLException {
         List<JobRole> jobRoles = new ArrayList<>();
         String query = "SELECT jobRoleID, jobRole, jobCapability, jobBandLevel FROM jobRoles Inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID)";
+
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
@@ -41,16 +42,16 @@ public class JobRolesDAO {
         throw new SQLException();
     }
 
-    public Competency getJobCompFromDatabase(Connection connection, String bandLevel) throws SQLException {
+    public Competency getJobCompFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
-        String query = "SELECT competencyName,competencyData FROM competencies WHERE competencyName = ?";
+        String query = "Select bandLevels.jobBandLevel, competencies.competencyStage1, competencies.competencyStage2,competencies.competencyStage3,competencies.competencyStage4,jobRoles.competencyStage From competencies Inner Join bandLevels using(jobBandLevelID) Inner Join jobRoles using(jobBandLevelID) WHERE jobRoles.jobRoleID = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, bandLevel);
+        preparedStatement.setInt(1, jobRoleID);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            Competency competency = new Competency(rs.getString("competencyName"), rs.getString("competencyData"));
+            Competency competency = new Competency(rs.getString("jobBandLevel"), rs.getString("competencyStage1"),rs.getString("competencyStage2"),rs.getString("competencyStage3"),rs.getString("competencyStage4"),rs.getString("competencyStage"));
             return competency;
         }
         throw new SQLException();
