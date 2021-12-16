@@ -9,6 +9,19 @@ jobBandLevelID int auto_increment PRIMARY KEY NOT NULL,
 jobBandLevel varchar(50) NOT NULL
 );
 
+create table training (
+trainingID int auto_increment PRIMARY KEY NOT NULL,
+trainingLink text NOT NULL
+);
+
+create table bandLevelsTraining (
+jobBandLevelID int NOT NULL,
+trainingID int NOT NULL,
+
+PRIMARY KEY(jobBandLevelID, trainingID),
+CONSTRAINT fk_jobBandLevelIDtraining FOREIGN KEY (jobBandLevelID) REFERENCES bandLevels(jobBandLevelID),
+CONSTRAINT fk_trainingID FOREIGN KEY (trainingID) REFERENCES training(trainingID)
+);
 
 create table capabilities (
 jobCapabilityID int auto_increment PRIMARY KEY NOT NULL,
@@ -51,6 +64,86 @@ insert into bandLevels(jobBandLevel) values('Consultant');
 insert into bandLevels(jobBandLevel) values('Manager');
 insert into bandLevels(jobBandLevel) values('Principal');
 insert into bandLevels(jobBandLevel) values('Leadership Community');
+
+
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx'); -- All staff
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Intro-to-Remote-Working.aspx'); -- entry level to senior associate
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Interpersonal-Skills.aspx'); -- entry level to senior associate
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/PowerPoint-101.aspx'); -- All staff
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Effective-Decision-Making.aspx'); -- senior associate plus
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Developing-your-Presentation-Skills.aspx'); -- entry level to consultant
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Discovering-your-Personal-Brand.aspx'); -- All staff
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Crucial-Conversations.aspx'); -- Senior associate plus
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Leading-Change.aspx'); -- principal to leader
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Managing-Change.aspx'); -- consultant to manager
+insert into training(trainingLink) values('https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Effective-Decision-Making.aspx'); -- consultant to leader
+
+
+insert into bandLevelsTraining values(1, 1);
+insert into bandLevelsTraining values(2, 1);
+insert into bandLevelsTraining values(3, 1);
+insert into bandLevelsTraining values(4, 1);
+insert into bandLevelsTraining values(5, 1);
+insert into bandLevelsTraining values(6, 1);
+insert into bandLevelsTraining values(7, 1);
+insert into bandLevelsTraining values(8, 1);
+
+insert into bandLevelsTraining values(1, 2);
+insert into bandLevelsTraining values(2, 2);
+insert into bandLevelsTraining values(3, 2);
+insert into bandLevelsTraining values(4, 2);
+
+insert into bandLevelsTraining values(1, 3);
+insert into bandLevelsTraining values(2, 3);
+insert into bandLevelsTraining values(3, 3);
+insert into bandLevelsTraining values(4, 3);
+
+insert into bandLevelsTraining values(1, 4);
+insert into bandLevelsTraining values(2, 4);
+insert into bandLevelsTraining values(3, 4);
+insert into bandLevelsTraining values(4, 4);
+insert into bandLevelsTraining values(5, 4);
+insert into bandLevelsTraining values(6, 4);
+insert into bandLevelsTraining values(7, 4);
+insert into bandLevelsTraining values(8, 4);
+
+insert into bandLevelsTraining values(4, 5);
+insert into bandLevelsTraining values(5, 5);
+insert into bandLevelsTraining values(6, 5);
+insert into bandLevelsTraining values(7, 5);
+insert into bandLevelsTraining values(8, 5);
+
+insert into bandLevelsTraining values(1, 6);
+insert into bandLevelsTraining values(2, 6);
+insert into bandLevelsTraining values(3, 6);
+insert into bandLevelsTraining values(4, 6);
+insert into bandLevelsTraining values(5, 6);
+
+insert into bandLevelsTraining values(1, 7);
+insert into bandLevelsTraining values(2, 7);
+insert into bandLevelsTraining values(3, 7);
+insert into bandLevelsTraining values(4, 7);
+insert into bandLevelsTraining values(5, 7);
+insert into bandLevelsTraining values(6, 7);
+insert into bandLevelsTraining values(7, 7);
+insert into bandLevelsTraining values(8, 7);
+
+insert into bandLevelsTraining values(4, 8);
+insert into bandLevelsTraining values(5, 8);
+insert into bandLevelsTraining values(6, 8);
+insert into bandLevelsTraining values(7, 8);
+insert into bandLevelsTraining values(8, 8);
+
+insert into bandLevelsTraining values(7, 9);
+insert into bandLevelsTraining values(8, 9);
+
+insert into bandLevelsTraining values(5, 10);
+insert into bandLevelsTraining values(6, 10);
+
+insert into bandLevelsTraining values(5, 11);
+insert into bandLevelsTraining values(6, 11);
+insert into bandLevelsTraining values(7, 11);
+insert into bandLevelsTraining values(8, 11);
 
 
 insert into capabilities(jobCapability) values('Engineering');
