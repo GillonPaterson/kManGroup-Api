@@ -7,7 +7,9 @@ import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
 import com.kainos.ea.model.RoleMatrixModel;
+import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.util.DatabaseConnector;
+import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,9 +41,31 @@ public class JobRolesService {
         return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
     }
 
-    public Competency getComp(String bandLevel) throws SQLException {
+    public Competency getComp(int jobRoleID) throws SQLException {
+        Competency competency = new Competency();
         Connection connection = databaseConnector.getConnection();
-        return jobRolesDAO.getJobCompFromDatabase(connection, bandLevel);
+        competency = jobRolesDAO.getJobCompFromDatabase(connection, jobRoleID);
+        if (competency.getCompetencyStage().equals("stage 1")){
+             Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1());
+             return competency1;
+        } else if (competency.getCompetencyStage().equals("stage 2")){
+            Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1(), competency.getCompetencyStage2());
+            return competency1;
+        } else if (competency.getCompetencyStage().equals("stage 3")){
+            Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1(), competency.getCompetencyStage2(), competency.getCompetencyStage3());
+            return competency1;
+        }else if (competency.getCompetencyStage().equals("stage 4")){
+            Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1(), competency.getCompetencyStage2(), competency.getCompetencyStage3(), competency.getCompetencyStage4());
+            return competency1;
+        } else {
+            System.out.println("Null response");
+            return null;
+        }
+    }
+
+    public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobTrainingFromDatabase(connection, bandLevel);
     }
 
     public String[][] getRoleMatrix() throws SQLException{
