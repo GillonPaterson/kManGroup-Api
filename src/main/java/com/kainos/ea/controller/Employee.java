@@ -50,11 +50,11 @@ public class Employee {
     }
 
     @GET
-    @Path("/getJobCompetency/{jobRoleID}/{bandLevel}")
+    @Path("/getJobCompetency/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobComp(@PathParam("bandLevel") String bandLevel){
+    public Response getJobComp(@PathParam("jobRoleID") int jobRoleID){
         try{
-            Competency competency = jobRolesService.getComp(bandLevel);
+            Competency competency = jobRolesService.getComp(jobRoleID);
             return Response.ok(competency).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
