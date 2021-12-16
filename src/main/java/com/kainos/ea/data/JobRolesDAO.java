@@ -59,13 +59,13 @@ public class JobRolesDAO {
 
     public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
         List<JobTraining> training = new ArrayList<>();
-        String query = "SELECT bandLevels.jobBandLevel, training.trainingLink FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE jobBandLevel = ?";
+        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE jobBandLevel = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, bandLevel);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingLink"));
+            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingName"), rs.getString("trainingLink"));
             training.add(jobTraining);
         }
         return training;
