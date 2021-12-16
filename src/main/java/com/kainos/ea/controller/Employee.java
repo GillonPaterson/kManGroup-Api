@@ -49,7 +49,7 @@ public class Employee {
     }
 
     @GET
-    @Path("/getJobCompetency/{bandLevel}")
+    @Path("/getJobCompetency/{jobRoleID}/{bandLevel}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobComp(@PathParam("bandLevel") String bandLevel){
         try{
