@@ -3,6 +3,7 @@ package com.kainos.ea.data;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,8 +15,7 @@ import java.util.List;
 public class JobRolesDAO {
     public List<JobRole> getJobRolesFromDatabase(Connection connection) throws SQLException {
         List<JobRole> jobRoles = new ArrayList<>();
-        String query = "SELECT jobRoleID, jobRole, jobCapability, jobBandLevel FROM jobRoles";
-
+        String query = "SELECT jobRoleID, jobRole, jobCapability, jobBandLevel FROM jobRoles Inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
@@ -54,6 +54,20 @@ public class JobRolesDAO {
             return competency;
         }
         throw new SQLException();
+    }
+
+    public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
+        List<JobTraining> training = new ArrayList<>();
+        String query = "SELECT bandLevels.jobBandLevel, training.trainingLink FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE jobBandLevel = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, bandLevel);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingLink"));
+            training.add(jobTraining);
+        }
+        return training;
     }
 
 

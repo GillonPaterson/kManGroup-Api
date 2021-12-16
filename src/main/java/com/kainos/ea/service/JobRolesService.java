@@ -4,6 +4,7 @@ import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.util.DatabaseConnector;
 
 import java.sql.Connection;
@@ -37,5 +38,10 @@ public class JobRolesService {
     public Competency getComp(String bandLevel) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobCompFromDatabase(connection, bandLevel);
+    }
+
+    public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobTrainingFromDatabase(connection, bandLevel);
     }
 }

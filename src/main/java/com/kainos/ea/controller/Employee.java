@@ -3,6 +3,7 @@ package com.kainos.ea.controller;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
@@ -56,6 +57,19 @@ public class Employee {
         try{
             Competency competency = jobRolesService.getComp(bandLevel);
             return Response.ok(competency).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @GET
+    @Path("/getJobTraining/{bandLevel}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobTraining(@PathParam("bandLevel") String bandLevel){
+        try{
+            List<JobTraining> jobTraining= jobRolesService.getJobTraining(bandLevel);
+            return Response.ok(jobTraining).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
         }
