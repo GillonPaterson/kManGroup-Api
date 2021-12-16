@@ -61,4 +61,17 @@ public class Employee {
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
+
+    @GET
+    @Path("/getRoleMatrix")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRoleMatrix(){
+        try{
+            String[][] roleMatrix = jobRolesService.getRoleMatrix();
+            return Response.ok(roleMatrix).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
 }
