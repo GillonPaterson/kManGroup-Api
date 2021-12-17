@@ -13,6 +13,7 @@ import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class JobRolesService {
@@ -29,6 +30,13 @@ public class JobRolesService {
     public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector){
         this.jobRolesDAO = jobRolesDAO;
         this.databaseConnector = databaseConnector;
+    }
+
+    public JobRolesService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
+        this.jobRolesDAO = jobRolesDAO;
+        this.databaseConnector = databaseConnector;
+        this.bandLevelDAO = bandLevelDAO;
+        this.capabilityDAO = capabilityDAO;
     }
 
     public List<JobRole> getJobRoles() throws SQLException {
@@ -76,10 +84,10 @@ public class JobRolesService {
 
         List<RoleMatrixModel> roleMatrixModels = jobRolesDAO.getJobRoleMatrixFromDatabase(connection);
 
-        String[][] roleMatrix = new String[bandLevel.size()][capability.size()+1];
+        String[][] roleMatrix = new String[bandLevel.size()+1][capability.size()+1];
 
-        for (int i =0; i < bandLevel.size(); i++){
-            roleMatrix[i][0] = bandLevel.get(i);
+        for (int i = 1; i < bandLevel.size() + 1; i++){
+            roleMatrix[i][0] = bandLevel.get(i-1);
         }
         roleMatrix[0][0] = "Job Band Level";
         for (int i =1; i < capability.size()+1; i++){
@@ -101,7 +109,6 @@ public class JobRolesService {
                 }
             }
         }
-
         return roleMatrix;
     }
 }
