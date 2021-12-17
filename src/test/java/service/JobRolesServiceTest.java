@@ -66,6 +66,10 @@ class JobRolesServiceTest {
 
     @Test
     void testServicegetComp() throws SQLException {
+        
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
 
         Competency competencyModel = new Competency("Associate",
                 "Reflects on owninteractions with a wide and diverse range of individuals andgroups from within and beyond immediate service/organisation.Challenges and refreshes own values, beliefs, leadership styles and approaches. Overtly role models the giving and receiving of feedback.",
