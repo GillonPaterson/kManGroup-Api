@@ -3,8 +3,8 @@ package com.kainos.ea.data;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.RoleMatrixModel;
 import com.kainos.ea.model.JobTraining;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,6 +42,24 @@ public class JobRolesDAO {
         throw new SQLException();
     }
 
+    public List<RoleMatrixModel> getJobRoleMatrixFromDatabase(Connection connection) throws SQLException {
+
+        List<RoleMatrixModel> roleMatrixModels = new ArrayList<>();
+        String query = "SELECT jobRoles.jobRole, bandLevels.jobBandLevel, capabilities.jobCapability FROM jobRoles INNER JOIN bandLevels using (jobBandLevelID) INNER JOIN capabilities using (jobCapabilityID)";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            RoleMatrixModel roleMatrixModel = new RoleMatrixModel(rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"));
+            roleMatrixModels.add(roleMatrixModel);
+        }
+        if (roleMatrixModels.isEmpty()){
+            throw new SQLException();
+        }else{
+            return roleMatrixModels;
+        }
+    }
     public Competency getJobCompFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
         String query = "Select bandLevels.jobBandLevel, competencies.competencyStage1, competencies.competencyStage2,competencies.competencyStage3,competencies.competencyStage4,jobRoles.competencyStage From competencies Inner Join bandLevels using(jobBandLevelID) Inner Join jobRoles using(jobBandLevelID) WHERE jobRoles.jobRoleID = ?";
@@ -59,17 +77,16 @@ public class JobRolesDAO {
 
     public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
         List<JobTraining> training = new ArrayList<>();
-        String query = "SELECT bandLevels.jobBandLevel, training.trainingLink FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE jobBandLevel = ?";
+        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE jobBandLevel = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, bandLevel);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingLink"));
+            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingName"), rs.getString("trainingLink"));
             training.add(jobTraining);
         }
         return training;
     }
-
 
 }
