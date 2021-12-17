@@ -1,22 +1,23 @@
 package service;
 
+import com.kainos.ea.data.BandLevelDAO;
+import com.kainos.ea.data.CapabilityDAO;
 import com.kainos.ea.data.JobRolesDAO;
-import com.kainos.ea.model.Competency;
-import com.kainos.ea.model.JobRole;
-import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.*;
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import javax.annotation.meta.When;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class JobRolesServiceTest {
     @Test
@@ -66,7 +67,7 @@ class JobRolesServiceTest {
 
     @Test
     void testServicegetComp() throws SQLException {
-        
+
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
@@ -78,7 +79,7 @@ class JobRolesServiceTest {
                 null,
                 "stage 3");
 
-        Competency competencyModelService = new Competency("Associate","Reflects on owninteractions with a wide and diverse range of individuals andgroups from within and beyond immediate service/organisation.Challenges and refreshes own values, beliefs, leadership styles and approaches. Overtly role models the giving and receiving of feedback.","'Successfully manages a range of personal and organisational demandsand pressures. Demonstrates tenacity and resilience. Overcomes setbackswhere goals cannot be achieved and quickly refocuses. Is visible andaccessible to others.'","Develops through systematically scanningthe external environment and exploring leading edge thinking and best practice.Applies learning to build and refresh the business. Treats challenge as a positive forcefor improvement.");
+        Competency competencyModelService = new Competency("Associate", "Reflects on owninteractions with a wide and diverse range of individuals andgroups from within and beyond immediate service/organisation.Challenges and refreshes own values, beliefs, leadership styles and approaches. Overtly role models the giving and receiving of feedback.", "'Successfully manages a range of personal and organisational demandsand pressures. Demonstrates tenacity and resilience. Overcomes setbackswhere goals cannot be achieved and quickly refocuses. Is visible andaccessible to others.'", "Develops through systematically scanningthe external environment and exploring leading edge thinking and best practice.Applies learning to build and refresh the business. Treats challenge as a positive forcefor improvement.");
 
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
@@ -93,10 +94,10 @@ class JobRolesServiceTest {
         assertEquals(competencyModelService.getCompetencyStage1(), returnedModel.getCompetencyStage1());
         assertEquals(competencyModelService.getCompetencyStage2(), returnedModel.getCompetencyStage2());
         assertEquals(competencyModelService.getCompetencyStage3(), returnedModel.getCompetencyStage3());
-  }
+    }
 
-  @Test
-  void testServiceGetTrainingDAO() throws SQLException {
+    @Test
+    void testServiceGetTrainingDAO() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -119,5 +120,49 @@ class JobRolesServiceTest {
         Mockito.verify(jobRolesDAO).getJobTrainingFromDatabase(connection, "Associate");
 
         assertEquals(jobTraining, returnedList);
-}
+    }
+
+    @Test
+    void testServiceCallsRightDAOAndReturnMatrix() throws SQLException{
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        List<String> capabilities = new ArrayList<>();
+        capabilities.add("Engineering");
+        capabilities.add("Platforms");
+
+        CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
+        Mockito.when(capabilityDAO.getJobCapabilitiesFromDatabase(connection)).thenReturn(capabilities);
+
+        List<String> bandLevels = new ArrayList<>();
+        bandLevels.add("Apprentice");
+        bandLevels.add("Trainee");
+
+        BandLevelDAO bandLevelDAO = Mockito.mock(BandLevelDAO.class);
+        Mockito.when(bandLevelDAO.getBandLevelFromDatabase(connection)).thenReturn(bandLevels);
+
+        List<RoleMatrixModel> roleMatrixModels = new ArrayList<>();
+        RoleMatrixModel roleMatrixModel1 = new RoleMatrixModel("Software Dev", "Engineering", "Apprentice");
+        RoleMatrixModel roleMatrixModel2 = new RoleMatrixModel("Platform Engineer", "Platforms", "Trainee");
+        roleMatrixModels.add(roleMatrixModel1);
+        roleMatrixModels.add(roleMatrixModel2);
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        Mockito.when(jobRolesDAO.getJobRoleMatrixFromDatabase(connection)).thenReturn(roleMatrixModels);
+
+        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, bandLevelDAO, capabilityDAO, connector);
+
+        String[][] returnedArray = jobRolesService.getRoleMatrix();
+
+        Mockito.verify(connector).getConnection();
+        Mockito.verify(capabilityDAO).getJobCapabilitiesFromDatabase(connection);
+        Mockito.verify(bandLevelDAO).getBandLevelFromDatabase(connection);
+        Mockito.verify(jobRolesDAO).getJobRoleMatrixFromDatabase(connection);
+
+        String[][] expectedArray = {{"Job Band Level", "Engineering", "Platforms"}, {"Apprentice", "Software Dev", ""}, {"Trainee", "", "Platform Engineer"}};
+//        System.out.println(Arrays.deepToString(returnedArray));
+//        System.out.println(Arrays.deepToString(expectedArray));
+        assertArrayEquals(expectedArray,returnedArray);
+    }
 }
