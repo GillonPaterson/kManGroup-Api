@@ -4,11 +4,21 @@ public class RoleMatrixModel {
     public String jobRole;
     public String capability;
     public String bandLevel;
+    public String jobRoleID;
 
-    public RoleMatrixModel(String jobRole, String capability, String bandLevel) {
+    public RoleMatrixModel(String jobRole, String capability, String bandLevel, String jobRoleID) {
         this.jobRole = jobRole;
         this.capability = capability;
+        this.jobRoleID = jobRoleID;
         this.bandLevel = bandLevel;
+    }
+
+    public String getJobRoleID() {
+        return jobRoleID;
+    }
+
+    public void setJobRoleID(String jobRoleID) {
+        this.jobRoleID = jobRoleID;
     }
 
     public String getJobRole() {
