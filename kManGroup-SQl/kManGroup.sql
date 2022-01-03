@@ -12,7 +12,8 @@ jobBandLevel varchar(50) NOT NULL
 create table training (
 trainingID int auto_increment PRIMARY KEY NOT NULL,
 trainingName varchar(100) NOT NULL,
-trainingLink text NOT NULL
+trainingLink text NOT NULL,
+trainingGroup varchar(100) NOT NULL
 );
 
 create table bandLevelsTraining (
@@ -97,17 +98,17 @@ insert into competencies(jobBandLevelID,competencyDataID) Values(8,5);
 insert into capabilityLead(leadID,leadFname,leadSname,leadPhoto,leadMessage) value(1,"Dave","Boats","src=https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg","wow code is great");
 
 
-insert into training(trainingName, trainingLink) values('Mindset', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx'); -- All staff
-insert into training(trainingName, trainingLink) values('Intro to Remote Working', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Intro-to-Remote-Working.aspx'); -- entry level to senior associate
-insert into training(trainingName, trainingLink) values('Interpersonal Skills', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Interpersonal-Skills.aspx'); -- entry level to senior associate
-insert into training(trainingName, trainingLink) values('Powerpoint 101', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/PowerPoint-101.aspx'); -- All staff
-insert into training(trainingName, trainingLink) values('Effective Decision Making', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Effective-Decision-Making.aspx'); -- senior associate plus
-insert into training(trainingName, trainingLink) values('Developing your Presentation Skills', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Developing-your-Presentation-Skills.aspx'); -- entry level to consultant
-insert into training(trainingName, trainingLink) values('Discovering your Personal Brand', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Discovering-your-Personal-Brand.aspx'); -- All staff
-insert into training(trainingName, trainingLink) values('Crucial Conversation', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Crucial-Conversations.aspx'); -- Senior associate plus
-insert into training(trainingName, trainingLink) values('Leading Change', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Leading-Change.aspx'); -- principal to leader
-insert into training(trainingName, trainingLink) values('Managing Change', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Managing-Change.aspx'); -- consultant to manager
-insert into training(trainingName, trainingLink) values('Effective Decision Making', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Effective-Decision-Making.aspx'); -- consultant to leader
+insert into training(trainingName, trainingLink, trainingGroup) values('Mindset', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx', 'Development programmes'); -- All staff
+insert into training(trainingName, trainingLink, trainingGroup) values('Intro to Remote Working', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Intro-to-Remote-Working.aspx', 'Development programmes'); -- entry level to senior associate
+insert into training(trainingName, trainingLink, trainingGroup) values('Interpersonal Skills', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Interpersonal-Skills.aspx', 'Professional skills'); -- entry level to senior associate
+insert into training(trainingName, trainingLink, trainingGroup) values('Powerpoint 101', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/PowerPoint-101.aspx', 'Technical skills'); -- All staff
+insert into training(trainingName, trainingLink, trainingGroup) values('Effective Decision Making', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Effective-Decision-Making.aspx', 'Development programmes'); -- senior associate plus
+insert into training(trainingName, trainingLink, trainingGroup) values('Developing your Presentation Skills', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Developing-your-Presentation-Skills.aspx', 'Professional skills'); -- entry level to consultant
+insert into training(trainingName, trainingLink, trainingGroup) values('Discovering your Personal Brand', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Discovering-your-Personal-Brand.aspx', 'Development programmes'); -- All staff
+insert into training(trainingName, trainingLink, trainingGroup) values('Crucial Conversation', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Crucial-Conversations.aspx', 'Development programmes'); -- Senior associate plus
+insert into training(trainingName, trainingLink, trainingGroup) values('Leading Change', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Leading-Change.aspx', 'Development programmes'); -- principal to leader
+insert into training(trainingName, trainingLink, trainingGroup) values('Managing Change', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Managing-Change.aspx', 'Development programmes'); -- consultant to manager
+insert into training(trainingName, trainingLink, trainingGroup) values('Effective Decision Making', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Effective-Decision-Making.aspx', 'Development programmes'); -- consultant to leader
 
 
 insert into bandLevelsTraining values(1, 1);
