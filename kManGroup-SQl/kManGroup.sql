@@ -3,7 +3,6 @@ CREATE DATABASE kManGroup_gillon;
 
 use kManGroup_gillon;
 
-
 create table bandLevels (
 jobBandLevelID int auto_increment PRIMARY KEY NOT NULL,
 jobBandLevel varchar(50) NOT NULL,
@@ -62,9 +61,11 @@ jobBandLevelID int NOT NULL,
 jobSpec text NOT NULL,
 jobLink text NOT NULL,
 jobResponsibilities text NOT NULL,
+jobFamilyID int NOT NULL,
 
 CONSTRAINT pk_Job_Role_ID PRIMARY KEY (jobRoleID),
 CONSTRAINT fk_JobBandLevelID FOREIGN KEY (jobBandLevelID) REFERENCES bandLevels(jobBandLevelID),
+CONSTRAINT fk_JobFamilyid_JobRoles FOREIGN KEY (jobFamilyID) REFERENCES jobFamilies(jobFamilyID),
 CONSTRAINT fk_jobCapabilityID FOREIGN KEY (jobCapabilityID) REFERENCES capabilities(jobCapabilityID));
 
 

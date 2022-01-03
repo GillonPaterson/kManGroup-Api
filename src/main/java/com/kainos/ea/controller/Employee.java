@@ -1,6 +1,7 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.model.*;
+import com.kainos.ea.service.JobFamiliesService;
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 public class Employee {
 
     public JobRolesService jobRolesService = new JobRolesService();
+    public JobFamiliesService jobFamiliesService = new JobFamiliesService();
 
     @GET
     @Path("/getJobRoles")
@@ -108,6 +110,19 @@ public class Employee {
             return Response.ok(jobTraining).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @GET
+    @Path("/getJobFamilies")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobFamilies(){
+        try{
+            JobFamilyRequestModel jobFamilyRequestModel = jobFamiliesService.getJobFamilies();
+            return Response.ok(jobFamilyRequestModel).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job family models: " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
