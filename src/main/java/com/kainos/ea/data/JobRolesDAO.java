@@ -62,7 +62,7 @@ public class JobRolesDAO {
     }
     public Competency getJobCompFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
-        String query = "Select bandLevels.jobBandLevel, competencies.competencyStage1, competencies.competencyStage2,competencies.competencyStage3,competencies.competencyStage4,jobRoles.competencyStage From competencies Inner Join bandLevels using(jobBandLevelID) Inner Join jobRoles using(jobBandLevelID) WHERE jobRoles.jobRoleID = ?";
+        String query = "Select bandLevels.jobBandLevel, competenciesData.competencyStage1, competenciesData.competencyStage2,competenciesData.competencyStage3,competenciesData.competencyStage4,jobRoles.competencyStage from competenciesData inner join competencies using(competencyDataID) inner join bandLevels using(jobBandLevelID) inner join jobRoles using(jobBandLevelID) where jobroleID = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, jobRoleID);
