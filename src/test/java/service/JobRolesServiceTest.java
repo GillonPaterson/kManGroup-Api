@@ -101,8 +101,8 @@ class JobRolesServiceTest {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
-        JobTraining jt1 = new JobTraining("Associate", "Mindset", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx");
-        JobTraining jt2 = new JobTraining("Associate", "Powerpoint 101", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/PowerPoint-101.aspx");
+        JobTraining jt1 = new JobTraining("Associate", "Mindset", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx", "Development programmes");
+        JobTraining jt2 = new JobTraining("Associate", "Powerpoint 101", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/PowerPoint-101.aspx", "Technical skills");
 
 
         List<JobTraining> jobTraining = new ArrayList<>();

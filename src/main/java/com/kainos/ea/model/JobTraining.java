@@ -7,12 +7,14 @@ public class JobTraining {
     private String jobBandLevel;
     private String trainingName;
     private String trainingLink;
+    private String trainingGroup;
 
     @JsonCreator
-    public JobTraining(@JsonProperty("jobBandLevel") String JobBandLevel, @JsonProperty("trainingName") String TrainingName, @JsonProperty("trainingLink") String TrainingLink) {
+    public JobTraining(@JsonProperty("jobBandLevel") String JobBandLevel, @JsonProperty("trainingName") String TrainingName, @JsonProperty("trainingLink") String TrainingLink, @JsonProperty("trainingGroup") String TrainingGroup) {
         this.setJobBandLevel(JobBandLevel);
         this.setTrainingName(TrainingName);
         this.setTrainingLink(TrainingLink);
+        this.setTrainingGroup(TrainingGroup);
     }
 
     public String getJobBandLevel() {
@@ -37,5 +39,13 @@ public class JobTraining {
 
     public void setTrainingName(String trainingName) {
         this.trainingName = trainingName;
+    }
+
+    public String getTrainingGroup() {
+        return trainingGroup;
+    }
+
+    public void setTrainingGroup(String trainingGroup) {
+        this.trainingGroup = trainingGroup;
     }
 }
