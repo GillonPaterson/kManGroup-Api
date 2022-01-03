@@ -1,7 +1,9 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.model.*;
+
 import com.kainos.ea.service.AdminLoginService;
+
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
@@ -63,7 +65,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRoleMatrix(){
         try{
-            String[][] roleMatrix = jobRolesService.getRoleMatrix();
+            RoleMatrixResponseModel roleMatrix = jobRolesService.getRoleMatrix();
             return Response.ok(roleMatrix).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());

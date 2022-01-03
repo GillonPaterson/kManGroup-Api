@@ -10,7 +10,7 @@ import java.util.List;
 public class BandLevelDAO {
     public List<String> getBandLevelFromDatabase(Connection connection) throws SQLException {
         List<String> bandLevels = new ArrayList<>();
-        String query = "SELECT jobBandLevel FROM bandLevels";
+        String query = "SELECT jobBandLevel FROM bandLevels ORDER BY importance";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 

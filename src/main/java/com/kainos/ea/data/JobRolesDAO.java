@@ -45,13 +45,13 @@ public class JobRolesDAO {
     public List<RoleMatrixModel> getJobRoleMatrixFromDatabase(Connection connection) throws SQLException {
 
         List<RoleMatrixModel> roleMatrixModels = new ArrayList<>();
-        String query = "SELECT jobRoles.jobRole, bandLevels.jobBandLevel, capabilities.jobCapability FROM jobRoles INNER JOIN bandLevels using (jobBandLevelID) INNER JOIN capabilities using (jobCapabilityID)";
+        String query = "SELECT jobRoles.jobRole, jobRoles.jobRoleID, bandLevels.jobBandLevel, capabilities.jobCapability FROM jobRoles INNER JOIN bandLevels using (jobBandLevelID) INNER JOIN capabilities using (jobCapabilityID)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            RoleMatrixModel roleMatrixModel = new RoleMatrixModel(rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"));
+            RoleMatrixModel roleMatrixModel = new RoleMatrixModel(rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobRoleID"));
             roleMatrixModels.add(roleMatrixModel);
         }
         if (roleMatrixModels.isEmpty()){
