@@ -75,39 +75,10 @@ public class JobRolesDAO {
         throw new SQLException();
     }
 
-    public List<JobTraining> getJobTrainingDPFromDatabase(Connection connection, String bandLevel) throws SQLException {
+
+    public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
         List<JobTraining> training = new ArrayList<>();
-        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink, training.trainingGroup FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE (training.trainingGroup = 'Development programmes' AND bandLevels.jobBandLevel = ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, bandLevel);
-
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
-            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingName"), rs.getString("trainingLink"), rs.getString("trainingGroup"));
-            training.add(jobTraining);
-        }
-        return training;
-    }
-
-
-    public List<JobTraining> getJobTrainingPSFromDatabase(Connection connection, String bandLevel) throws SQLException {
-        List<JobTraining> training = new ArrayList<>();
-        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink, training.trainingGroup FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE (training.trainingGroup = 'Professional skills' AND bandLevels.jobBandLevel = ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, bandLevel);
-
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
-            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingName"), rs.getString("trainingLink"), rs.getString("trainingGroup"));
-            training.add(jobTraining);
-        }
-        return training;
-    }
-
-
-    public List<JobTraining> getJobTrainingTSFromDatabase(Connection connection, String bandLevel) throws SQLException {
-        List<JobTraining> training = new ArrayList<>();
-        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink, training.trainingGroup FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE (training.trainingGroup = 'Technical skills' AND bandLevels.jobBandLevel = ?)";
+        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink, training.trainingGroup FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE (bandLevels.jobBandLevel = ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, bandLevel);
 
