@@ -45,26 +45,9 @@ public class JobRolesService {
         return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
     }
 
-    public Competency getComp(int jobRoleID) throws SQLException {
-        Competency competency = new Competency();
+    public List<Competency> getComp(int jobRoleID) throws SQLException {
         Connection connection = databaseConnector.getConnection();
-        competency = jobRolesDAO.getJobCompFromDatabase(connection, jobRoleID);
-        if (competency.getCompetencyStage().equals("stage 1")){
-             Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1());
-             return competency1;
-        } else if (competency.getCompetencyStage().equals("stage 2")){
-            Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1(), competency.getCompetencyStage2());
-            return competency1;
-        } else if (competency.getCompetencyStage().equals("stage 3")){
-            Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1(), competency.getCompetencyStage2(), competency.getCompetencyStage3());
-            return competency1;
-        }else if (competency.getCompetencyStage().equals("stage 4")){
-            Competency competency1 = new Competency(competency.getBandLevel(), competency.getCompetencyStage1(), competency.getCompetencyStage2(), competency.getCompetencyStage3(), competency.getCompetencyStage4());
-            return competency1;
-        } else {
-            System.out.println("Null response");
-            return null;
-        }
+        return jobRolesDAO.getJobCompFromDatabase(connection,jobRoleID);
     }
 
     public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {
