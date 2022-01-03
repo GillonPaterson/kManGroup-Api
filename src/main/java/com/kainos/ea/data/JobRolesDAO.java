@@ -60,19 +60,25 @@ public class JobRolesDAO {
             return roleMatrixModels;
         }
     }
-    public Competency getJobCompFromDatabase(Connection connection, int jobRoleID) throws SQLException {
+    public List<Competency> getJobCompFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
-        String query = "Select bandLevels.jobBandLevel, competenciesData.competencyStage1, competenciesData.competencyStage2,competenciesData.competencyStage3,competenciesData.competencyStage4,jobRoles.competencyStage from competenciesData inner join competencies using(competencyDataID) inner join bandLevels using(jobBandLevelID) inner join jobRoles using(jobBandLevelID) where jobroleID = ?";
+        List<Competency> complist = new ArrayList<>();
+        String query = "Select bandLevels.jobBandLevel, competenciesData.competencyStage from competenciesData inner join competencies using(competencyDataID) inner join bandLevels using(jobBandLevelID) inner join jobRoles using(jobBandLevelID) where jobroleID = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, jobRoleID);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            Competency competency = new Competency(rs.getString("jobBandLevel"), rs.getString("competencyStage1"),rs.getString("competencyStage2"),rs.getString("competencyStage3"),rs.getString("competencyStage4"),rs.getString("competencyStage"));
-            return competency;
+            Competency competency = new Competency(rs.getString("jobBandLevel"),rs.getString("competencyStage"));
+            complist.add(competency);
         }
-        throw new SQLException();
+
+        if (complist.isEmpty()){
+            throw new SQLException();
+        }else{
+            return complist;
+        }
     }
 
     public List<JobTraining> getJobTrainingDPFromDatabase(Connection connection, String bandLevel) throws SQLException {
