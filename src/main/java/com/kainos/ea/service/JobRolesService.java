@@ -71,6 +71,12 @@ public class JobRolesService {
         }
     }
 
+    public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobTrainingFromDatabase(connection, bandLevel);
+    }
+
+    /*
     public List<JobTraining> getJobTrainingDP(String bandLevel) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobTrainingDPFromDatabase(connection, bandLevel);
@@ -85,6 +91,7 @@ public class JobRolesService {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobTrainingTSFromDatabase(connection, bandLevel);
     }
+     */
 
 
     public String[][] getRoleMatrix() throws SQLException{

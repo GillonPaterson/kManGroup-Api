@@ -1,17 +1,12 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.model.Competency;
-import com.kainos.ea.model.JobRole;
-import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.*;
+import com.kainos.ea.service.AdminLoginService;
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -77,6 +72,20 @@ public class Employee {
     }
 
     @GET
+    @Path("/getJobTraining/{bandLevel}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobTraining(@PathParam("bandLevel") String bandLevel){
+        try{
+            List<JobTraining> jobTraining= jobRolesService.getJobTraining(bandLevel);
+            return Response.ok(jobTraining).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    /*
+    @GET
     @Path("/getJobTrainingDP/{bandLevel}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobTrainingDP(@PathParam("bandLevel") String bandLevel){
@@ -113,5 +122,15 @@ public class Employee {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+     */
+
+    @POST
+    @Path("/checkDetails")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response checkDetails(Details details) {
+        AdminLoginService loginService = new AdminLoginService();
+        return Response.status(HttpStatus.OK_200).entity(loginService.checkDetails(details)).build();
     }
 }
