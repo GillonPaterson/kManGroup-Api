@@ -75,6 +75,7 @@ public class Employee {
 
     @GET
     @Path("/getJobTraining/{bandLevel}")
+
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobTraining(@PathParam("bandLevel") String bandLevel){
         try{
@@ -86,47 +87,6 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-    /*
-    @GET
-    @Path("/getJobTrainingDP/{bandLevel}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTrainingDP(@PathParam("bandLevel") String bandLevel){
-        try{
-            List<JobTraining> jobTraining= jobRolesService.getJobTrainingDP(bandLevel);
-            return Response.ok(jobTraining).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
-        }
-        return Response.status(HttpStatus.BAD_REQUEST_400).build();
-    }
-
-    @GET
-    @Path("/getJobTrainingPS/{bandLevel}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTrainingPS(@PathParam("bandLevel") String bandLevel){
-        try{
-            List<JobTraining> jobTraining= jobRolesService.getJobTrainingPS(bandLevel);
-            return Response.ok(jobTraining).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
-        }
-        return Response.status(HttpStatus.BAD_REQUEST_400).build();
-    }
-
-    @GET
-    @Path("/getJobTrainingTS/{bandLevel}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTrainingTS(@PathParam("bandLevel") String bandLevel){
-        try{
-            List<JobTraining> jobTraining= jobRolesService.getJobTrainingTS(bandLevel);
-            return Response.ok(jobTraining).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
-        }
-        return Response.status(HttpStatus.BAD_REQUEST_400).build();
-    }
-
-     */
 
     @POST
     @Path("/checkDetails")
