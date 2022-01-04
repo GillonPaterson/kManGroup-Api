@@ -56,6 +56,12 @@ public class JobRolesService {
     }
 
 
+    public List<CapabilityLead> getAllCapabilityLeads() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return capabilityDAO.getAllCapabilityleadsFromDataBase(connection);
+    }
+
+
     public RoleMatrixResponseModel getRoleMatrix() throws SQLException{
         Connection connection = databaseConnector.getConnection();
 
@@ -67,6 +73,7 @@ public class JobRolesService {
         RoleMatrixResponseModel roleMatrixResponseModel = new RoleMatrixResponseModel(roleMatrixModels, bandLevel, capability);
 
         return roleMatrixResponseModel;
+
 
 //        String[][] roleMatrix = new String[bandLevel.size()+1][capability.size()+1];
 //
@@ -94,4 +101,5 @@ public class JobRolesService {
 //            }
 //        }
     }
+
 }

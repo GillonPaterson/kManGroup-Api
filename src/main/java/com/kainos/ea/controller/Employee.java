@@ -107,4 +107,20 @@ public class Employee {
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
+    @GET
+    @Path("/getAllCapabilityLead")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCapabilityLead(){
+        try{
+            List<CapabilityLead> capabilityLead = jobRolesService.getAllCapabilityLeads();
+            return Response.ok(capabilityLead).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+
+
 }
