@@ -2,14 +2,13 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.model.*;
 import com.kainos.ea.service.JobFamiliesService;
+
+import com.kainos.ea.service.AdminLoginService;
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -54,7 +53,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobComp(@PathParam("jobRoleID") int jobRoleID){
         try{
-            Competency competency = jobRolesService.getComp(jobRoleID);
+            List<Competency> competency = jobRolesService.getComp(jobRoleID);
             return Response.ok(competency).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
@@ -76,11 +75,11 @@ public class Employee {
     }
 
     @GET
-    @Path("/getJobTrainingDP/{bandLevel}")
+    @Path("/getJobTraining/{bandLevel}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTrainingDP(@PathParam("bandLevel") String bandLevel){
+    public Response getJobTraining(@PathParam("bandLevel") String bandLevel){
         try{
-            List<JobTraining> jobTraining= jobRolesService.getJobTrainingDP(bandLevel);
+            List<JobTraining> jobTraining= jobRolesService.getJobTraining(bandLevel);
             return Response.ok(jobTraining).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
@@ -88,30 +87,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-    @GET
-    @Path("/getJobTrainingPS/{bandLevel}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTrainingPS(@PathParam("bandLevel") String bandLevel){
-        try{
-            List<JobTraining> jobTraining= jobRolesService.getJobTrainingPS(bandLevel);
-            return Response.ok(jobTraining).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
-        }
-        return Response.status(HttpStatus.BAD_REQUEST_400).build();
-    }
-
-    @GET
-    @Path("/getJobTrainingTS/{bandLevel}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTrainingTS(@PathParam("bandLevel") String bandLevel){
-        try{
-            List<JobTraining> jobTraining= jobRolesService.getJobTrainingTS(bandLevel);
-            return Response.ok(jobTraining).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
-        }
-        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    @POST
+    @Path("/checkDetails")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response checkDetails(Details details) {
+        AdminLoginService loginService = new AdminLoginService();
+        return Response.status(HttpStatus.OK_200).entity(loginService.checkDetails(details)).build();
     }
 
     @GET
@@ -119,11 +100,28 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobFamilies(){
         try{
-             List<JobFamilyModel> jobFamilyModels = jobFamiliesService.getJobFamilies();
+            List<JobFamilyModel> jobFamilyModels = jobFamiliesService.getJobFamilies();
             return Response.ok(jobFamilyModels).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job family models: " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
+  
+    @GET
+    @Path("/getAllCapabilityLead")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCapabilityLead(){
+        try{
+            List<CapabilityLead> capabilityLead = jobRolesService.getAllCapabilityLeads();
+            return Response.ok(capabilityLead).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+
+
 }

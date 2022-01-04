@@ -46,6 +46,31 @@ class JobRolesServiceTest {
     }
 
     @Test
+    void testServiceGetCompetency() throws SQLException {
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        Competency comp1 = new Competency("Associate", "Behaves in an open, honest, and inclusive manner, upholding personal andorganisational ethics and values. Shows respect for the needs of others and promotes equality and diversity.");
+        Competency comp2 = new Competency( "Associate", "Confident and independent in own personal impact and recognises an influence on others beyond immediate teams. Goals are aligned to strategic objectives and Kainos values. Champions self and others for equality, diversity, and inclusion.");
+
+        List<Competency> compList = new ArrayList<>();
+        compList.add(comp1);
+        compList.add(comp2);
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        Mockito.when(jobRolesDAO.getJobCompFromDatabase(connection,1)).thenReturn(compList);
+
+        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
+        List<Competency> returnedList = jobRolesService.getComp(1);
+
+        Mockito.verify(connector).getConnection();
+        Mockito.verify(jobRolesDAO).getJobCompFromDatabase(connection,1);
+
+        assertEquals(compList, returnedList);
+    }
+
+    @Test
     void testServiceGetSpecCallsDAO() throws SQLException {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -65,39 +90,9 @@ class JobRolesServiceTest {
         assertEquals(jobSpecModel, returnedModel);
     }
 
-    @Test
-    void testServicegetComp() throws SQLException {
-
-        Connection connection = Mockito.mock(Connection.class);
-        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
-        Mockito.when(connector.getConnection()).thenReturn(connection);
-
-        Competency competencyModel = new Competency("Associate",
-                "Reflects on owninteractions with a wide and diverse range of individuals andgroups from within and beyond immediate service/organisation.Challenges and refreshes own values, beliefs, leadership styles and approaches. Overtly role models the giving and receiving of feedback.",
-                "'Successfully manages a range of personal and organisational demandsand pressures. Demonstrates tenacity and resilience. Overcomes setbackswhere goals cannot be achieved and quickly refocuses. Is visible andaccessible to others.'",
-                "Develops through systematically scanningthe external environment and exploring leading edge thinking and best practice.Applies learning to build and refresh the business. Treats challenge as a positive forcefor improvement.",
-                null,
-                "stage 3");
-
-        Competency competencyModelService = new Competency("Associate", "Reflects on owninteractions with a wide and diverse range of individuals andgroups from within and beyond immediate service/organisation.Challenges and refreshes own values, beliefs, leadership styles and approaches. Overtly role models the giving and receiving of feedback.", "'Successfully manages a range of personal and organisational demandsand pressures. Demonstrates tenacity and resilience. Overcomes setbackswhere goals cannot be achieved and quickly refocuses. Is visible andaccessible to others.'", "Develops through systematically scanningthe external environment and exploring leading edge thinking and best practice.Applies learning to build and refresh the business. Treats challenge as a positive forcefor improvement.");
-
-
-        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobCompFromDatabase(connection, 1)).thenReturn(competencyModel);
-
-        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        Competency returnedModel = jobRolesService.getComp(1);
-
-        Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobCompFromDatabase(connection, 1);
-        assertEquals(competencyModelService.getBandLevel(), returnedModel.getBandLevel());
-        assertEquals(competencyModelService.getCompetencyStage1(), returnedModel.getCompetencyStage1());
-        assertEquals(competencyModelService.getCompetencyStage2(), returnedModel.getCompetencyStage2());
-        assertEquals(competencyModelService.getCompetencyStage3(), returnedModel.getCompetencyStage3());
-    }
 
     @Test
-    void testServiceGetTrainingDPDAO() throws SQLException {
+    void testServiceGetTrainingDAO() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -111,66 +106,17 @@ class JobRolesServiceTest {
         jobTraining.add(jt2);
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobTrainingDPFromDatabase(connection, "Associate")).thenReturn(jobTraining);
+        Mockito.when(jobRolesDAO.getJobTrainingFromDatabase(connection, "Associate")).thenReturn(jobTraining);
 
         JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        List<JobTraining> returnedList = jobRolesService.getJobTrainingDP("Associate");
+        List<JobTraining> returnedList = jobRolesService.getJobTraining("Associate");
 
         Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobTrainingDPFromDatabase(connection, "Associate");
+        Mockito.verify(jobRolesDAO).getJobTrainingFromDatabase(connection, "Associate");
 
         assertEquals(jobTraining, returnedList);
     }
 
-    @Test
-    void testServiceGetTrainingPSDAO() throws SQLException {
-
-        Connection connection = Mockito.mock(Connection.class);
-        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
-        Mockito.when(connector.getConnection()).thenReturn(connection);
-        JobTraining jt1 = new JobTraining("Associate", "Interpersonal Skills", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Interpersonal-Skills.aspx", "Professional skills");
-        JobTraining jt2 = new JobTraining("Associate", "Developing your Presentation Skills", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Developing-your-Presentation-Skills.aspx", "Professional skills");
-
-
-        List<JobTraining> jobTraining = new ArrayList<>();
-        jobTraining.add(jt1);
-        jobTraining.add(jt2);
-
-        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobTrainingPSFromDatabase(connection, "Associate")).thenReturn(jobTraining);
-
-        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        List<JobTraining> returnedList = jobRolesService.getJobTrainingPS("Associate");
-
-        Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobTrainingPSFromDatabase(connection, "Associate");
-
-        assertEquals(jobTraining, returnedList);
-    }
-
-    @Test
-    void testServiceGetTrainingTSDAO() throws SQLException {
-
-        Connection connection = Mockito.mock(Connection.class);
-        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
-        Mockito.when(connector.getConnection()).thenReturn(connection);
-        JobTraining jt1 = new JobTraining("Associate", "Powerpoint 101", "https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/PowerPoint-101.aspx", "Technical skills");
-
-
-        List<JobTraining> jobTraining = new ArrayList<>();
-        jobTraining.add(jt1);
-
-        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobTrainingTSFromDatabase(connection, "Associate")).thenReturn(jobTraining);
-
-        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        List<JobTraining> returnedList = jobRolesService.getJobTrainingTS("Associate");
-
-        Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobTrainingTSFromDatabase(connection, "Associate");
-
-        assertEquals(jobTraining, returnedList);
-    }
 
     @Test
     void testServiceCallsRightDAOAndReturnMatrix() throws SQLException{
