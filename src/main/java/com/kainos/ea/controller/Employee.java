@@ -119,8 +119,8 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobFamilies(){
         try{
-            JobFamilyRequestModel jobFamilyRequestModel = jobFamiliesService.getJobFamilies();
-            return Response.ok(jobFamilyRequestModel).build();
+             List<JobFamilyModel> jobFamilyModels = jobFamiliesService.getJobFamilies();
+            return Response.ok(jobFamilyModels).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job family models: " + ex.getMessage());
         }
