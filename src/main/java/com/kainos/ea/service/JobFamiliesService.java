@@ -15,6 +15,16 @@ public class JobFamiliesService {
     CapabilityDAO capabilityDAO = new CapabilityDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
+    public JobFamiliesService(){
+
+    }
+
+    public JobFamiliesService(JobFamiliesDAO jobFamiliesDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector) {
+        this.jobFamiliesDAO = jobFamiliesDAO;
+        this.capabilityDAO = capabilityDAO;
+        this.databaseConnector = databaseConnector;
+    }
+
     public JobFamilyRequestModel getJobFamilies() throws SQLException {
         Connection connection = databaseConnector.getConnection();
         List<String> capabilities = capabilityDAO.getJobCapabilitiesFromDatabase(connection);
