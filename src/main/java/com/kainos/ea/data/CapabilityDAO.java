@@ -46,4 +46,21 @@ public class CapabilityDAO {
         }
 
     }
+
+    public CapabilityLead getCapabilityleadFromDataBase(Connection connection, int leadID) throws SQLException{
+        String query = "Select leadID, leadFname, leadSname, leadPhoto, leadMessage, capabilities.jobCapability from capabilityLead inner join capabilities using(jobCapabilityID) where leadID = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, leadID);
+
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            CapabilityLead capLead = new CapabilityLead(rs.getInt("leadID"),rs.getString("leadFname"),rs.getString("leadSname"),rs.getString("leadMessage"),rs.getString("leadPhoto"), rs.getString("jobCapability"));
+            return capLead;
+        }
+
+        throw new SQLException();
+    }
+
 }

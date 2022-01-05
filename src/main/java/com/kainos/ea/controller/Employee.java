@@ -121,6 +121,17 @@ public class Employee {
     }
 
 
-
+    @GET
+    @Path("/getCapabilityLead/{leadID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCapabilityLead(@PathParam("leadID")int leadID){
+        try{
+            CapabilityLead capabilityLead = jobRolesService.getCapabilitylead(leadID);
+            return Response.ok(capabilityLead).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
 
 }
