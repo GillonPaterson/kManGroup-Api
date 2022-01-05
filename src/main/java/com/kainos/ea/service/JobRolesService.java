@@ -28,6 +28,11 @@ public class JobRolesService {
         this.databaseConnector = databaseConnector;
     }
 
+    public JobRolesService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
+        this.databaseConnector = databaseConnector;
+        this.capabilityDAO = capabilityDAO;
+    }
+
     public JobRolesService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
         this.jobRolesDAO = jobRolesDAO;
         this.databaseConnector = databaseConnector;
@@ -61,6 +66,12 @@ public class JobRolesService {
         return capabilityDAO.getAllCapabilityleadsFromDataBase(connection);
     }
 
+
+
+    public CapabilityLead getCapabilitylead(int leadID) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return capabilityDAO.getCapabilityleadFromDataBase(connection, leadID);
+    }
 
     public RoleMatrixResponseModel getRoleMatrix() throws SQLException{
         Connection connection = databaseConnector.getConnection();
