@@ -42,7 +42,9 @@ leadFname varchar(25) Not Null,
 leadSname varchar(30) Not Null,
 leadPhoto text Not Null,
 leadMessage text Not Null,
-jobCapabilityID int not null						
+jobCapabilityID int not null,
+
+CONSTRAINT fk_jobCapabilityID_capabilityLead FOREIGN KEY (jobCapabilityID) REFERENCES capabilities(jobCapabilityID)					
 );
 
 create table jobFamilies(
@@ -149,7 +151,7 @@ insert into competencies(jobBandLevelID,competencyDataID) Values(3,15);
 
 
 
-insert into capabilityLead(leadID,leadFname,leadSname,leadPhoto,leadMessage) value(1,"Dave","Boats","src=https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg","wow code is great");
+insert into capabilityLead(leadID,leadFname,leadSname,leadPhoto,leadMessage,jobCapabilityID) value(1,"Dave","Boats","https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg","wow code is great",1);
 
 
 insert into training(trainingName, trainingLink, trainingGroup) values('Mindset', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx', 'Development programmes'); -- All staff
