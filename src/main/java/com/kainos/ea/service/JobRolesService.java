@@ -60,7 +60,7 @@ public class JobRolesService {
 
     public List<String> getJobBandLevels() throws SQLException {
         Connection connection = databaseConnector.getConnection();
-        return bandLevelDAO.getBandLevelFromDatabase2(connection);
+        return bandLevelDAO.getBandLevelFromDatabase(connection);
     }
 
     public List<String> getJobCapabilities() throws SQLException {
