@@ -11,6 +11,11 @@ public class AddJobRole {
     private String jobResponsibilities;
     private String jobFamily;
 
+    @JsonCreator
+    public AddJobRole()
+    {
+
+    }
 
     @JsonCreator
     public AddJobRole(@JsonProperty("jobRole") String jobRole, @JsonProperty("jobBandLevelID") String jobBandLevel, @JsonProperty("jobSpec") String jobSpec, @JsonProperty("jobLink") String jobLink, @JsonProperty("jobResponsibilities") String jobResponsibilities, @JsonProperty("jobFamilyID") String jobFamily) {
