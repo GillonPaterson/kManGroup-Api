@@ -17,4 +17,4 @@ Gillon is a baddie ngl
 Rules
 ---
 1. You break it you fix it 
-
+2. If Gillon did it and it doesn't work check his spelling 
