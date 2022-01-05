@@ -24,4 +24,9 @@ public class JobFamiliesService {
         JobFamilyRequestModel jobFamilyRequestModel = new JobFamilyRequestModel(capabilities, jobFamilyModels);
         return jobFamilyRequestModel;
     }
+
+    public List<String> getJobFamilyNames() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobFamiliesDAO.getJobFamiliesFromDatabase(connection);
+    }
 }

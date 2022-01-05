@@ -24,4 +24,22 @@ public class JobFamiliesDAO {
 
         return jobFamilyModels;
     }
+
+
+    public List<String> getJobFamiliesFromDatabase(Connection connection) throws SQLException {
+        List<String> families = new ArrayList<>();
+        String query = "SELECT jobFamilyName FROM jobFamilies";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            families.add(rs.getString("jobFamilyName"));
+        }
+        if(families.isEmpty()) {
+            throw new SQLException();
+        }else{
+            return families;
+        }
+    }
 }
