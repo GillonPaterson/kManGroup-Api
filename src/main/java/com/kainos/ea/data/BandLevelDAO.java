@@ -24,21 +24,4 @@ public class BandLevelDAO {
             return bandLevels;
         }
     }
-
-    public List<String> getBandLevelFromDatabase2(Connection connection) throws SQLException {
-        List<String> bandLevels = new ArrayList<>();
-        String query = "SELECT jobBandLevel FROM bandLevels ORDER BY jobBandLevelID";
-
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            bandLevels.add(rs.getString("jobBandLevel"));
-        }
-        if(bandLevels.isEmpty()) {
-            throw new SQLException();
-        }else{
-            return bandLevels;
-        }
-    }
 }
