@@ -15,13 +15,13 @@ import java.util.List;
 public class JobRolesDAO {
     public List<JobRole> getJobRolesFromDatabase(Connection connection) throws SQLException {
         List<JobRole> jobRoles = new ArrayList<>();
-        String query = "SELECT jobRoleID, jobRole, jobCapability, jobBandLevel FROM jobRoles Inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID)";
+        String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"));
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"));
             jobRoles.add(jobRole);
         }
         return jobRoles;
@@ -45,7 +45,7 @@ public class JobRolesDAO {
     public List<RoleMatrixModel> getJobRoleMatrixFromDatabase(Connection connection) throws SQLException {
 
         List<RoleMatrixModel> roleMatrixModels = new ArrayList<>();
-        String query = "SELECT jobRoles.jobRole, jobRoles.jobRoleID, bandLevels.jobBandLevel, capabilities.jobCapability FROM jobRoles INNER JOIN bandLevels using (jobBandLevelID) INNER JOIN capabilities using (jobCapabilityID)";
+        String query = "SELECT jobRoles.jobRole, jobRoles.jobRoleID, bandLevels.jobBandLevel, capabilities.jobCapability FROM jobRoles INNER JOIN bandLevels using (jobBandLevelID) inner join jobFamilies using(jobFamilyID) INNER JOIN capabilities using (jobCapabilityID)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 

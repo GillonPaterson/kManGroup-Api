@@ -26,8 +26,8 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate");
-        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Apprentice");
+        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate","Engineering");
+        JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Apprentice", "Engineering");
 
         List<JobRole> jobRoles = new ArrayList<>();
         jobRoles.add(jobRole1);
@@ -52,7 +52,7 @@ class JobRolesServiceTest {
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
         List competencies = new ArrayList();
-        competencies.add("Behaves in an open, honest, and inclusive manner, upholding personal andorganisational ethics and values. Shows respect for the needs of others and promotes equality and diversity.");
+        competencies.add("Behaves in an open, honest, and inclusive manner, upholding personal and organisational ethics and values. Shows respect for the needs of others and promotes equality and diversity.");
         competencies.add("Confident and independent in own personal impact and recognises an influence on others beyond immediate teams. Goals are aligned to strategic objectives and Kainos values. Champions self and others for equality, diversity, and inclusion.");
         Competency comp1 = new Competency("Associate",competencies);
 
