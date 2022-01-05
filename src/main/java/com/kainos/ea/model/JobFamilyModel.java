@@ -1,12 +1,18 @@
 package com.kainos.ea.model;
 
+import java.util.List;
+
 public class JobFamilyModel {
     public String jobCapability;
-    public String jobFamily;
+    public List<String> jobFamily;
 
-    public JobFamilyModel(String jobCapability, String jobFamily) {
+    public JobFamilyModel(String jobCapability, List<String> jobFamily) {
         this.jobCapability = jobCapability;
         this.jobFamily = jobFamily;
+    }
+
+    public JobFamilyModel(String jobCapability) {
+        this.jobCapability = jobCapability;
     }
 
     public String getJobCapability() {
@@ -17,11 +23,11 @@ public class JobFamilyModel {
         this.jobCapability = jobCapability;
     }
 
-    public String getJobFamily() {
+    public List<String> getJobFamily() {
         return jobFamily;
     }
 
-    public void setJobFamily(String jobFamily) {
+    public void setJobFamily(List<String> jobFamily) {
         this.jobFamily = jobFamily;
     }
 }

@@ -1,9 +1,7 @@
 package service;
 
-import com.kainos.ea.data.CapabilityDAO;
 import com.kainos.ea.data.JobFamiliesDAO;
 import com.kainos.ea.model.JobFamilyModel;
-import com.kainos.ea.model.JobFamilyRequestModel;
 import com.kainos.ea.service.JobFamiliesService;
 import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
@@ -23,30 +21,30 @@ class JobFamiliesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        List<String> capabilities = new ArrayList<>();
-        capabilities.add("Engineering");
-        capabilities.add("Cyber Security");
+        List<String> families1 = new ArrayList<>();
+        families1.add("Engineering");
+        families1.add("Testing");
 
-        CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
-        Mockito.when(capabilityDAO.getJobCapabilitiesFromDatabase(connection)).thenReturn(capabilities);
+        List<String> families2 = new ArrayList<>();
+        families2.add("Security");
 
         List<JobFamilyModel> jobFamilyModels = new ArrayList<>();
-        JobFamilyModel one = new JobFamilyModel("Engineering", "Testing");
-        JobFamilyModel two = new JobFamilyModel("Cyber Security", "Security");
+        JobFamilyModel one = new JobFamilyModel("Engineering", families1);
+        JobFamilyModel two = new JobFamilyModel("Cyber Security", families2);
         jobFamilyModels.add(one);
         jobFamilyModels.add(two);
 
         JobFamiliesDAO jobFamiliesDAO = Mockito.mock(JobFamiliesDAO.class);
         Mockito.when(jobFamiliesDAO.getFamilies(connection)).thenReturn(jobFamilyModels);
 
-        JobFamiliesService jobFamiliesService = new JobFamiliesService(jobFamiliesDAO, capabilityDAO, connector);
+        JobFamiliesService jobFamiliesService = new JobFamiliesService(jobFamiliesDAO, connector);
 
-        JobFamilyRequestModel returned = jobFamiliesService.getJobFamilies();
+        List<JobFamilyModel> returned = jobFamiliesService.getJobFamilies();
 
-        JobFamilyRequestModel expected = new JobFamilyRequestModel(capabilities, jobFamilyModels);
+        assertEquals(jobFamilyModels, returned);
 
-        assertEquals(expected.getJobFamilyModels(), returned.getJobFamilyModels());
-        assertEquals(expected.getCapabilities(), returned.getCapabilities());
+        Mockito.verify(connector).getConnection();
+        Mockito.verify(jobFamiliesDAO).getFamilies(connection);
 
     }
 }

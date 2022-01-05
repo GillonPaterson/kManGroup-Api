@@ -100,13 +100,14 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobFamilies(){
         try{
-            JobFamilyRequestModel jobFamilyRequestModel = jobFamiliesService.getJobFamilies();
-            return Response.ok(jobFamilyRequestModel).build();
+            List<JobFamilyModel> jobFamilyModels = jobFamiliesService.getJobFamilies();
+            return Response.ok(jobFamilyModels).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job family models: " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
+  
     @GET
     @Path("/getAllCapabilityLead")
     @Produces(MediaType.APPLICATION_JSON)

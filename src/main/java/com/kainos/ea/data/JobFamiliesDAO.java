@@ -18,8 +18,22 @@ public class JobFamiliesDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            JobFamilyModel jobFamilyModel = new JobFamilyModel(rs.getString("jobCapability"), rs.getString("jobFamilyName"));
-            jobFamilyModels.add(jobFamilyModel);
+            String capability = rs.getString("jobCapability");
+            String jobFamily = rs.getString("jobFamilyName");
+            boolean added = false;
+            for(int i = 0; i < jobFamilyModels.size(); i++){
+                if(jobFamilyModels.get(i).getJobCapability().equals(capability)){
+                    jobFamilyModels.get(i).getJobFamily().add(jobFamily);
+                    added = true;
+                }
+            }
+            if (!added) {
+                List<String> jobFamilies = new ArrayList<>();
+                jobFamilies.add(jobFamily);
+
+                JobFamilyModel jobFamilyModel = new JobFamilyModel(capability, jobFamilies );
+                jobFamilyModels.add(jobFamilyModel);
+            }
         }
 
         return jobFamilyModels;
