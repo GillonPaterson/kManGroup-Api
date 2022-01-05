@@ -53,7 +53,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobComp(@PathParam("jobRoleID") int jobRoleID){
         try{
-            List<Competency> competency = jobRolesService.getComp(jobRoleID);
+            Competency competency = jobRolesService.getComp(jobRoleID);
             return Response.ok(competency).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
