@@ -45,6 +45,14 @@ public class JobRolesService {
         return jobRolesDAO.getJobRolesFromDatabase(connection);
     }
 
+
+    public Integer addJobRole(AddJobRole addJobRoles) {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.addJobRole(connection, addJobRoles);
+    }
+
+
+
     public JobSpecModel getJobSpec(int jobRoleID) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
@@ -53,6 +61,16 @@ public class JobRolesService {
     public Competency getComp(int jobRoleID) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobCompFromDatabase(connection,jobRoleID);
+    }
+
+    public List<String> getJobBandLevels() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return bandLevelDAO.getBandLevelFromDatabase(connection);
+    }
+
+    public List<String> getJobCapabilities() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return capabilityDAO.getJobCapabilitiesFromDatabase(connection);
     }
 
     public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {

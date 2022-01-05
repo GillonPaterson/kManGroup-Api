@@ -28,4 +28,9 @@ public class JobFamiliesService {
 
         return jobFamilyModels;
     }
+
+    public List<String> getJobFamilyNames() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobFamiliesDAO.getJobFamiliesFromDatabase(connection);
+    }
 }

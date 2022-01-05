@@ -35,6 +35,58 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+
+    @POST
+    @Path("/addJobRole")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addJobRole(AddJobRole addJobRoles) {
+        JobRolesService jobRolesService = new JobRolesService();
+        jobRolesService.addJobRole(addJobRoles);
+        return Response.status(HttpStatus.CREATED_201).build();
+    }
+
+    @GET
+    @Path("/getJobBandLevels")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobBandLevels(){
+        try{
+            List<String> jobBandLevels = jobRolesService.getJobBandLevels();
+            return Response.ok(jobBandLevels).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job band levels" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+    @GET
+    @Path("/getJobFamilyNames")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobFamilyNames(){
+        try{
+            List<String> jobFamilyNames = jobFamiliesService.getJobFamilyNames();
+            return Response.ok(jobFamilyNames).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job capabilities" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+    @GET
+    @Path("/getJobCapabilities")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobCapabilities(){
+        try{
+            List<String> jobCapabilities = jobRolesService.getJobCapabilities();
+            return Response.ok(jobCapabilities).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job capabilities" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
     @GET
     @Path("/getJobSpec/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)

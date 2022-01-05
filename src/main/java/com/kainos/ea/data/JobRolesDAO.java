@@ -1,14 +1,8 @@
 package com.kainos.ea.data;
 
-import com.kainos.ea.model.Competency;
-import com.kainos.ea.model.JobRole;
-import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.RoleMatrixModel;
-import com.kainos.ea.model.JobTraining;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.kainos.ea.model.*;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +19,64 @@ public class JobRolesDAO {
             jobRoles.add(jobRole);
         }
         return jobRoles;
+    }
+
+
+    public Integer addJobRole(Connection connection, AddJobRole addJobRole){
+        int bandLevelID = 0;
+        int jobFamilyID = 0;
+
+        String query1 = "SELECT jobBandLevelID FROM bandLevels WHERE jobBandLevel = ?";
+        try {
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setString(1, addJobRole.getJobBandLevel());
+
+            ResultSet rs = statement1.executeQuery();
+            while (rs.next()){
+                bandLevelID = rs.getInt("jobBandLevelID");
+            }
+        }catch (Exception e1)
+        {
+            System.out.println(e1);
+        }
+
+        String query2 = "SELECT jobFamilyID FROM jobFamilies WHERE jobFamilyName = ?";
+        try {
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            statement2.setString(1, addJobRole.getJobFamily());
+
+            ResultSet rs = statement2.executeQuery();
+            while (rs.next()){
+                jobFamilyID = rs.getInt("jobFamilyID");
+            }
+        }catch (Exception e2)
+        {
+            System.out.println(e2);
+        }
+
+
+        String query3 = "Insert into jobRoles (jobRole, jobBandLevelID, jobSpec, jobLink, jobResponsibilities, jobFamilyID)" +"Values(?,?,?,?,?,?)";
+        try{
+            PreparedStatement statement3 = connection.prepareStatement(query3, Statement.RETURN_GENERATED_KEYS);
+            statement3.setString(1, addJobRole.getJobRole());
+            statement3.setInt(2, bandLevelID);
+            statement3.setString(3, addJobRole.getJobSpec());
+            statement3.setString(4, addJobRole.getJobLink());
+            statement3.setString(5, addJobRole.getJobResponsibilities());
+            statement3.setInt(6, jobFamilyID);
+
+            statement3.execute();
+            try(ResultSet generatedKeys = statement3.getGeneratedKeys()) {
+                if (!generatedKeys.next()) {
+                    throw new SQLException("create job role failed");
+                }
+                return generatedKeys.getInt(1);
+            }
+
+        } catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
     }
 
     public JobSpecModel getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
