@@ -207,4 +207,23 @@ class JobRolesServiceTest {
         assertEquals(expected.capability,returnedResponse.capability);
         assertEquals(expected.bandLevel,returnedResponse.bandLevel);
     }
+
+
+    @Test
+    public void addJobRoleTest(){
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        AddJobRole job = new AddJobRole();
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector);
+
+        Mockito.when(jobRolesDAO.addJobRole(connection, job)).thenReturn(20);
+
+        int result = jobServ.addJobRole(job);
+
+        Mockito.verify(jobRolesDAO).addJobRole(connection, job);
+        assertEquals(20,result);
+    }
 }
