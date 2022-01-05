@@ -45,7 +45,7 @@ public class JobRolesService {
         return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
     }
 
-    public List<Competency> getComp(int jobRoleID) throws SQLException {
+    public Competency getComp(int jobRoleID) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobCompFromDatabase(connection,jobRoleID);
     }

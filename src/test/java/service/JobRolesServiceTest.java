@@ -51,23 +51,21 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        Competency comp1 = new Competency("Associate", "Behaves in an open, honest, and inclusive manner, upholding personal andorganisational ethics and values. Shows respect for the needs of others and promotes equality and diversity.");
-        Competency comp2 = new Competency( "Associate", "Confident and independent in own personal impact and recognises an influence on others beyond immediate teams. Goals are aligned to strategic objectives and Kainos values. Champions self and others for equality, diversity, and inclusion.");
-
-        List<Competency> compList = new ArrayList<>();
-        compList.add(comp1);
-        compList.add(comp2);
+        List competencies = new ArrayList();
+        competencies.add("Behaves in an open, honest, and inclusive manner, upholding personal andorganisational ethics and values. Shows respect for the needs of others and promotes equality and diversity.");
+        competencies.add("Confident and independent in own personal impact and recognises an influence on others beyond immediate teams. Goals are aligned to strategic objectives and Kainos values. Champions self and others for equality, diversity, and inclusion.");
+        Competency comp1 = new Competency("Associate",competencies);
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobCompFromDatabase(connection,1)).thenReturn(compList);
+        Mockito.when(jobRolesDAO.getJobCompFromDatabase(connection,1)).thenReturn(comp1);
 
         JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        List<Competency> returnedList = jobRolesService.getComp(1);
+        Competency returnedList = jobRolesService.getComp(1);
 
         Mockito.verify(connector).getConnection();
         Mockito.verify(jobRolesDAO).getJobCompFromDatabase(connection,1);
 
-        assertEquals(compList, returnedList);
+        assertEquals(comp1, returnedList);
     }
 
     @Test

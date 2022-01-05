@@ -3,26 +3,28 @@ package com.kainos.ea.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class Competency {
     private String bandLevel;
-    private String competencyStage;
+    private List<String> competencyStage;
 
     public Competency(){
 
     }
 
     @JsonCreator
-    public Competency(@JsonProperty("bandLevel") String bandLevel,@JsonProperty("competencyStage") String competencyStage) {
+    public Competency(@JsonProperty("bandLevel") String bandLevel,@JsonProperty("competencyStage") List competencyStage) {
         this.bandLevel= bandLevel;
         this.competencyStage = competencyStage;
 
     }
 
-    public String getCompetencyStage() {
+    public List getCompetencyStage() {
         return competencyStage;
     }
 
-    public void setCompetencyStage(String competencyStage) {
+    public void setCompetencyStage(List competencyStage) {
         this.competencyStage = competencyStage;
     }
 
