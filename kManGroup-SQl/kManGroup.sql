@@ -9,6 +9,16 @@ jobBandLevel varchar(50) NOT NULL,
 importance int NOT NULL
 );
 
+create table users (
+username varchar(60) PRIMARY KEY,
+passwordHash varchar(128) NOT NULL,
+salt varchar(128) NOT NULL,
+isAdmin BOOLEAN NOT NULL
+);
+
+INSERT INTO users VALUES ("admin","2Iy7caZut0pNFtG2oUbZbQ==" ,"o2BesGj8elWLslkVfdT5n5MbDvD3AxNbAgwwFBaGUCYfs6S45mHhdT1/sOVa53qfrxR49coy0YzXAH99jl9XvA==",true);
+INSERT INTO users VALUES ("employee","cFHpC1WqVAMiVxIF3iCi/Q==" ,"WBFTDwP5p4R0bEyAmFy1hFPI5XQyjIz3+vLjkMtHOYVsyVhMgS3p50C1hUPxNHq6OKKx+771APpFHYgU4GEYGg==",false);
+
 create table training (
 trainingID int auto_increment PRIMARY KEY NOT NULL,
 trainingName varchar(100) NOT NULL,

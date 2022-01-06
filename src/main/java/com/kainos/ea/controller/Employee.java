@@ -4,12 +4,13 @@ import com.kainos.ea.model.*;
 import com.kainos.ea.service.CapabiltyService;
 import com.kainos.ea.service.JobFamiliesService;
 
-import com.kainos.ea.service.AdminLoginService;
 import com.kainos.ea.service.JobRolesService;
+import com.kainos.ea.service.LoginService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -143,11 +144,38 @@ public class Employee {
     }
 
     @POST
-    @Path("/checkDetails")
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response checkDetails(Details details) {
-        AdminLoginService loginService = new AdminLoginService();
-        return Response.status(HttpStatus.OK_200).entity(loginService.checkDetails(details)).build();
+    public Response login(UserRequestModel loginInfo) {
+        LoginService loginService = new LoginService();
+        try {
+            String jwt = loginService.checkDetails(loginInfo);
+            return Response
+                    .status(HttpStatus.OK_200)
+                    .header(HttpHeaders.AUTHORIZATION,"Bearer " + jwt)
+                    .build();
+        }catch (SQLException sqlException){
+            System.out.println("SQL Exception during login: " + sqlException.getMessage());
+        }catch (Exception ex){
+            System.out.println("Exception while hashing: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @POST
+    @Path("/createUser")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createUser(UserRequestModel userInfo) {
+        LoginService loginService = new LoginService();
+        try {
+            loginService.registerUser(userInfo);
+            return Response.status(HttpStatus.OK_200).build();
+        }catch (SQLException sqlException){
+            System.out.println("SQL Exception during login: " + sqlException.getMessage());
+        }catch (Exception ex){
+            System.out.println("Exception while hashing: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
     @GET
