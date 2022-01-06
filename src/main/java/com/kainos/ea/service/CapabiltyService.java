@@ -3,6 +3,7 @@ package com.kainos.ea.service;
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
 import com.kainos.ea.data.JobRolesDAO;
+import com.kainos.ea.model.Capabilities;
 import com.kainos.ea.model.CapabilityLead;
 import com.kainos.ea.model.CapabilityRequest;
 import com.kainos.ea.util.DatabaseConnector;
@@ -66,5 +67,22 @@ public class CapabiltyService {
         }else{
             return capabilityDAO.addCapabilityToDatabase(connection, capabilityRequest);
         }
+    }
+
+    public Integer updateCapability(Capabilities capabilities) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        String var = capabilityValidator.UpdateCapabilityValidator(capabilities);
+        if (var != null){
+            System.out.println(var);
+            return 0;
+        }else{
+            return capabilityDAO.updateCapability(connection, capabilities);
+        }
+    }
+
+
+    public List<Capabilities> getAllCapabilites() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return capabilityDAO.getAllCapabilitiesFromDataBase(connection);
     }
 }

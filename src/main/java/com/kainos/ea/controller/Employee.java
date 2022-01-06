@@ -228,8 +228,37 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCapability(CapabilityRequest capabilityRequest) {
         try {
-            System.out.println(capabilityRequest.getCapabilityName());
             capabiltyService.createCapability(capabilityRequest);
+            return Response.status(HttpStatus.CREATED_201).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+
+    }
+
+
+    @GET
+    @Path("/getAllCapabilities")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCapabilities(){
+        try{
+            List<Capabilities> capabilities = capabiltyService.getAllCapabilites();
+            return Response.ok(capabilities).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @POST
+    @Path("/updateCapability")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCapability(Capabilities capabilities) {
+        try {
+            System.out.println(capabilities);
+            capabiltyService.updateCapability(capabilities);
             return Response.status(HttpStatus.CREATED_201).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXECEPTION "+ ex.getMessage());
