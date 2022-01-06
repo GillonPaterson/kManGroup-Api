@@ -79,17 +79,11 @@ public class JobRolesService {
     }
 
 
-    public List<CapabilityLead> getAllCapabilityLeads() throws SQLException {
-        Connection connection = databaseConnector.getConnection();
-        return capabilityDAO.getAllCapabilityleadsFromDataBase(connection);
-    }
 
 
 
-    public CapabilityLead getCapabilitylead(int leadID) throws SQLException {
-        Connection connection = databaseConnector.getConnection();
-        return capabilityDAO.getCapabilityleadFromDataBase(connection, leadID);
-    }
+
+
 
     public RoleMatrixResponseModel getRoleMatrix() throws SQLException{
         Connection connection = databaseConnector.getConnection();

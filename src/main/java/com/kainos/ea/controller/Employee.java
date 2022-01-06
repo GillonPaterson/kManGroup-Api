@@ -1,6 +1,7 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.model.*;
+import com.kainos.ea.service.CapabiltyService;
 import com.kainos.ea.service.JobFamiliesService;
 
 import com.kainos.ea.service.AdminLoginService;
@@ -21,6 +22,8 @@ public class Employee {
 
     public JobRolesService jobRolesService = new JobRolesService();
     public JobFamiliesService jobFamiliesService = new JobFamiliesService();
+    public CapabiltyService capabiltyService = new CapabiltyService();
+
 
     @GET
     @Path("/getJobRoles")
@@ -165,7 +168,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCapabilityLead(){
         try{
-            List<CapabilityLead> capabilityLead = jobRolesService.getAllCapabilityLeads();
+            List<CapabilityLead> capabilityLead = capabiltyService.getAllCapabilityLeads();
             return Response.ok(capabilityLead).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
@@ -179,12 +182,28 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCapabilityLead(@PathParam("leadID")int leadID){
         try{
-            CapabilityLead capabilityLead = jobRolesService.getCapabilitylead(leadID);
+            CapabilityLead capabilityLead = capabiltyService.getCapabilitylead(leadID);
             return Response.ok(capabilityLead).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @POST
+    @Path("/createCapability")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createCapability(CapabilityRequest capabilityRequest) {
+        try {
+            System.out.println(capabilityRequest.getCapabilityName());
+            capabiltyService.createCapability(capabilityRequest);
+            return Response.status(HttpStatus.CREATED_201).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+
     }
 
 }
