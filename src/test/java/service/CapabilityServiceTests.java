@@ -5,6 +5,7 @@ import com.kainos.ea.model.CapabilityLead;
 import com.kainos.ea.model.CapabilityRequest;
 import com.kainos.ea.service.CapabiltyService;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.CapabilityValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -68,15 +69,71 @@ public class CapabilityServiceTests {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
+        CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
 
         CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
-        CapabilityRequest capReq = new CapabilityRequest("test");
-        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector);
+        CapabilityRequest capReq = new CapabilityRequest("Engineering");
+        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector,capabilityValidator);
 
+        Mockito.when(capabilityValidator.addCapabilityValidator(capReq)).thenReturn(null);
         Mockito.when(capabilityDAO.addCapabilityToDatabase(connection, capReq)).thenReturn(20);
         int result = capServ.createCapability(capReq);
 
         Mockito.verify(capabilityDAO).addCapabilityToDatabase(connection, capReq);
         assertEquals(20,result);
+    }
+
+    @Test
+    public void TestServiceAddCapabiltyValidatorRetrunsErrorForNumbersInName() throws SQLException{
+
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+
+        CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
+        CapabilityRequest capReq = new CapabilityRequest("12345");
+        CapabiltyService capServ = new CapabiltyService(capabilityValidator);
+
+        Mockito.when(capabilityValidator.addCapabilityValidator(capReq)).thenReturn("capability name cannot contain numbers");
+        int result = capServ.createCapability(capReq);
+
+        Mockito.verify(capabilityValidator).addCapabilityValidator(capReq);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddCapabiltyValidatorRetrunsErrorForTooManyCharacters() throws SQLException{
+
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+
+        CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
+        CapabilityRequest capReq = new CapabilityRequest("fdnvjkfvbndfjkbngdfbvnvlkadsnfvlsdkvnsdvklsvndlsvsdklvnlskvnsdkvnsdnvklsvnksdnvkldsnvsdkvnsdlnvsd");
+        CapabiltyService capServ = new CapabiltyService(capabilityValidator);
+
+        Mockito.when(capabilityValidator.addCapabilityValidator(capReq)).thenReturn("capability name cannot be anymore than 20 characters");
+        int result = capServ.createCapability(capReq);
+
+        Mockito.verify(capabilityValidator).addCapabilityValidator(capReq);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddCapabiltyValidatorRetrunsErrorForSpaces() throws SQLException{
+
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+
+        CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
+        CapabilityRequest capReq = new CapabilityRequest(" letters");
+        CapabiltyService capServ = new CapabiltyService(capabilityValidator);
+
+        Mockito.when(capabilityValidator.addCapabilityValidator(capReq)).thenReturn("capability name cannot contain empty spaces");
+        int result = capServ.createCapability(capReq);
+
+        Mockito.verify(capabilityValidator).addCapabilityValidator(capReq);
+        System.out.println(result);
+        assertEquals(0,result);
     }
 }

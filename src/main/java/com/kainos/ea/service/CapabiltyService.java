@@ -6,6 +6,8 @@ import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.CapabilityLead;
 import com.kainos.ea.model.CapabilityRequest;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.CapabilityValidator;
+import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,8 +18,14 @@ public class CapabiltyService {
     BandLevelDAO bandLevelDAO = new BandLevelDAO();
     CapabilityDAO capabilityDAO = new CapabilityDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
+    CapabilityValidator capabilityValidator = new CapabilityValidator();
 
     public CapabiltyService(){
+
+    }
+
+    public CapabiltyService(CapabilityValidator capabilityValidator){
+        this.capabilityValidator = capabilityValidator;
 
     }
 
@@ -31,11 +39,11 @@ public class CapabiltyService {
         this.capabilityDAO = capabilityDAO;
     }
 
-    public CapabiltyService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
-        this.jobRolesDAO = jobRolesDAO;
+    public CapabiltyService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector,CapabilityValidator capabilityValidator){
         this.databaseConnector = databaseConnector;
-        this.bandLevelDAO = bandLevelDAO;
         this.capabilityDAO = capabilityDAO;
+        this.capabilityValidator = capabilityValidator;
+
     }
 
     public List<CapabilityLead> getAllCapabilityLeads() throws SQLException {
@@ -51,6 +59,12 @@ public class CapabiltyService {
 
     public Integer createCapability(CapabilityRequest capabilityRequest) throws SQLException {
         Connection connection = databaseConnector.getConnection();
-        return capabilityDAO.addCapabilityToDatabase(connection, capabilityRequest);
+        String var = capabilityValidator.addCapabilityValidator(capabilityRequest);
+        if (var != null){
+            System.out.println(var);
+            return 0;
+        }else{
+            return capabilityDAO.addCapabilityToDatabase(connection, capabilityRequest);
+        }
     }
 }
