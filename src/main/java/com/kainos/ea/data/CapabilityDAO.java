@@ -1,5 +1,6 @@
 package com.kainos.ea.data;
 
+import com.kainos.ea.model.Capabilities;
 import com.kainos.ea.model.CapabilityLead;
 import com.kainos.ea.model.CapabilityRequest;
 import com.kainos.ea.model.Competency;
@@ -82,4 +83,40 @@ public class CapabilityDAO {
         }
     }
 
+
+    public List<Capabilities> getAllCapabilitiesFromDataBase(Connection connection) throws SQLException{
+        String query = "Select jobCapabilityID, jobCapability from capabilities";
+        List<Capabilities> capList = new ArrayList<>();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            Capabilities cap = new Capabilities(rs.getInt("jobCapabilityID"),rs.getString("jobCapability"));
+            capList.add(cap);
+        }
+
+        if(capList.isEmpty()){
+            throw new SQLException();
+        }else{
+            return capList;
+        }
+    }
+
+
+    public Integer updateCapability(Connection connection, Capabilities capabilities) throws SQLException {
+        String query = "Update capabilities Set jobCapability = ? Where jobCapabilityID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, capabilities.getCapabilityName());
+            preparedStatement.setInt(2, capabilities.getCapabilityID());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new SQLException("update user failed");
+
+        }
+
+        return null;
+    }
 }
