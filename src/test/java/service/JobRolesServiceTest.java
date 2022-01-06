@@ -6,6 +6,7 @@ import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.*;
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.JobRoleValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -168,9 +169,11 @@ class JobRolesServiceTest {
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRolesValidator = Mockito.mock(JobRoleValidator.class);
         AddJobRole job = new AddJobRole();
-        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector);
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRolesValidator);
 
+        Mockito.when(jobRolesValidator.addJobRoleValidator(job)).thenReturn(null);
         Mockito.when(jobRolesDAO.addJobRole(connection, job)).thenReturn(20);
 
         int result = jobServ.addJobRole(job);

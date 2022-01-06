@@ -5,6 +5,7 @@ import com.kainos.ea.data.CapabilityDAO;
 import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.*;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.JobRoleValidator;
 import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
@@ -18,6 +19,7 @@ public class JobRolesService {
     BandLevelDAO bandLevelDAO = new BandLevelDAO();
     CapabilityDAO capabilityDAO = new CapabilityDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
+    JobRoleValidator jobRoleValidator = new JobRoleValidator();
 
     public JobRolesService(){
 
@@ -31,6 +33,12 @@ public class JobRolesService {
     public JobRolesService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
         this.databaseConnector = databaseConnector;
         this.capabilityDAO = capabilityDAO;
+    }
+
+    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector, JobRoleValidator jobRoleValidator){
+        this.databaseConnector = databaseConnector;
+        this.jobRolesDAO = jobRolesDAO;
+        this.jobRoleValidator = jobRoleValidator;
     }
 
     public JobRolesService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
@@ -48,7 +56,14 @@ public class JobRolesService {
 
     public Integer addJobRole(AddJobRole addJobRoles) {
         Connection connection = databaseConnector.getConnection();
-        return jobRolesDAO.addJobRole(connection, addJobRoles);
+        String var = jobRoleValidator.addJobRoleValidator(addJobRoles);
+
+        if (var != null){
+            System.out.println(var);
+            return 0;
+        }else{
+            return jobRolesDAO.addJobRole(connection, addJobRoles);
+        }
     }
 
 
