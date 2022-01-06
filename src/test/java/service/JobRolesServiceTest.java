@@ -6,6 +6,7 @@ import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.*;
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.CapabilityValidator;
 import com.kainos.ea.validator.JobRoleValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -180,5 +181,125 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRolesDAO).addJobRole(connection, job);
         assertEquals(20,result);
+    }
+
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForNumbersInName() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("12345", "test", "test", "https://test", "test", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The role name cannot contain numbers");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForTooManyCharacters() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", "test", "test", "https://test", "test", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The role name cannot be anymore than 40 characters");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForSpaces() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole(" test", "test", "test", "https://test", "test", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The role name cannot contain empty spaces at the start and end");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForSpecNotBeingEntered() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "", "https://test", "test", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The job specification must be entered");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForRespNotBeingEntered() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "test", "https://test", "", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The job responsibilities must be entered");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "test", "test", "", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The link must start with 'https://'");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForLinkNotBeingLongerThan8() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "test", "https://", "", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("A link must be entered");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
     }
 }
