@@ -35,6 +35,12 @@ public class JobRolesService {
         this.capabilityDAO = capabilityDAO;
     }
 
+    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector, JobRoleValidator jobRoleValidator){
+        this.databaseConnector = databaseConnector;
+        this.jobRolesDAO = jobRolesDAO;
+        this.jobRoleValidator = jobRoleValidator;
+    }
+
     public JobRolesService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
         this.jobRolesDAO = jobRolesDAO;
         this.databaseConnector = databaseConnector;
