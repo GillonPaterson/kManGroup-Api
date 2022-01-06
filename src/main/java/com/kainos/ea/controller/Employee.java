@@ -46,8 +46,12 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addJobRole(AddJobRole addJobRoles) {
         JobRolesService jobRolesService = new JobRolesService();
-        jobRolesService.addJobRole(addJobRoles);
-        return Response.status(HttpStatus.CREATED_201).build();
+        int x = jobRolesService.addJobRole(addJobRoles);
+
+        if(x != 0)
+            return Response.status(HttpStatus.CREATED_201).build();
+        else
+            return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
     @GET
