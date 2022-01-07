@@ -20,8 +20,8 @@ public class CapabilityValidator {
             }
 
         }
-        if (capName.contains(" ") == true) {
-            return "capability name cannot contain empty spaces";
+        if (capName.matches("/^\\s|\\s$/")) {
+            return "capability name cannot contain empty spaces at start or end of name";
         }
         return null;
 
@@ -42,8 +42,8 @@ public class CapabilityValidator {
             }
 
         }
-        if (capName.contains(" ") == true) {
-            return "capability name cannot contain empty spaces";
+        if (capName.matches("/^\\s|\\s$/")) {
+            return "capability name cannot contain empty spaces at start or end of name";
         }
         return null;
 
