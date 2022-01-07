@@ -228,7 +228,10 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCapability(CapabilityRequest capabilityRequest) {
         try {
-            capabiltyService.createCapability(capabilityRequest);
+            int var = capabiltyService.createCapability(capabilityRequest);
+            if (var == 0) {
+                return Response.status(HttpStatus.BAD_REQUEST_400).build();
+            }
             return Response.status(HttpStatus.CREATED_201).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXECEPTION "+ ex.getMessage());
@@ -258,7 +261,10 @@ public class Employee {
     public Response updateCapability(Capabilities capabilities) {
         try {
             System.out.println(capabilities);
-            capabiltyService.updateCapability(capabilities);
+            int var = capabiltyService.updateCapability(capabilities);
+            if (var == 0) {
+                return Response.status(HttpStatus.BAD_REQUEST_400).build();
+            }
             return Response.status(HttpStatus.CREATED_201).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXECEPTION "+ ex.getMessage());
