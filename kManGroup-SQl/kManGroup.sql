@@ -157,11 +157,13 @@ insert into competencies(jobBandLevelID,competencyDataID) Values(4,5);
 insert into competencies(jobBandLevelID,competencyDataID) Values(3,5);
 insert into competencies(jobBandLevelID,competencyDataID) Values(2,5);
 insert into competencies(jobBandLevelID,competencyDataID) Values(3,15);
-
+insert into competencies(jobBandLevelID,competencyDataID) Values(7,15);
+insert into competencies(jobBandLevelID,competencyDataID) Values(8,20);
 
 
 
 insert into capabilityLead(leadID,leadFname,leadSname,leadPhoto,leadMessage,jobCapabilityID) value(1,"Dave","Boats","https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg","wow code is great",1);
+insert into capabilityLead(leadID,leadFname,leadSname,leadPhoto,leadMessage,jobCapabilityID) value(2,"Lee","Brown","https://cdn.vox-cdn.com/thumbor/BxA3f-dxx4UmGxOCNE_7P4V7fAs=/0x0:5157x3438/1200x800/filters:focal(880x1246:1704x2070)/cdn.vox-cdn.com/uploads/chorus_image/image/69106641/1201476988.0.jpg","i love Kainos",2);
 
 
 insert into training(trainingName, trainingLink, trainingGroup) values('Mindset', 'https://kainossoftwareltd.sharepoint.com/L%26D/SitePages/Mindset.aspx', 'Development programmes'); -- All staff
