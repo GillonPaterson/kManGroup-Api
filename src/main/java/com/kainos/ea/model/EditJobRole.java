@@ -8,19 +8,19 @@ public class EditJobRole {
     private int jobRoleID;
     private String jobRole;
     private String jobSpec;
-    private int jobBandLevelID;
-    private int jobFamilyID;
+    private String jobBandLevel;
+    private String jobFamily;
     private String jobLink;
     private String jobResponsibilities;
 
 
     @JsonCreator
-    public EditJobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobSpec") String jobSpec, @JsonProperty("jobBandLevelID") int jobBandLevelID, @JsonProperty("jobFamilyID") int jobFamilyID, @JsonProperty("jobLink") String jobLink, @JsonProperty("jobResponsibilities") String jobResponsibilities) {
+    public EditJobRole(@JsonProperty("jobRoleID") int jobRoleID, @JsonProperty("jobRole") String jobRole, @JsonProperty("jobSpec") String jobSpec, @JsonProperty("jobBandLevel") String jobBandLevel, @JsonProperty("jobFamily") String jobFamily, @JsonProperty("jobLink") String jobLink, @JsonProperty("jobResponsibilities") String jobResponsibilities) {
         this.setJobRoleID(jobRoleID);
         this.setJobRole(jobRole);
         this.setJobSpec(jobSpec);
-        this.setJobBandLevelID(jobBandLevelID);
-        this.setJobFamilyID(jobFamilyID);
+        this.setJobBandLevel(jobBandLevel);
+        this.setJobFamily(jobFamily);
         this.setJobLink(jobLink);
         this.setJobResponsibilities(jobResponsibilities);
     }
@@ -49,20 +49,20 @@ public class EditJobRole {
         this.jobSpec = jobSpec;
     }
 
-    public int getJobBandLevelID() {
-        return jobBandLevelID;
+    public String getJobBandLevel() {
+        return jobBandLevel;
     }
 
-    public void setJobBandLevelID(int jobBandLevelID) {
-        this.jobBandLevelID = jobBandLevelID;
+    public void setJobBandLevel(String jobBandLevel) {
+        this.jobBandLevel = jobBandLevel;
     }
 
-    public int getJobFamilyID() {
-        return jobFamilyID;
+    public String getJobFamily() {
+        return jobFamily;
     }
 
-    public void setJobFamilyID(int jobFamilyID) {
-        this.jobFamilyID = jobFamilyID;
+    public void setJobFamily(String jobFamily) {
+        this.jobFamily = jobFamily;
     }
 
     public String getJobLink() {

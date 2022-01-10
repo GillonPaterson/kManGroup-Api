@@ -68,6 +68,23 @@ public class Employee {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+
+    @POST
+    @Path("/editJobRole/{jobRoleID}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editJobRole(@PathParam("jobRoleID") int jobRoleID, AddJobRole editJobRole) {
+        JobRolesService jobRolesService = new JobRolesService();
+        int x = jobRolesService.editJobRole(editJobRole, jobRoleID);
+
+        if(x == 1)
+            return Response.status(HttpStatus.CREATED_201).build();
+        else
+            return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+
     @GET
     @Path("/getJobBandLevels")
     @Produces(MediaType.APPLICATION_JSON)

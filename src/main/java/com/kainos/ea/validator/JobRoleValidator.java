@@ -1,14 +1,24 @@
 package com.kainos.ea.validator;
 
 import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
 
 public class JobRoleValidator {
 
     public String addJobRoleValidator(AddJobRole addJobRole){
-        String roleName = addJobRole.getJobRole();
-        String roleSpec = addJobRole.getJobSpec();
-        String roleResp = addJobRole.getJobResponsibilities();
-        String jobLink = addJobRole.getJobLink();
+         return validationMethod(addJobRole);
+    }
+
+    public String validationMethod(AddJobRole addJobRole){
+        String roleName;
+        String roleSpec;
+        String roleResp;
+        String jobLink;
+
+            roleName = addJobRole.getJobRole();
+            roleSpec = addJobRole.getJobSpec();
+            roleResp = addJobRole.getJobResponsibilities();
+            jobLink = addJobRole.getJobLink();
 
         if(roleName == "")
             return "The role name must be entered";

@@ -24,15 +24,15 @@ public class JobRolesDAO {
 
     public EditJobRole getJobRoleFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
-        EditJobRole jobRole = new EditJobRole(0, "", "", 0, 0, "", "");
-        String query = "SELECT jobRoleID, jobRole, jobSpec, jobBandLevelID, jobFamilyID, jobLink, jobResponsibilities FROM jobRoles WHERE jobRoles.jobRoleID = ?";
+        EditJobRole jobRole = new EditJobRole(0, "", "", "", "", "", "");
+        String query = "SELECT jobRoleID, jobRole, jobSpec, jobBandLevel, jobFamilyName, jobLink, jobResponsibilities FROM jobRoles INNER JOIN bandLevels using(jobBandLevelID) INNER JOIN jobFamilies using(jobFamilyID) WHERE jobRoles.jobRoleID = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, jobRoleID);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
-            jobRole = new EditJobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobSpec"), rs.getInt("jobBandLevelID"), rs.getInt("jobFamilyID"), rs.getString("jobLink"), rs.getString("jobResponsibilities"));
+            jobRole = new EditJobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobSpec"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"), rs.getString("jobLink"), rs.getString("jobResponsibilities"));
             return jobRole;
         }
         return jobRole;
@@ -96,6 +96,62 @@ public class JobRolesDAO {
             return null;
         }
     }
+
+
+    public Integer editJobRole(Connection connection, AddJobRole editJobRole, int jobRoleID){
+        int bandLevelID = 0;
+        int jobFamilyID = 0;
+
+        String query1 = "SELECT jobBandLevelID FROM bandLevels WHERE jobBandLevel = ?";
+        try {
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setString(1, editJobRole.getJobBandLevel());
+
+            ResultSet rs = statement1.executeQuery();
+            while (rs.next()){
+                bandLevelID = rs.getInt("jobBandLevelID");
+            }
+        }catch (Exception e1)
+        {
+            System.out.println(e1);
+        }
+
+        String query2 = "SELECT jobFamilyID FROM jobFamilies WHERE jobFamilyName = ?";
+        try {
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            statement2.setString(1, editJobRole.getJobFamily());
+
+            ResultSet rs = statement2.executeQuery();
+            while (rs.next()){
+                jobFamilyID = rs.getInt("jobFamilyID");
+            }
+        }catch (Exception e2)
+        {
+            System.out.println(e2);
+        }
+
+
+        String query3 = "Update jobRoles set jobRole = ?, jobBandLevelID = ?, jobSpec = ?, jobLink = ?, jobResponsibilities = ?, jobFamilyID = ? where jobRoleID = ?";
+        try{
+            PreparedStatement statement3 = connection.prepareStatement(query3, Statement.RETURN_GENERATED_KEYS);
+            statement3.setString(1, editJobRole.getJobRole());
+            statement3.setInt(2, bandLevelID);
+            statement3.setString(3, editJobRole.getJobSpec());
+            statement3.setString(4, editJobRole.getJobLink());
+            statement3.setString(5, editJobRole.getJobResponsibilities());
+            statement3.setInt(6, jobFamilyID);
+            statement3.setInt(7, jobRoleID);
+
+            statement3.executeUpdate();
+            return 1;
+
+        } catch (Exception e) {
+            System.out.println("Failed to update the job role. " + e);
+            return -1;
+        }
+    }
+
+
 
     public JobSpecModel getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
