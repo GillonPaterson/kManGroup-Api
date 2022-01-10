@@ -3,15 +3,25 @@ package com.kainos.ea.controller;
 import com.kainos.ea.model.*;
 import com.kainos.ea.service.*;
 
-import io.swagger.annotations.Api;
+import com.kainos.ea.service.JobRolesService;
+import com.kainos.ea.service.LoginService;
+import io.swagger.annotations.*;
 import org.eclipse.jetty.http.HttpStatus;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
+@SwaggerDefinition(securityDefinition = @SecurityDefinition(
+        apiKeyAuthDefinitions = {
+                @ApiKeyAuthDefinition(key = "custom",
+                        name = "authorization",
+                        in = ApiKeyAuthDefinition.ApiKeyLocation.HEADER,
+                        description = "Bearer Authentication")}))
 
 @Api
 @Path("api")
@@ -24,7 +34,11 @@ public class Employee {
     public CompetencyService competencyService = new CompetencyService();
     public BandLevelService bandLevelService = new BandLevelService();
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobRoles")
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +52,11 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobRole/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -54,6 +72,12 @@ public class Employee {
 
 
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @RolesAllowed("Admin")
     @POST
     @Path("/addJobRole")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -69,6 +93,12 @@ public class Employee {
     }
 
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @POST
     @Path("/editJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -85,6 +115,12 @@ public class Employee {
 
 
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobBandLevels")
     @Produces(MediaType.APPLICATION_JSON)
@@ -98,7 +134,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobFamilyNames")
     @Produces(MediaType.APPLICATION_JSON)
@@ -112,7 +153,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobCapabilities")
     @Produces(MediaType.APPLICATION_JSON)
@@ -126,6 +172,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobSpec/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -139,6 +191,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobCompetency/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -152,6 +210,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getRoleMatrix")
     @Produces(MediaType.APPLICATION_JSON)
@@ -165,6 +229,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobTraining/{bandLevel}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -197,6 +267,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @RolesAllowed("Admin")
     @POST
     @Path("/createUser")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -213,6 +289,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getJobFamilies")
     @Produces(MediaType.APPLICATION_JSON)
@@ -225,11 +307,18 @@ public class Employee {
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
-  
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getAllCapabilityLead")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCapabilityLead(){
+        System.out.println("Authenticated");
         try{
             List<CapabilityLead> capabilityLead = capabiltyService.getAllCapabilityLeads();
             return Response.ok(capabilityLead).build();
@@ -239,7 +328,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getCapabilityLead/{leadID}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -253,6 +347,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @RolesAllowed("Admin")
     @POST
     @Path("/createCapability")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -271,7 +371,12 @@ public class Employee {
 
     }
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
     @GET
     @Path("/getAllCapabilities")
     @Produces(MediaType.APPLICATION_JSON)
@@ -285,6 +390,12 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @RolesAllowed("Admin")
     @POST
     @Path("/updateCapability")
     @Consumes(MediaType.APPLICATION_JSON)
