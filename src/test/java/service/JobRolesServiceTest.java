@@ -2,8 +2,10 @@ package service;
 
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
+import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.*;
+import com.kainos.ea.service.CompetencyService;
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.util.DatabaseConnector;
 import com.kainos.ea.validator.CapabilityValidator;
@@ -48,28 +50,6 @@ class JobRolesServiceTest {
         assertEquals(jobRoles, returnedList);
     }
 
-    @Test
-    void testServiceGetCompetency() throws SQLException {
-        Connection connection = Mockito.mock(Connection.class);
-        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
-        Mockito.when(connector.getConnection()).thenReturn(connection);
-
-        List competencies = new ArrayList();
-        competencies.add("Behaves in an open, honest, and inclusive manner, upholding personal and organisational ethics and values. Shows respect for the needs of others and promotes equality and diversity.");
-        competencies.add("Confident and independent in own personal impact and recognises an influence on others beyond immediate teams. Goals are aligned to strategic objectives and Kainos values. Champions self and others for equality, diversity, and inclusion.");
-        Competency comp1 = new Competency("Associate",competencies);
-
-        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobCompFromDatabase(connection,1)).thenReturn(comp1);
-
-        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        Competency returnedList = jobRolesService.getComp(1);
-
-        Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobCompFromDatabase(connection,1);
-
-        assertEquals(comp1, returnedList);
-    }
 
     @Test
     void testServiceGetSpecCallsDAO() throws SQLException {
