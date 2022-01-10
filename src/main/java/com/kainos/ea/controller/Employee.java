@@ -40,6 +40,21 @@ public class Employee {
     }
 
 
+    @GET
+    @Path("/getJobRole/{jobRoleID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobRole(@PathParam("jobRoleID") int jobRoleID){
+        try{
+            EditJobRole jobRole= jobRolesService.getJobRole(jobRoleID);
+            return Response.ok(jobRole).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting the job role " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+
     @POST
     @Path("/addJobRole")
     @Consumes(MediaType.APPLICATION_JSON)
