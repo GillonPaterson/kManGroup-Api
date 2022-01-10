@@ -69,6 +69,18 @@ public class JobRolesService {
         }
     }
 
+    public Integer editJobRole(AddJobRole editJobRoles, int jobRoleID) {
+        Connection connection = databaseConnector.getConnection();
+        String var = jobRoleValidator.addJobRoleValidator(editJobRoles);
+
+        if (var != null){
+            System.out.println(var);
+            return 0;
+        }else{
+            return jobRolesDAO.editJobRole(connection, editJobRoles, jobRoleID);
+        }
+    }
+
 
 
     public JobSpecModel getJobSpec(int jobRoleID) throws SQLException {
