@@ -1,11 +1,8 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.model.*;
-import com.kainos.ea.service.CapabiltyService;
-import com.kainos.ea.service.JobFamiliesService;
+import com.kainos.ea.service.*;
 
-import com.kainos.ea.service.JobRolesService;
-import com.kainos.ea.service.LoginService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -24,6 +21,8 @@ public class Employee {
     public JobRolesService jobRolesService = new JobRolesService();
     public JobFamiliesService jobFamiliesService = new JobFamiliesService();
     public CapabiltyService capabiltyService = new CapabiltyService();
+    public CompetencyService competencyService = new CompetencyService();
+    public BandLevelService bandLevelService = new BandLevelService();
 
 
     @GET
@@ -59,7 +58,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobBandLevels(){
         try{
-            List<String> jobBandLevels = jobRolesService.getJobBandLevels();
+            List<String> jobBandLevels = bandLevelService.getJobBandLevels();
             return Response.ok(jobBandLevels).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job band levels" + ex.getMessage());
@@ -87,7 +86,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobCapabilities(){
         try{
-            List<String> jobCapabilities = jobRolesService.getJobCapabilities();
+            List<String> jobCapabilities = capabiltyService.getJobCapabilities();
             return Response.ok(jobCapabilities).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job capabilities" + ex.getMessage());
@@ -113,7 +112,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobComp(@PathParam("jobRoleID") int jobRoleID){
         try{
-            Competency competency = jobRolesService.getComp(jobRoleID);
+            Competency competency = competencyService.getComp(jobRoleID);
             return Response.ok(competency).build();
         }catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());

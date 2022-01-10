@@ -8,3 +8,5 @@ prop2: value2
 
 swagger:
   resourcePackage: <com.kainos.ea.resources>
+
+
