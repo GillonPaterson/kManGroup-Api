@@ -50,6 +50,13 @@ public class JobRolesService {
     }
 
 
+    public EditJobRole getJobRole(int jobRoleID) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobRoleFromDatabase(connection, jobRoleID);
+    }
+
+
+
     public Integer addJobRole(AddJobRole addJobRoles) {
         Connection connection = databaseConnector.getConnection();
         String var = jobRoleValidator.addJobRoleValidator(addJobRoles);
