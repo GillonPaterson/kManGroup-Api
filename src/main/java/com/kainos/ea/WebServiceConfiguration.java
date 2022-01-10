@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.Base64;
 
 public class WebServiceConfiguration extends Configuration {
     // TODO: implement service configuration

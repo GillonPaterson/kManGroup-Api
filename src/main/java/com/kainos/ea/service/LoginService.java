@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit;
 public class LoginService {
 
     private final LoginDAO loginDAO;
-    private DatabaseConnector connector;
-    private Hasher hasher;
-    private Token token;
+    private final DatabaseConnector connector;
+    private final Hasher hasher;
+    private final Token token;
 
     public LoginService() {
         loginDAO = new LoginDAO();
