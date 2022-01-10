@@ -2,6 +2,7 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
+import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.*;
 import com.kainos.ea.util.DatabaseConnector;
@@ -30,11 +31,6 @@ public class JobRolesService {
         this.databaseConnector = databaseConnector;
     }
 
-    public JobRolesService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
-        this.databaseConnector = databaseConnector;
-        this.capabilityDAO = capabilityDAO;
-    }
-
     public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector, JobRoleValidator jobRoleValidator){
         this.databaseConnector = databaseConnector;
         this.jobRolesDAO = jobRolesDAO;
@@ -52,6 +48,13 @@ public class JobRolesService {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobRolesFromDatabase(connection);
     }
+
+
+    public EditJobRole getJobRole(int jobRoleID) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobRoleFromDatabase(connection, jobRoleID);
+    }
+
 
 
     public Integer addJobRole(AddJobRole addJobRoles) {
@@ -73,32 +76,14 @@ public class JobRolesService {
         return jobRolesDAO.getJobSpecFromDatabase(connection, jobRoleID);
     }
 
-    public Competency getComp(int jobRoleID) throws SQLException {
-        Connection connection = databaseConnector.getConnection();
-        return jobRolesDAO.getJobCompFromDatabase(connection,jobRoleID);
-    }
 
-    public List<String> getJobBandLevels() throws SQLException {
-        Connection connection = databaseConnector.getConnection();
-        return bandLevelDAO.getBandLevelFromDatabase(connection);
-    }
 
-    public List<String> getJobCapabilities() throws SQLException {
-        Connection connection = databaseConnector.getConnection();
-        return capabilityDAO.getJobCapabilitiesFromDatabase(connection);
-    }
+
 
     public List<JobTraining> getJobTraining(String bandLevel) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobTrainingFromDatabase(connection, bandLevel);
     }
-
-
-
-
-
-
-
 
     public RoleMatrixResponseModel getRoleMatrix() throws SQLException{
         Connection connection = databaseConnector.getConnection();

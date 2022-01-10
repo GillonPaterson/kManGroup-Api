@@ -22,6 +22,24 @@ public class JobRolesDAO {
     }
 
 
+    public EditJobRole getJobRoleFromDatabase(Connection connection, int jobRoleID) throws SQLException {
+
+        EditJobRole jobRole = new EditJobRole(0, "", "", 0, 0, "", "");
+        String query = "SELECT jobRoleID, jobRole, jobSpec, jobBandLevelID, jobFamilyID, jobLink, jobResponsibilities FROM jobRoles WHERE jobRoles.jobRoleID = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, jobRoleID);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            jobRole = new EditJobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobSpec"), rs.getInt("jobBandLevelID"), rs.getInt("jobFamilyID"), rs.getString("jobLink"), rs.getString("jobResponsibilities"));
+            return jobRole;
+        }
+        return jobRole;
+    }
+
+
+
     public Integer addJobRole(Connection connection, AddJobRole addJobRole){
         int bandLevelID = 0;
         int jobFamilyID = 0;
@@ -112,30 +130,7 @@ public class JobRolesDAO {
             return roleMatrixModels;
         }
     }
-    public Competency getJobCompFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 
-        List<String> competencyStage = new ArrayList<>();
-
-        String jobBandLevel = "";
-        String query = "Select bandLevels.jobBandLevel, competenciesData.competencyStage from competenciesData inner join competencies using(competencyDataID) inner join bandLevels using(jobBandLevelID) inner join jobRoles using(jobBandLevelID) where jobRoleID = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, jobRoleID);
-        ResultSet rs = preparedStatement.executeQuery();
-
-        while (rs.next()) {
-            jobBandLevel = rs.getString("jobBandLevel");
-            competencyStage.add(rs.getString("competencyStage"));
-            System.out.println(competencyStage);
-        }
-
-        Competency competency = new Competency(jobBandLevel,competencyStage);
-
-        if (competencyStage.isEmpty()){
-            throw new SQLException();
-        }else{
-            return competency;
-        }
-    }
 
     public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
         List<JobTraining> training = new ArrayList<>();

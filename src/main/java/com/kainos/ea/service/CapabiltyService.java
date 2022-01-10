@@ -85,4 +85,9 @@ public class CapabiltyService {
         Connection connection = databaseConnector.getConnection();
         return capabilityDAO.getAllCapabilitiesFromDataBase(connection);
     }
+
+    public List<String> getJobCapabilities() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return capabilityDAO.getJobCapabilitiesFromDatabase(connection);
+    }
 }
