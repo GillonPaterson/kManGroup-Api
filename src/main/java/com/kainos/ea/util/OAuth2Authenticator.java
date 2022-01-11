@@ -18,8 +18,8 @@ public class OAuth2Authenticator implements Authenticator<String, User> {
     private static final String SECRET_KEY = "2w0lavt3CFAAqAY1z4q+LpZfCNW5gLH+udmMfi/Tl6g=";
 
     @Override
-    public Optional<User> authenticate(String token) throws AuthenticationException {
-        System.out.println("Authenticated");
+    public Optional<User> authenticate(String token) {
+        System.out.println("Authentication Happening");
         Jws<Claims> jws;
         try {
             jws = Jwts.parserBuilder()

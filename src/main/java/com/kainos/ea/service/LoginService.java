@@ -3,14 +3,12 @@ package com.kainos.ea.service;
 import com.kainos.ea.data.LoginDAO;
 import com.kainos.ea.model.TokenSubject;
 import com.kainos.ea.model.UserRequestModel;
-import com.kainos.ea.model.User;
+import com.kainos.ea.model.DatabaseUserModel;
 import com.kainos.ea.util.DatabaseConnector;
 import com.kainos.ea.util.Hasher;
-import com.kainos.ea.util.Token;
+import com.kainos.ea.util.TokenHandler;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLOutput;
 import java.util.concurrent.TimeUnit;
 
 public class LoginService {
@@ -18,41 +16,49 @@ public class LoginService {
     private final LoginDAO loginDAO;
     private final DatabaseConnector connector;
     private final Hasher hasher;
-    private final Token token;
+    private final TokenHandler tokenHandler;
 
     public LoginService() {
         loginDAO = new LoginDAO();
         connector = new DatabaseConnector();
         hasher = new Hasher();
-        token = new Token();
+        tokenHandler = new TokenHandler();
     }
 
-    public LoginService(LoginDAO loginDao, DatabaseConnector connector){
+    public LoginService(LoginDAO loginDAO, DatabaseConnector connector, Hasher hasher) {
+        this.loginDAO = loginDAO;
+        this.connector = connector;
+        this.hasher = hasher;
+        tokenHandler = new TokenHandler();
+    }
+
+    public LoginService(LoginDAO loginDao, DatabaseConnector connector, Hasher hasher, TokenHandler tokenHandler){
         this.connector = connector;
         this.loginDAO = loginDao;
-        hasher = new Hasher();
-        token = new Token();
+        this.hasher = hasher;
+        this.tokenHandler = tokenHandler;
     }
 
     public String checkDetails(UserRequestModel loginInfo) throws Exception {
 
         Connection connection = connector.getConnection();
-        User user = loginDAO.getDetails(connection, loginInfo.getUsername());
-        if(user.getUsername() != null){
-            String givenPasswordHash = hasher.hashPassword(loginInfo.getPassword(), user.getSalt());
+        DatabaseUserModel user = loginDAO.getDetails(connection, loginInfo.getUsername());
+        String givenPasswordHash = hasher.hashPassword(loginInfo.getPassword(), user.getSalt());
 
-            if(user.getPasswordHash().equals(givenPasswordHash)){
-                TokenSubject tokenSubject = new TokenSubject(user.getUsername(), user.isAdmin());
-                String tokenString = token.createToken(tokenSubject, TimeUnit.HOURS.toMillis(1));
-                return tokenString;
-            }
+        if(user.getPasswordHash().equals(givenPasswordHash)){
+            TokenSubject tokenSubject = new TokenSubject(user.getUsername(), user.isAdmin());
+
+            String tokenString = tokenHandler.createToken(tokenSubject, TimeUnit.HOURS.toMillis(1));
+            return tokenString;
         }
-        return null;
+        else {
+            return null;
+        }
     }
 
     public void registerUser(UserRequestModel userInfo) throws Exception{
         Connection connection = connector.getConnection();
-        User user = new User();
+        DatabaseUserModel user = new DatabaseUserModel();
         user.setUsername(userInfo.getUsername());
         user.setSalt(hasher.getNewSalt());
         user.setPasswordHash(hasher.hashPassword(userInfo.getPassword(), user.getSalt()));
