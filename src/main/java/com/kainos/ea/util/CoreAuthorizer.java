@@ -6,6 +6,6 @@ public class CoreAuthorizer implements Authorizer<User> {
     @Override
     public boolean authorize(User user, String role) {
         System.out.println("Authorized");
-        return user.getName() != null && user.getRoles().equals(role);
+        return user.getName() != null && user.getRoles().contains(role);
     }
 }

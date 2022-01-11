@@ -52,12 +52,13 @@ public class LoginDAO {
     }
 
     public void registerUser(Connection connection, User user) throws SQLException{
-        String query = "INSERT INTO users VALUES (? ,? ,?);";
+        String query = "INSERT INTO users VALUES (? ,? ,?,?);";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,user.getUsername());
         statement.setString(2, user.getPasswordHash());
         statement.setString(3, user.getSalt());
+        statement.setBoolean(4, user.isAdmin());
 
         statement.executeUpdate();
     }

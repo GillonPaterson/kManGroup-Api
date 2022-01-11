@@ -56,10 +56,12 @@ public class LoginService {
         user.setUsername(userInfo.getUsername());
         user.setSalt(hasher.getNewSalt());
         user.setPasswordHash(hasher.hashPassword(userInfo.getPassword(), user.getSalt()));
+        user.setAdmin(userInfo.getRoles()[0].equals("Admin"));
 
         System.out.println("Username: " + user.getUsername());
         System.out.println("Password: "+ user.getPasswordHash());
         System.out.println("Salt: "+ user.getSalt());
+        System.out.println("isAdmin: "+ user.isAdmin());
 
         loginDAO.registerUser(connection,user);
     }
