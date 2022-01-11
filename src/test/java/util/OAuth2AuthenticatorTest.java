@@ -15,33 +15,35 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class OAuth2AuthenticatorTest {
     //Will have to make a new one in 04/10/2129 as expires then
-    static String adminToken;
-    static String expiredToken;
-    static String nonAdminToken;
-    static String invalidToken ;
+    //Should store these securely
+    String adminToken = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjUwNDE1MDA0Nzd9.XanyBYN7Lxe1kh54dBy5vgwV3owYFTr78GgE0EmMcFs";
+    String expiredToken= "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjE2NDE1MDA0Nzd9.mMHpvTbBQgDugSX7DlJ4pxopnvLiyFucX-Y2BmU-w34";
+    String nonAdminToken= "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjpmYWxzZSwiZXhwIjo1MDQxNTAwNDc3fQ.vZOAnZO5DSWHd17LyXF2zSot7GvkobpOCNJnIffnuKM";
+    String invalidToken= "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjUwNDE1MDA0Nzd9.oGJnhsJ2WQlrx9ispBx0cl7t7i1cQ8vcq_qzo_bfBB";
 
-    @BeforeAll
-    static void setUpTokens(){
-        try {
-            FileInputStream propsStream =
-                    new FileInputStream("authTest.properties");
-
-            Properties props = new Properties();
-            props.load(propsStream);
-
-            adminToken = props.getProperty("adminToken");
-            nonAdminToken = props.getProperty("nonAdminToken");
-            expiredToken = props.getProperty("expiredToken");
-            invalidToken = props.getProperty("invalidToken");
-
-            if (adminToken == null || nonAdminToken == null || expiredToken == null || invalidToken == null)
-                throw new IllegalArgumentException(
-                        "Properties file must exist and must contain "
-                                + "all tokens for tests to work.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //How to store securely but then how pipeline
+//    @BeforeAll
+//    static void setUpTokens(){
+//        try {
+//            FileInputStream propsStream =
+//                    new FileInputStream("authTest.properties");
+//
+//            Properties props = new Properties();
+//            props.load(propsStream);
+//
+//            adminToken = props.getProperty("adminToken");
+//            nonAdminToken = props.getProperty("nonAdminToken");
+//            expiredToken = props.getProperty("expiredToken");
+//            invalidToken = props.getProperty("invalidToken");
+//
+//            if (adminToken == null || nonAdminToken == null || expiredToken == null || invalidToken == null)
+//                throw new IllegalArgumentException(
+//                        "Properties file must exist and must contain "
+//                                + "all tokens for tests to work.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Test
     void testReturnsUserPrincipleObjectWithAdminWhenGivenAdminToken(){
