@@ -207,6 +207,31 @@ class JobRolesServiceTest {
 
 
     @Test
+    public void deleteJobRoleTest(){
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector);
+
+        Mockito.when(jobRolesDAO.deleteJobRole(connection, 1)).thenReturn(1);
+
+        int result = -1;
+
+        try {
+            result = jobServ.deleteJobRole(1);
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+
+
+        Mockito.verify(jobRolesDAO).deleteJobRole(connection, 1);
+        assertEquals(1, result);
+    }
+
+
+    @Test
     public void TestServiceAddRoleValidatorReturnsErrorForNumbersInName() throws SQLException{
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
