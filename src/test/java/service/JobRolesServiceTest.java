@@ -164,6 +164,48 @@ class JobRolesServiceTest {
     }
 
 
+
+    @Test
+    void testServiceGetRoleCallsDAO() throws SQLException {
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        EditJobRole jobRole1 = new EditJobRole(1, "Dev", "Engineering", "Associate","Engineering", "https://test", "test");
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        Mockito.when(jobRolesDAO.getJobRoleFromDatabase(connection, 1)).thenReturn(jobRole1);
+
+        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
+        EditJobRole returned = jobRolesService.getJobRole(1);
+
+        Mockito.verify(connector).getConnection();
+        Mockito.verify(jobRolesDAO).getJobRoleFromDatabase(connection, 1);
+
+        assertEquals(jobRole1, returned);
+    }
+
+    @Test
+    public void editJobRoleTest(){
+        Connection connection = Mockito.mock(Connection.class);
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(connector.getConnection()).thenReturn(connection);
+
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRolesValidator = Mockito.mock(JobRoleValidator.class);
+        AddJobRole editJob = new AddJobRole();
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRolesValidator);
+
+        Mockito.when(jobRolesValidator.addJobRoleValidator(editJob)).thenReturn(null);
+        Mockito.when(jobRolesDAO.editJobRole(connection, editJob, 1)).thenReturn(1);
+
+        int result = jobServ.editJobRole(editJob, 1);
+
+        Mockito.verify(jobRolesDAO).editJobRole(connection, editJob, 1);
+        assertEquals(1, result);
+    }
+
+
     @Test
     public void TestServiceAddRoleValidatorReturnsErrorForNumbersInName() throws SQLException{
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
