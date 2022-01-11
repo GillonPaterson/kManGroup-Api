@@ -152,6 +152,23 @@ public class JobRolesDAO {
     }
 
 
+    public Integer deleteJobRole(Connection connection, int jobRoleID){
+
+        String query = "DELETE FROM jobRoles where jobRoleID = ?";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, jobRoleID);
+
+            statement.executeUpdate();
+            return 1;
+
+        } catch (Exception e) {
+            System.out.println("Failed to delete the job role. " + e);
+            return -1;
+        }
+    }
+
+
 
     public JobSpecModel getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
 

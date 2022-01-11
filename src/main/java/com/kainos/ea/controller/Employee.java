@@ -84,6 +84,26 @@ public class Employee {
     }
 
 
+    @POST
+    @Path("/deleteJobRole/{jobRoleID}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteJobRole(@PathParam("jobRoleID") int jobRoleID) {
+        try {
+            JobRolesService jobRolesService = new JobRolesService();
+            int x = jobRolesService.deleteJobRole(jobRoleID);
+
+            if (x == 1)
+                return Response.status(HttpStatus.CREATED_201).build();
+            else
+                return Response.status(HttpStatus.BAD_REQUEST_400).build();
+        }catch(SQLException e)
+        {
+            return Response.status(HttpStatus.BAD_REQUEST_400).build();
+        }
+    }
+
+
 
     @GET
     @Path("/getJobBandLevels")

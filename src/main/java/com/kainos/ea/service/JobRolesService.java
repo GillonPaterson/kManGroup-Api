@@ -55,6 +55,11 @@ public class JobRolesService {
         return jobRolesDAO.getJobRoleFromDatabase(connection, jobRoleID);
     }
 
+    public Integer deleteJobRole(int jobRoleID) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.deleteJobRole(connection, jobRoleID);
+    }
+
 
 
     public Integer addJobRole(AddJobRole addJobRoles) {
