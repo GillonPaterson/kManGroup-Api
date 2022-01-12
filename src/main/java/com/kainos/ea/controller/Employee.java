@@ -1,16 +1,45 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.model.*;
-import com.kainos.ea.service.*;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.Capabilities;
+import com.kainos.ea.model.RoleMatrixResponseModel;
+import com.kainos.ea.model.Competency;
+import com.kainos.ea.model.UserRequestModel;
+import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.JobFamilyModel;
+import com.kainos.ea.model.CapabilityLead;
+import com.kainos.ea.model.CapabilityRequest;
+
+import com.kainos.ea.service.BandLevelService;
+import com.kainos.ea.service.JobFamiliesService;
+import com.kainos.ea.service.CapabiltyService;
+import com.kainos.ea.service.CompetencyService;
 
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.service.LoginService;
-import io.swagger.annotations.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+
+
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.POST;
+import javax.ws.rs.Consumes;
+
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
