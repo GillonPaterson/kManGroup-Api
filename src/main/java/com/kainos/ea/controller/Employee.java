@@ -86,10 +86,12 @@ public class Employee {
         JobRolesService jobRolesService = new JobRolesService();
         int x = jobRolesService.addJobRole(addJobRoles);
 
-        if(x != 0)
+        if(x != 0) {
             return Response.status(HttpStatus.CREATED_201).build();
-        else
+        }
+        else {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
+        }
     }
 
 
@@ -107,10 +109,12 @@ public class Employee {
         JobRolesService jobRolesService = new JobRolesService();
         int x = jobRolesService.editJobRole(editJobRole, jobRoleID);
 
-        if(x == 1)
+        if(x == 1) {
             return Response.status(HttpStatus.CREATED_201).build();
-        else
+        }
+        else {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
+        }
     }
 
 
@@ -123,10 +127,12 @@ public class Employee {
             JobRolesService jobRolesService = new JobRolesService();
             int x = jobRolesService.deleteJobRole(jobRoleID);
 
-            if (x == 1)
+            if (x == 1) {
                 return Response.status(HttpStatus.CREATED_201).build();
-            else
+            }
+            else {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
+            }
         }catch(SQLException e)
         {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
