@@ -13,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,13 +73,13 @@ public class LoginServiceTest {
 
         LoginService loginService = new LoginService(loginDAO, connector, hasher);
 
-        String returnedToken = loginService.checkDetails(userRequestModel);
-
+        Exception exception = assertThrows(SQLException.class, () -> {
+            loginService.checkDetails(userRequestModel);
+        });
+        assertEquals("Passwords don't match", exception.getMessage());
         Mockito.verify(connector).getConnection();
         Mockito.verify(loginDAO).getDetails(connection,"test");
         Mockito.verify(hasher).hashPassword(userRequestModel.getPassword(), returnedUser.getSalt());
-
-        assertNull(returnedToken);
     }
 
     @Test
