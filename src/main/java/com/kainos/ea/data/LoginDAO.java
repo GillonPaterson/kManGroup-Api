@@ -1,7 +1,7 @@
 package com.kainos.ea.data;
 
 import com.kainos.ea.model.UserRequestModel;
-import com.kainos.ea.model.User;
+import com.kainos.ea.model.DatabaseUserModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,14 +32,14 @@ public class LoginDAO {
         return true;
     }
 
-    public User getDetails(Connection connection,String username) throws SQLException{
+    public DatabaseUserModel getDetails(Connection connection, String username) throws SQLException{
         String query = "SELECT * from users where username = ?";
         PreparedStatement statement = connection.prepareStatement(query);
 
         statement.setString(1,username);
 
         ResultSet rs = statement.executeQuery();
-        User user = new User();
+        DatabaseUserModel user = new DatabaseUserModel();
 
         if (rs.next()){
             user.setUsername(rs.getString("username"));
@@ -51,13 +51,14 @@ public class LoginDAO {
         throw new SQLException("No username in database");
     }
 
-    public void registerUser(Connection connection, User user) throws SQLException{
-        String query = "INSERT INTO users VALUES (? ,? ,?);";
+    public void registerUser(Connection connection, DatabaseUserModel user) throws SQLException{
+        String query = "INSERT INTO users VALUES (? ,? ,?,?);";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1,user.getUsername());
         statement.setString(2, user.getPasswordHash());
         statement.setString(3, user.getSalt());
+        statement.setBoolean(4, user.isAdmin());
 
         statement.executeUpdate();
     }

@@ -1,15 +1,15 @@
 package com.kainos.ea.model;
 
-public class User {
+public class DatabaseUserModel {
     private String username;
     private String passwordHash;
     private String salt;
     private boolean isAdmin;
 
-    public User() {
+    public DatabaseUserModel() {
 
     }
-    public User(String username, String passwordHash, String salt, boolean isAdmin) {
+    public DatabaseUserModel(String username, String passwordHash, String salt, boolean isAdmin) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.salt = salt;

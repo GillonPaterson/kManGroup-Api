@@ -10,7 +10,7 @@ import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
-public class Token {
+public class TokenHandler {
     private static final String SECRET_KEY = "2w0lavt3CFAAqAY1z4q+LpZfCNW5gLH+udmMfi/Tl6g=";
 
     public String createToken(TokenSubject subject, long lifeSpan){
