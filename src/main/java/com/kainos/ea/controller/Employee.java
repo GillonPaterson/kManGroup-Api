@@ -86,7 +86,7 @@ public class Employee {
     @GET
     @Path("/getJobRole/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobRole(@PathParam("jobRoleID") int jobRoleID){
+    public Response getJobRole(@PathParam("jobRoleID") int jobRoleID) {
         try {
             EditJobRole jobRole = jobRolesService.getJobRole(jobRoleID);
             return Response.ok(jobRole).build();
@@ -160,8 +160,8 @@ public class Employee {
             else {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
             }
-        }catch(SQLException e)
-        {
+        } catch (SQLException e)
+         {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
@@ -177,12 +177,13 @@ public class Employee {
     @GET
     @Path("/getJobBandLevels")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobBandLevels(){
-        try{
+    public Response getJobBandLevels() {
+        try {
             List<String> jobBandLevels = bandLevelService.getJobBandLevels();
             return Response.ok(jobBandLevels).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job band levels" + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job band levels"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -196,11 +197,11 @@ public class Employee {
     @GET
     @Path("/getJobFamilyNames")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobFamilyNames(){
-        try{
+    public Response getJobFamilyNames() {
+        try {
             List<String> jobFamilyNames = jobFamiliesService.getJobFamilyNames();
             return Response.ok(jobFamilyNames).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job capabilities"
                     + ex.getMessage());
         }
@@ -216,11 +217,11 @@ public class Employee {
     @GET
     @Path("/getJobCapabilities")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobCapabilities(){
-        try{
+    public Response getJobCapabilities() {
+        try {
             List<String> jobCapabilities = capabiltyService.getJobCapabilities();
             return Response.ok(jobCapabilities).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job capabilities"
                     + ex.getMessage());
         }
@@ -236,11 +237,11 @@ public class Employee {
     @GET
     @Path("/getJobSpec/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobSpec(@PathParam("jobRoleID") int jobRoleID){
-        try{
+    public Response getJobSpec(@PathParam("jobRoleID") int jobRoleID) {
+        try {
             JobSpecModel jobSpecModel= jobRolesService.getJobSpec(jobRoleID);
             return Response.ok(jobSpecModel).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles"
                     + ex.getMessage());
         }
@@ -256,11 +257,11 @@ public class Employee {
     @GET
     @Path("/getJobCompetency/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobComp(@PathParam("jobRoleID") int jobRoleID){
-        try{
+    public Response getJobComp(@PathParam("jobRoleID") int jobRoleID) {
+        try {
             Competency competency = competencyService.getComp(jobRoleID);
             return Response.ok(competency).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles"
                     + ex.getMessage());
         }
@@ -276,11 +277,11 @@ public class Employee {
     @GET
     @Path("/getRoleMatrix")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRoleMatrix(){
-        try{
+    public Response getRoleMatrix() {
+        try {
             RoleMatrixResponseModel roleMatrix = jobRolesService.getRoleMatrix();
             return Response.ok(roleMatrix).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: "
                     + ex.getMessage());
         }
@@ -296,11 +297,11 @@ public class Employee {
     @GET
     @Path("/getJobTraining/{bandLevel}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobTraining(@PathParam("bandLevel") String bandLevel){
-        try{
+    public Response getJobTraining(@PathParam("bandLevel") String bandLevel) {
+        try {
             List<JobTraining> jobTraining= jobRolesService.getJobTraining(bandLevel);
             return Response.ok(jobTraining).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles"
                     + ex.getMessage());
         }
@@ -318,10 +319,10 @@ public class Employee {
                     .status(HttpStatus.OK_200)
                     .header(HttpHeaders.AUTHORIZATION,"Bearer " + jwt)
                     .build();
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException){
             System.out.println("SQL Exception during login: "
                     + sqlException.getMessage());
-        }catch (Exception ex){
+        } catch (Exception ex){
             System.out.println("Exception while hashing: "
                     + ex.getMessage());
         }
@@ -342,10 +343,10 @@ public class Employee {
         try {
             loginService.registerUser(userInfo);
             return Response.status(HttpStatus.OK_200).build();
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException){
             System.out.println("SQL Exception during login: "
                     + sqlException.getMessage());
-        }catch (Exception ex){
+        } catch (Exception ex){
             System.out.println("Exception while hashing: "
                     + ex.getMessage());
         }
@@ -361,11 +362,11 @@ public class Employee {
     @GET
     @Path("/getJobFamilies")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobFamilies(){
-        try{
+    public Response getJobFamilies() {
+        try {
             List<JobFamilyModel> jobFamilyModels = jobFamiliesService.getJobFamilies();
             return Response.ok(jobFamilyModels).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job family models: "
                     + ex.getMessage());
         }
@@ -381,12 +382,12 @@ public class Employee {
     @GET
     @Path("/getAllCapabilityLead")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCapabilityLead(){
+    public Response getAllCapabilityLead() {
         System.out.println("Authenticated");
-        try{
+        try {
             List<CapabilityLead> capabilityLead = capabiltyService.getAllCapabilityLeads();
             return Response.ok(capabilityLead).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: "
                     + ex.getMessage());
         }
@@ -402,11 +403,11 @@ public class Employee {
     @GET
     @Path("/getCapabilityLead/{leadID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCapabilityLead(@PathParam("leadID")int leadID){
-        try{
+    public Response getAllCapabilityLead(@PathParam("leadID")int leadID) {
+        try {
             CapabilityLead capabilityLead = capabiltyService.getCapabilitylead(leadID);
             return Response.ok(capabilityLead).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: "
                     + ex.getMessage());
         }
@@ -430,7 +431,7 @@ public class Employee {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
             }
             return Response.status(HttpStatus.CREATED_201).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION "
                     + ex.getMessage());
         }
@@ -447,11 +448,11 @@ public class Employee {
     @GET
     @Path("/getAllCapabilities")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCapabilities(){
-        try{
+    public Response getAllCapabilities() {
+        try {
             List<Capabilities> capabilities = capabiltyService.getAllCapabilites();
             return Response.ok(capabilities).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting role matrix: "
                     + ex.getMessage());
         }
