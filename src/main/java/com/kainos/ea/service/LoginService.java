@@ -9,6 +9,7 @@ import com.kainos.ea.util.Hasher;
 import com.kainos.ea.util.TokenHandler;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 public class LoginService {
@@ -52,7 +53,7 @@ public class LoginService {
             return tokenString;
         }
         else {
-            return null;
+            throw new SQLException("Passwords don't match");
         }
     }
 
