@@ -71,12 +71,13 @@ public class Employee {
     @GET
     @Path("/getJobRoles")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJobRoles(){
-        try{
-            List<JobRole> jobRoles= jobRolesService.getJobRoles();
+    public Response getJobRoles() {
+         try {
+            List<JobRole> jobRoles = jobRolesService.getJobRoles();
             return Response.ok(jobRoles).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -90,10 +91,10 @@ public class Employee {
     @Path("/getJobRole/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobRole(@PathParam("jobRoleID") int jobRoleID){
-        try{
-            EditJobRole jobRole= jobRolesService.getJobRole(jobRoleID);
+        try {
+            EditJobRole jobRole = jobRolesService.getJobRole(jobRoleID);
             return Response.ok(jobRole).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting the job role " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
