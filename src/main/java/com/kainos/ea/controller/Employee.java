@@ -91,7 +91,8 @@ public class Employee {
             EditJobRole jobRole = jobRolesService.getJobRole(jobRoleID);
             return Response.ok(jobRole).build();
         } catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting the job role " + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting the job role "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -200,7 +201,8 @@ public class Employee {
             List<String> jobFamilyNames = jobFamiliesService.getJobFamilyNames();
             return Response.ok(jobFamilyNames).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job capabilities" + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting job capabilities"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -219,7 +221,8 @@ public class Employee {
             List<String> jobCapabilities = capabiltyService.getJobCapabilities();
             return Response.ok(jobCapabilities).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job capabilities" + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting job capabilities"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -238,7 +241,8 @@ public class Employee {
             JobSpecModel jobSpecModel= jobRolesService.getJobSpec(jobRoleID);
             return Response.ok(jobSpecModel).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting job roles"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -257,7 +261,8 @@ public class Employee {
             Competency competency = competencyService.getComp(jobRoleID);
             return Response.ok(competency).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting job roles"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -276,7 +281,8 @@ public class Employee {
             RoleMatrixResponseModel roleMatrix = jobRolesService.getRoleMatrix();
             return Response.ok(roleMatrix).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting role matrix: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -295,7 +301,8 @@ public class Employee {
             List<JobTraining> jobTraining= jobRolesService.getJobTraining(bandLevel);
             return Response.ok(jobTraining).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting job roles"
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -312,9 +319,11 @@ public class Employee {
                     .header(HttpHeaders.AUTHORIZATION,"Bearer " + jwt)
                     .build();
         }catch (SQLException sqlException){
-            System.out.println("SQL Exception during login: " + sqlException.getMessage());
+            System.out.println("SQL Exception during login: "
+                    + sqlException.getMessage());
         }catch (Exception ex){
-            System.out.println("Exception while hashing: " + ex.getMessage());
+            System.out.println("Exception while hashing: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -334,9 +343,11 @@ public class Employee {
             loginService.registerUser(userInfo);
             return Response.status(HttpStatus.OK_200).build();
         }catch (SQLException sqlException){
-            System.out.println("SQL Exception during login: " + sqlException.getMessage());
+            System.out.println("SQL Exception during login: "
+                    + sqlException.getMessage());
         }catch (Exception ex){
-            System.out.println("Exception while hashing: " + ex.getMessage());
+            System.out.println("Exception while hashing: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -355,7 +366,8 @@ public class Employee {
             List<JobFamilyModel> jobFamilyModels = jobFamiliesService.getJobFamilies();
             return Response.ok(jobFamilyModels).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job family models: " + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting job family models: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -375,7 +387,8 @@ public class Employee {
             List<CapabilityLead> capabilityLead = capabiltyService.getAllCapabilityLeads();
             return Response.ok(capabilityLead).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting role matrix: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -394,7 +407,8 @@ public class Employee {
             CapabilityLead capabilityLead = capabiltyService.getCapabilitylead(leadID);
             return Response.ok(capabilityLead).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting role matrix: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -417,7 +431,8 @@ public class Employee {
             }
             return Response.status(HttpStatus.CREATED_201).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+            System.out.println("SQL EXCEPTION "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
 
@@ -437,7 +452,8 @@ public class Employee {
             List<Capabilities> capabilities = capabiltyService.getAllCapabilites();
             return Response.ok(capabilities).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting role matrix: " + ex.getMessage());
+            System.out.println("SQL EXCEPTION while getting role matrix: "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
@@ -461,7 +477,8 @@ public class Employee {
             }
             return Response.status(HttpStatus.CREATED_201).build();
         }catch (SQLException ex) {
-            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+            System.out.println("SQL EXECEPTION "
+                    + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
 
