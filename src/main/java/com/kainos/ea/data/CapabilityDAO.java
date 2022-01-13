@@ -58,7 +58,7 @@ public class CapabilityDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            CapabilityLead capLead = new CapabilityLead(rs.getInt("leadID"),rs.getString("leadFname"),rs.getString("leadSname"),rs.getString("leadMessage"),rs.getString("leadPhoto"), rs.getString("jobCapability"));
+            CapabilityLead capLead = new CapabilityLead(rs.getInt("leadID"), rs.getString("leadFname"), rs.getString("leadSname"), rs.getString("leadMessage"), rs.getString("leadPhoto"), rs.getString("jobCapability"));
             return capLead;
         }
 

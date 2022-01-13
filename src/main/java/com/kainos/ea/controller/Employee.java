@@ -114,7 +114,7 @@ public class Employee {
         JobRolesService jobRolesService = new JobRolesService();
         int x = jobRolesService.addJobRole(addJobRoles);
 
-        if (x != 0){
+        if (x != 0) {
             return Response.status(HttpStatus.CREATED_201).build();
         } else {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
@@ -159,12 +159,12 @@ public class Employee {
             JobRolesService jobRolesService = new JobRolesService();
             int x = jobRolesService.deleteJobRole(jobRoleID);
 
-            if (x == 1){
+            if (x == 1) {
                 return Response.status(HttpStatus.CREATED_201).build();
             } else {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
@@ -239,7 +239,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobSpec(@PathParam("jobRoleID") int jobRoleID) {
         try {
-            JobSpecModel jobSpecModel= jobRolesService.getJobSpec(jobRoleID);
+            JobSpecModel jobSpecModel = jobRolesService.getJobSpec(jobRoleID);
             return Response.ok(jobSpecModel).build();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
@@ -296,7 +296,7 @@ public class Employee {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobTraining(@PathParam("bandLevel") String bandLevel) {
         try {
-            List<JobTraining> jobTraining= jobRolesService.getJobTraining(bandLevel);
+            List<JobTraining> jobTraining = jobRolesService.getJobTraining(bandLevel);
             return Response.ok(jobTraining).build();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
@@ -313,7 +313,7 @@ public class Employee {
             String jwt = loginService.checkDetails(loginInfo);
             return Response
                     .status(HttpStatus.OK_200)
-                    .header(HttpHeaders.AUTHORIZATION,"Bearer " + jwt)
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
                     .build();
         } catch (SQLException sqlException) {
             System.out.println("SQL Exception during login: " + sqlException.getMessage());
@@ -421,7 +421,7 @@ public class Employee {
             }
             return Response.status(HttpStatus.CREATED_201).build();
         } catch (SQLException ex) {
-            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+            System.out.println("SQL EXECEPTION " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
 
@@ -465,7 +465,7 @@ public class Employee {
             }
             return Response.status(HttpStatus.CREATED_201).build();
         } catch (SQLException ex) {
-            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+            System.out.println("SQL EXECEPTION " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
 

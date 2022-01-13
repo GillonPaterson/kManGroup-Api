@@ -70,12 +70,12 @@ public class JobRolesDAO {
             while (rs.next()) {
                 jobFamilyID = rs.getInt("jobFamilyID");
             }
-        }catch (Exception e2) {
+        } catch (Exception e2) {
             System.out.println(e2);
         }
 
 
-        String query3 = "Insert into jobRoles (jobRole, jobBandLevelID, jobSpec, jobLink, jobResponsibilities, jobFamilyID)" +"Values(?,?,?,?,?,?)";
+        String query3 = "Insert into jobRoles (jobRole, jobBandLevelID, jobSpec, jobLink, jobResponsibilities, jobFamilyID)" + "Values(?,?,?,?,?,?)";
         try {
             PreparedStatement statement3 = connection.prepareStatement(query3, Statement.RETURN_GENERATED_KEYS);
             statement3.setString(1, addJobRole.getJobRole());
@@ -152,7 +152,7 @@ public class JobRolesDAO {
     }
 
 
-    public Integer deleteJobRole(Connection connection, int jobRoleID){
+    public Integer deleteJobRole(Connection connection, int jobRoleID) {
 
         String query = "DELETE FROM jobRoles where jobRoleID = ?";
         try  {
