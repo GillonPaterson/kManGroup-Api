@@ -98,7 +98,7 @@ public class Employee {
             notes = "Requires Authentication. Returns dashboard",
             response = Response.class
     )
-    @PermitAll
+    @RolesAllowed("Admin")
     @POST
     @Path("/editJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -113,7 +113,12 @@ public class Employee {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
-
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @RolesAllowed("Admin")
     @POST
     @Path("/deleteJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
