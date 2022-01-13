@@ -1,6 +1,7 @@
 package com.kainos.ea.service;
 
 import com.kainos.ea.data.BandLevelDAO;
+import com.kainos.ea.model.BandLevelModel;
 import com.kainos.ea.util.DatabaseConnector;
 
 import java.sql.Connection;
@@ -15,5 +16,10 @@ public class BandLevelService {
     public List<String> getJobBandLevels() throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return bandLevelDAO.getBandLevelFromDatabase(connection);
+    }
+
+    public List<BandLevelModel> getJobBandLevelsAndImportance() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return bandLevelDAO.getBandLevelAndImportanceFromDatabase(connection);
     }
 }

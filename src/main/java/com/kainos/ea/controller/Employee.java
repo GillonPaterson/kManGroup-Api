@@ -166,6 +166,25 @@ public class Employee {
     )
     @PermitAll
     @GET
+    @Path("/getJobBandLevelsAndImportance")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobBandLevelsAndImportance(){
+        try{
+            List<BandLevelModel> jobBandLevels = bandLevelService.getJobBandLevelsAndImportance();
+            return Response.ok(jobBandLevels).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job band levels" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
     @Path("/getJobFamilyNames")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobFamilyNames(){
