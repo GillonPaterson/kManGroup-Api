@@ -222,7 +222,7 @@ class JobRolesServiceTest {
 
         try {
             result = jobServ.deleteJobRole(1);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -250,7 +250,7 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void testServiceAddRoleValidatorReturnsErrorForTooManyCharacters() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForTooManyCharacters() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);

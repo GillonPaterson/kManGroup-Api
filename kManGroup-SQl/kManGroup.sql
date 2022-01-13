@@ -79,7 +79,7 @@ CONSTRAINT fk_JobBandLevelID FOREIGN KEY (jobBandLevelID) REFERENCES bandLevels(
 CONSTRAINT fk_JobFamilyid_JobRoles FOREIGN KEY (jobFamilyID) REFERENCES jobFamilies(jobFamilyID));
 
 
-create table competencies ( 
+create table competencies (
 jobBandLevelID int NOT NULL,
 competencyDataID int Not Null
 );
@@ -125,7 +125,7 @@ insert into jobFamilies(jobFamilyName,jobCapabilityID) values('Delivery Strategy
 
 
 
-insert into competenciesData (competencyDataID, competencyStage) values(1, "Reflects on how factors such as own values, prejudices and emotions influencesownjudgement,"); 
+insert into competenciesData (competencyDataID, competencyStage) values(1, "Reflects on how factors such as own values, prejudices and emotions influencesownjudgement,");
 insert into competenciesData (competencyDataID, competencyStage) values(2,"behaviour, and self-belief. Usesfeedback from appraisals and othersources to consider personal impact and changesbehaviour. Understands personal sources of stressand wellbeing.");
 insert into competenciesData (competencyDataID, competencyStage) values(3,"Plans and manages own time effectively and fulfils work requirements andcommitments to a high standard, without compromising own health and wellbeing. Remains calm andfocused under pressure.");
 insert into competenciesData (competencyDataID, competencyStage) values(4,"Proactively manages self and career and identifies personal learning needs plan and completesa broad range of formal andinformal learning opportunitiesby taking responsibility for own personal development and seekingopportunities forlearning. Strives to put learning into practice.Clearly demonstrates that Encouragesa broad range of formal and informallearning opportunities, supporting development andcareer managementby putting selfforward for challenging assignments and projects which will develop strengths and address development areas. Seeks and provides constructive feedback from a variety of sources to support personal growth.Acts as an exemplar for others in managingcontinuous personaldevelopment. Facilitates thedevelopment of a learning culture.Identifies tangible, objective business improvementsand benefits when planning development activitiesand identifiesand tracksthesethrough metrics, to demonstrate impact onbusiness results.Role modelscontinuous learning and self-development, evaluating own effectiveness and growth and planning further development. Progressesin the right direction for self and Kainos through strong personal ownership.Develops through systematically scanningthe external environment and exploring leading edge thinking and best practice.Applies learning to build and refresh the business. Treats challenge as a positive forcefor improvement.");

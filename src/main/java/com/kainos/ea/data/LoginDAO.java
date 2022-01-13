@@ -51,7 +51,7 @@ public class LoginDAO {
         throw new SQLException("No username in database");
     }
 
-    public void registerUser(Connection connection, DatabaseUserModel user) throws SQLException{
+    public void registerUser(Connection connection, DatabaseUserModel user) throws SQLException {
         String query = "INSERT INTO users VALUES (? ,? ,?,?);";
 
         PreparedStatement statement = connection.prepareStatement(query);

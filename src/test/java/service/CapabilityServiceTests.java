@@ -25,7 +25,7 @@ public class CapabilityServiceTests {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        CapabilityLead lead1 = new CapabilityLead(1, "dave","boats", "wow code is great", "https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg", "Engineering");
+        CapabilityLead lead1 = new CapabilityLead(1, "dave", "boats", "wow code is great", "https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg", "Engineering");
 
         CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
         Mockito.when(capabilityDAO.getCapabilityleadFromDataBase(connection, 1)).thenReturn(lead1);
@@ -46,7 +46,7 @@ public class CapabilityServiceTests {
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
         CapabilityLead lead1 = new CapabilityLead(1, "dave", "boats", "wow code is great", "https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg", "Engineering");
-        CapabilityLead lead2 = new CapabilityLead( 2, "Lee", "Brown", "i love Kainos ", "https://cdn.vox-cdn.com/thumbor/BxA3f-dxx4UmGxOCNE_7P4V7fAs=/0x0:5157x3438/1200x800/filters:focal(880x1246:1704x2070)/cdn.vox-cdn.com/uploads/chorus_image/image/69106641/1201476988.0.jpg", "Cyber Security");
+        CapabilityLead lead2 = new CapabilityLead(2, "Lee", "Brown", "i love Kainos ", "https://cdn.vox-cdn.com/thumbor/BxA3f-dxx4UmGxOCNE_7P4V7fAs=/0x0:5157x3438/1200x800/filters:focal(880x1246:1704x2070)/cdn.vox-cdn.com/uploads/chorus_image/image/69106641/1201476988.0.jpg", "Cyber Security");
 
         List<CapabilityLead> leadList = new ArrayList<>();
         leadList.add(lead1);
@@ -74,7 +74,7 @@ public class CapabilityServiceTests {
 
         CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
         CapabilityRequest capReq = new CapabilityRequest("Engineering");
-        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector,capabilityValidator);
+        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector, capabilityValidator);
 
         Mockito.when(capabilityValidator.addCapabilityValidator(capReq)).thenReturn(null);
         Mockito.when(capabilityDAO.addCapabilityToDatabase(connection, capReq)).thenReturn(20);

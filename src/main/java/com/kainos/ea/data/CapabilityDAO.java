@@ -95,7 +95,7 @@ public class CapabilityDAO {
         ResultSet rs = preparedStatement.executeQuery();
 
         while (rs.next()) {
-            Capabilities cap = new Capabilities(rs.getInt("jobCapabilityID"),rs.getString("jobCapability"));
+            Capabilities cap = new Capabilities(rs.getInt("jobCapabilityID"), rs.getString("jobCapability"));
             capList.add(cap);
         }
 

@@ -27,7 +27,7 @@ public class LoginServiceTest {
     @Test
     void testCheckDetailsReturnsATokenIfDetailsCorrect() throws Exception {
         String[] roles = {};
-        UserRequestModel userRequestModel = new UserRequestModel(roles,"test", "password");
+        UserRequestModel userRequestModel = new UserRequestModel(roles, "test", "password");
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
@@ -50,7 +50,7 @@ public class LoginServiceTest {
         String returnedToken = loginService.checkDetails(userRequestModel);
 
         Mockito.verify(connector).getConnection();
-        Mockito.verify(loginDAO).getDetails(connection,"test");
+        Mockito.verify(loginDAO).getDetails(connection, "test");
         Mockito.verify(hasher).hashPassword(userRequestModel.getPassword(), returnedUser.getSalt());
         Mockito.verify(tokenHandler).createToken(any(TokenSubject.class), eq(TimeUnit.HOURS.toMillis(1)));
 
@@ -85,9 +85,9 @@ public class LoginServiceTest {
     }
 
     @Test
-    void testRegisterUserCreatesSaltAndHashesPasswordThenInsertsIntoDAO() throws Exception{
+    void testRegisterUserCreatesSaltAndHashesPasswordThenInsertsIntoDAO() throws Exception {
         String[] roles = {"Admin"};
-        UserRequestModel userRequestModel = new UserRequestModel(roles,"test", "password");
+        UserRequestModel userRequestModel = new UserRequestModel(roles, "test", "password");
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);

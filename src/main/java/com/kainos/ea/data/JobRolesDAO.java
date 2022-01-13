@@ -1,6 +1,12 @@
 package com.kainos.ea.data;
 
-import com.kainos.ea.model.*;
+
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.RoleMatrixModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,7 +92,7 @@ public class JobRolesDAO {
             statement3.setInt(6, jobFamilyID);
 
             statement3.execute();
-            try(ResultSet generatedKeys = statement3.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = statement3.getGeneratedKeys()) {
                 if (!generatedKeys.next()) {
                     throw new SQLException("create job role failed");
                 }

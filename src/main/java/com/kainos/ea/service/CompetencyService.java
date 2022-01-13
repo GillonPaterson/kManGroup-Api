@@ -15,7 +15,7 @@ public class CompetencyService {
 
     }
 
-    public CompetencyService(CompetencyDAO competencyDAO, DatabaseConnector databaseConnector ) {
+    public CompetencyService(CompetencyDAO competencyDAO, DatabaseConnector databaseConnector) {
         this.competencyDAO = competencyDAO;
         this.databaseConnector = databaseConnector;
 

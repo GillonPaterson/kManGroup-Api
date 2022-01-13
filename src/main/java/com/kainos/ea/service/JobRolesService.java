@@ -106,7 +106,7 @@ public class JobRolesService {
         return jobRolesDAO.getJobTrainingFromDatabase(connection, bandLevel);
     }
 
-    public RoleMatrixResponseModel getRoleMatrix() throws SQLException{
+    public RoleMatrixResponseModel getRoleMatrix() throws SQLException {
         Connection connection = databaseConnector.getConnection();
 
         List<String> bandLevel = bandLevelDAO.getBandLevelFromDatabase(connection);

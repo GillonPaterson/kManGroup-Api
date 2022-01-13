@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JobFamiliesServiceTest {
     @Test
-    void testGetJobFamiliesCallsDAOAndCreatesRequestModel() throws SQLException{
+    void testGetJobFamiliesCallsDAOAndCreatesRequestModel() throws SQLException {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);

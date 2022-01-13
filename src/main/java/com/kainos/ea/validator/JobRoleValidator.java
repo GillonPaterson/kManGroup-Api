@@ -43,7 +43,7 @@ public class JobRoleValidator {
             return "The job specification must be entered";
         }
 
-        if(roleResp == "") {
+        if (roleResp == "") {
             return "The job responsibilities must be entered";
         }
 

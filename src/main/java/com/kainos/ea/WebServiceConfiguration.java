@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public class WebServiceConfiguration extends Configuration {
-    // 'TODO:'.implement service configuration
+    //TODO:. implement service configuration
     @Valid
     @NotNull
     private final SwaggerBundleConfiguration swagger = new SwaggerBundleConfiguration();
