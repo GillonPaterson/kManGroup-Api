@@ -21,7 +21,7 @@ public class TokenHandlerTest {
         Jws<Claims> claims = tokenHandler.decodeJWT(token);
 
         //If fails cause claims is null, means not decoding it, error, not verified or expired
-        assertFalse((boolean )claims.getBody().get("isAdmin"));
+        assertFalse((boolean)claims.getBody().get("isAdmin"));
         assertEquals("test", claims.getBody().get("username"));
     }
 }
