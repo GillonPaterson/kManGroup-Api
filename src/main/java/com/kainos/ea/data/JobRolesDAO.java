@@ -1,8 +1,18 @@
 package com.kainos.ea.data;
 
-import com.kainos.ea.model.*;
 
-import java.sql.*;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.RoleMatrixModel;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +24,7 @@ public class JobRolesDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"));
             jobRoles.add(jobRole);
         }
@@ -31,7 +41,7 @@ public class JobRolesDAO {
         preparedStatement.setInt(1, jobRoleID);
 
         ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             jobRole = new EditJobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobSpec"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"), rs.getString("jobLink"), rs.getString("jobResponsibilities"));
             return jobRole;
         }
@@ -40,7 +50,7 @@ public class JobRolesDAO {
 
 
 
-    public Integer addJobRole(Connection connection, AddJobRole addJobRole){
+    public Integer addJobRole(Connection connection, AddJobRole addJobRole) {
         int bandLevelID = 0;
         int jobFamilyID = 0;
 
@@ -50,11 +60,10 @@ public class JobRolesDAO {
             statement1.setString(1, addJobRole.getJobBandLevel());
 
             ResultSet rs = statement1.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 bandLevelID = rs.getInt("jobBandLevelID");
             }
-        }catch (Exception e1)
-        {
+        } catch (Exception e1) {
             System.out.println(e1);
         }
 
@@ -64,17 +73,16 @@ public class JobRolesDAO {
             statement2.setString(1, addJobRole.getJobFamily());
 
             ResultSet rs = statement2.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 jobFamilyID = rs.getInt("jobFamilyID");
             }
-        }catch (Exception e2)
-        {
+        } catch (Exception e2) {
             System.out.println(e2);
         }
 
 
-        String query3 = "Insert into jobRoles (jobRole, jobBandLevelID, jobSpec, jobLink, jobResponsibilities, jobFamilyID)" +"Values(?,?,?,?,?,?)";
-        try{
+        String query3 = "Insert into jobRoles (jobRole, jobBandLevelID, jobSpec, jobLink, jobResponsibilities, jobFamilyID)" + "Values(?,?,?,?,?,?)";
+        try {
             PreparedStatement statement3 = connection.prepareStatement(query3, Statement.RETURN_GENERATED_KEYS);
             statement3.setString(1, addJobRole.getJobRole());
             statement3.setInt(2, bandLevelID);
@@ -84,21 +92,21 @@ public class JobRolesDAO {
             statement3.setInt(6, jobFamilyID);
 
             statement3.execute();
-            try(ResultSet generatedKeys = statement3.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = statement3.getGeneratedKeys()) {
                 if (!generatedKeys.next()) {
                     throw new SQLException("create job role failed");
                 }
                 return generatedKeys.getInt(1);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
     }
 
 
-    public Integer editJobRole(Connection connection, AddJobRole editJobRole, int jobRoleID){
+    public Integer editJobRole(Connection connection, AddJobRole editJobRole, int jobRoleID) {
         int bandLevelID = 0;
         int jobFamilyID = 0;
 
@@ -108,11 +116,10 @@ public class JobRolesDAO {
             statement1.setString(1, editJobRole.getJobBandLevel());
 
             ResultSet rs = statement1.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 bandLevelID = rs.getInt("jobBandLevelID");
             }
-        }catch (Exception e1)
-        {
+        } catch (Exception e1) {
             System.out.println(e1);
         }
 
@@ -122,17 +129,16 @@ public class JobRolesDAO {
             statement2.setString(1, editJobRole.getJobFamily());
 
             ResultSet rs = statement2.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 jobFamilyID = rs.getInt("jobFamilyID");
             }
-        }catch (Exception e2)
-        {
+        } catch (Exception e2) {
             System.out.println(e2);
         }
 
 
         String query3 = "Update jobRoles set jobRole = ?, jobBandLevelID = ?, jobSpec = ?, jobLink = ?, jobResponsibilities = ?, jobFamilyID = ? where jobRoleID = ?";
-        try{
+        try {
             PreparedStatement statement3 = connection.prepareStatement(query3, Statement.RETURN_GENERATED_KEYS);
             statement3.setString(1, editJobRole.getJobRole());
             statement3.setInt(2, bandLevelID);
@@ -152,10 +158,10 @@ public class JobRolesDAO {
     }
 
 
-    public Integer deleteJobRole(Connection connection, int jobRoleID){
+    public Integer deleteJobRole(Connection connection, int jobRoleID) {
 
         String query = "DELETE FROM jobRoles where jobRoleID = ?";
-        try{
+        try  {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, jobRoleID);
 
@@ -178,7 +184,7 @@ public class JobRolesDAO {
         preparedStatement.setInt(1, jobRoleID);
 
         ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             JobSpecModel jobSpecModel = new JobSpecModel(rs.getString("jobRole"), rs.getString("jobSpec"), rs.getString("jobLink"), rs.getString("jobResponsibilities"));
             return jobSpecModel;
         }
@@ -197,9 +203,9 @@ public class JobRolesDAO {
             RoleMatrixModel roleMatrixModel = new RoleMatrixModel(rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobRoleID"));
             roleMatrixModels.add(roleMatrixModel);
         }
-        if (roleMatrixModels.isEmpty()){
+        if (roleMatrixModels.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return roleMatrixModels;
         }
     }
@@ -212,7 +218,7 @@ public class JobRolesDAO {
         preparedStatement.setString(1, bandLevel);
 
         ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingName"), rs.getString("trainingLink"), rs.getString("trainingGroup"));
             training.add(jobTraining);
         }

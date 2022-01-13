@@ -27,7 +27,7 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
 
     @Override
     public void initialize(final Bootstrap<WebServiceConfiguration> bootstrap) {
-        // TODO: application initialization
+        //TODO:. application initialization
         bootstrap.addBundle(new SwaggerBundle<WebServiceConfiguration>() {
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(WebServiceConfiguration configuration) {
@@ -39,7 +39,7 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
     @Override
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        //TODO:. implement application
 
         environment.jersey().register(new AuthDynamicFeature(
                 new OAuthCredentialAuthFilter.Builder<User>()
