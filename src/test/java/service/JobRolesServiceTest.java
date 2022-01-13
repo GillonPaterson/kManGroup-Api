@@ -302,7 +302,7 @@ class JobRolesServiceTest {
 
 
     @Test
-    public void testServiceAddRoleValidatorReturnsErrorForSpecBeingTooLong() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForSpecBeingTooLong() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -389,7 +389,7 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void testServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
