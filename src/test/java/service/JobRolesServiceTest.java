@@ -338,7 +338,7 @@ class JobRolesServiceTest {
 
     @Test
 
-    public void TestServiceAddRoleValidatorReturnsErrorForRespBeingTooLong() throws SQLException {
+    public void testServiceAddRoleValidatorReturnsErrorForRespBeingTooLong() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -355,7 +355,7 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException {
+    public void testServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -389,7 +389,7 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException{
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
