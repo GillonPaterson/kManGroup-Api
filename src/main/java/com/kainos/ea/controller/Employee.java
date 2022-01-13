@@ -1,4 +1,5 @@
 package com.kainos.ea.controller;
+
 //models import
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.EditJobRole;
