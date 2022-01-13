@@ -156,8 +156,7 @@ public class Employee {
 
             if (x == 1) {
                 return Response.status(HttpStatus.CREATED_201).build();
-            }
-            else {
+            } else {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
             }
         } catch (SQLException e) {
