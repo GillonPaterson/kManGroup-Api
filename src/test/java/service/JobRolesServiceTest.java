@@ -2,27 +2,20 @@ package service;
 
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
-import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.*;
-import com.kainos.ea.service.CompetencyService;
 import com.kainos.ea.service.JobRolesService;
 import com.kainos.ea.util.DatabaseConnector;
-import com.kainos.ea.validator.CapabilityValidator;
 import com.kainos.ea.validator.JobRoleValidator;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import com.kainos.ea.service.CapabiltyService;
 
-import javax.annotation.meta.When;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JobRolesServiceTest {
     @Test
