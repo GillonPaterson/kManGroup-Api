@@ -9,7 +9,7 @@ public class Capabilities {
 
 
     @JsonCreator
-    public Capabilities(@JsonProperty("capabilityID") int capabilityID,@JsonProperty("capabilityName") String capabiltyName) {
+    public Capabilities(@JsonProperty("capabilityID") int capabilityID, @JsonProperty("capabilityName") String capabiltyName) {
         this.capabilityID = capabilityID;
         this.capabilityName = capabiltyName;
 

@@ -2,13 +2,10 @@ package util;
 
 import com.kainos.ea.util.OAuth2Authenticator;
 import com.kainos.ea.util.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,9 +14,9 @@ public class OAuth2AuthenticatorTest {
     //Will have to make a new one in 04/10/2129 as expires then
     //Should store these securely
     String adminToken = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjUwNDE1MDA0Nzd9.XanyBYN7Lxe1kh54dBy5vgwV3owYFTr78GgE0EmMcFs";
-    String expiredToken= "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjE2NDE1MDA0Nzd9.mMHpvTbBQgDugSX7DlJ4pxopnvLiyFucX-Y2BmU-w34";
-    String nonAdminToken= "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjpmYWxzZSwiZXhwIjo1MDQxNTAwNDc3fQ.vZOAnZO5DSWHd17LyXF2zSot7GvkobpOCNJnIffnuKM";
-    String invalidToken= "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjUwNDE1MDA0Nzd9.oGJnhsJ2WQlrx9ispBx0cl7t7i1cQ8vcq_qzo_bfBB";
+    String expiredToken = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjE2NDE1MDA0Nzd9.mMHpvTbBQgDugSX7DlJ4pxopnvLiyFucX-Y2BmU-w34";
+    String nonAdminToken = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjpmYWxzZSwiZXhwIjo1MDQxNTAwNDc3fQ.vZOAnZO5DSWHd17LyXF2zSot7GvkobpOCNJnIffnuKM";
+    String invalidToken = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDE4OTg4NzcsInVzZXJuYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJleHAiOjUwNDE1MDA0Nzd9.oGJnhsJ2WQlrx9ispBx0cl7t7i1cQ8vcq_qzo_bfBB";
 
     //How to store securely but then how pipeline
 //    @BeforeAll
@@ -46,7 +43,7 @@ public class OAuth2AuthenticatorTest {
 //    }
 
     @Test
-    void testReturnsUserPrincipleObjectWithAdminWhenGivenAdminToken(){
+    void testReturnsUserPrincipleObjectWithAdminWhenGivenAdminToken() {
 
         Set<String> expectedRolesSet = new HashSet<>();
         expectedRolesSet.add("Admin");
@@ -63,7 +60,7 @@ public class OAuth2AuthenticatorTest {
     }
 
     @Test
-    void testReturnsUserPrincipleObjectWithNonAdminWhenGivenNonAdminToken(){
+    void testReturnsUserPrincipleObjectWithNonAdminWhenGivenNonAdminToken() {
 
         Set<String> expectedRolesSet = new HashSet<>();
 
@@ -79,7 +76,7 @@ public class OAuth2AuthenticatorTest {
     }
 
     @Test
-    void testReturnsNothingWhenGivenExpiredToken(){
+    void testReturnsNothingWhenGivenExpiredToken() {
 
         OAuth2Authenticator oAuth2Authenticator = new OAuth2Authenticator();
         Optional<User> returnedOptional = oAuth2Authenticator.authenticate(expiredToken);
@@ -88,7 +85,7 @@ public class OAuth2AuthenticatorTest {
     }
 
     @Test
-    void testReturnsNothingWhenGivenInvalidToken(){
+    void testReturnsNothingWhenGivenInvalidToken() {
 
         OAuth2Authenticator oAuth2Authenticator = new OAuth2Authenticator();
         Optional<User> returnedOptional = oAuth2Authenticator.authenticate(invalidToken);

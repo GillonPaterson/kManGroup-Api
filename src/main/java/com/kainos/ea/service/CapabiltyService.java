@@ -16,31 +16,30 @@ import java.util.List;
 
 public class CapabiltyService {
     JobRolesDAO jobRolesDAO = new JobRolesDAO();
-    BandLevelDAO bandLevelDAO = new BandLevelDAO();
     CapabilityDAO capabilityDAO = new CapabilityDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
     CapabilityValidator capabilityValidator = new CapabilityValidator();
 
-    public CapabiltyService(){
+    public CapabiltyService() {
 
     }
 
-    public CapabiltyService(CapabilityValidator capabilityValidator){
+    public CapabiltyService(CapabilityValidator capabilityValidator) {
         this.capabilityValidator = capabilityValidator;
 
     }
 
-    public CapabiltyService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector){
+    public CapabiltyService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector) {
         this.jobRolesDAO = jobRolesDAO;
         this.databaseConnector = databaseConnector;
     }
 
-    public CapabiltyService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
+    public CapabiltyService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector) {
         this.databaseConnector = databaseConnector;
         this.capabilityDAO = capabilityDAO;
     }
 
-    public CapabiltyService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector,CapabilityValidator capabilityValidator){
+    public CapabiltyService(CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector, CapabilityValidator capabilityValidator) {
         this.databaseConnector = databaseConnector;
         this.capabilityDAO = capabilityDAO;
         this.capabilityValidator = capabilityValidator;
@@ -61,21 +60,21 @@ public class CapabiltyService {
     public Integer createCapability(CapabilityRequest capabilityRequest) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         String var = capabilityValidator.addCapabilityValidator(capabilityRequest);
-        if (var != null){
+        if (var != null) {
             System.out.println(var);
             return 0;
-        }else{
+        } else {
             return capabilityDAO.addCapabilityToDatabase(connection, capabilityRequest);
         }
     }
 
     public Integer updateCapability(Capabilities capabilities) throws SQLException {
         Connection connection = databaseConnector.getConnection();
-        String var = capabilityValidator.UpdateCapabilityValidator(capabilities);
-        if (var != null){
+        String var = capabilityValidator.updateCapabilityValidator(capabilities);
+        if (var != null) {
             System.out.println(var);
             return 0;
-        }else{
+        } else {
             return capabilityDAO.updateCapability(connection, capabilities);
         }
     }

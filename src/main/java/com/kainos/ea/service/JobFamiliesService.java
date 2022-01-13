@@ -12,7 +12,7 @@ public class JobFamiliesService {
     JobFamiliesDAO jobFamiliesDAO = new JobFamiliesDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public JobFamiliesService(){
+    public JobFamiliesService() {
 
     }
 

@@ -33,7 +33,7 @@ public class LoginService {
         tokenHandler = new TokenHandler();
     }
 
-    public LoginService(LoginDAO loginDao, DatabaseConnector connector, Hasher hasher, TokenHandler tokenHandler){
+    public LoginService(LoginDAO loginDao, DatabaseConnector connector, Hasher hasher, TokenHandler tokenHandler) {
         this.connector = connector;
         this.loginDAO = loginDao;
         this.hasher = hasher;
@@ -46,18 +46,17 @@ public class LoginService {
         DatabaseUserModel user = loginDAO.getDetails(connection, loginInfo.getUsername());
         String givenPasswordHash = hasher.hashPassword(loginInfo.getPassword(), user.getSalt());
 
-        if(user.getPasswordHash().equals(givenPasswordHash)){
+        if (user.getPasswordHash().equals(givenPasswordHash)) {
             TokenSubject tokenSubject = new TokenSubject(user.getUsername(), user.isAdmin());
 
             String tokenString = tokenHandler.createToken(tokenSubject, TimeUnit.HOURS.toMillis(1));
             return tokenString;
-        }
-        else {
+        } else {
             throw new SQLException("Passwords don't match");
         }
     }
 
-    public void registerUser(UserRequestModel userInfo) throws Exception{
+    public void registerUser(UserRequestModel userInfo) throws Exception {
         Connection connection = connector.getConnection();
         DatabaseUserModel user = new DatabaseUserModel();
         user.setUsername(userInfo.getUsername());
@@ -66,10 +65,10 @@ public class LoginService {
         user.setAdmin(userInfo.getRoles()[0].equals("Admin"));
 
         System.out.println("Username: " + user.getUsername());
-        System.out.println("Password: "+ user.getPasswordHash());
-        System.out.println("Salt: "+ user.getSalt());
-        System.out.println("isAdmin: "+ user.isAdmin());
+        System.out.println("Password: " + user.getPasswordHash());
+        System.out.println("Salt: " + user.getSalt());
+        System.out.println("isAdmin: " + user.isAdmin());
 
-        loginDAO.registerUser(connection,user);
+        loginDAO.registerUser(connection, user);
     }
 }

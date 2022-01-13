@@ -4,14 +4,16 @@ public class Details {
     private String username;
     private String password;
 
-    public Details(){}
+    public Details() {
 
-    public Details(String username, String password){
+    }
+
+    public Details(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public boolean equals(Details a){
+    public boolean equals(Details a) {
         return (this.username.equals(a.getUsername()) && this.password.equals(a.getPassword()));
     }
 

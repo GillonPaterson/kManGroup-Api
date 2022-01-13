@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobFamiliesDAO {
-    public List<JobFamilyModel> getFamilies(Connection connection) throws SQLException{
+    public List<JobFamilyModel> getFamilies(Connection connection) throws SQLException {
         String query = "SELECT jobFamilyName, jobCapability FROM jobFamilies INNER JOIN capabilities using(jobCapabilityID)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         List<JobFamilyModel> jobFamilyModels = new ArrayList<>();
 
         ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             String capability = rs.getString("jobCapability");
             String jobFamily = rs.getString("jobFamilyName");
             boolean added = false;
-            for(int i = 0; i < jobFamilyModels.size(); i++){
-                if(jobFamilyModels.get(i).getJobCapability().equals(capability)){
+            for (int i = 0; i < jobFamilyModels.size(); i++) {
+                if (jobFamilyModels.get(i).getJobCapability().equals(capability)) {
                     jobFamilyModels.get(i).getJobFamily().add(jobFamily);
                     added = true;
                 }
@@ -31,7 +31,7 @@ public class JobFamiliesDAO {
                 List<String> jobFamilies = new ArrayList<>();
                 jobFamilies.add(jobFamily);
 
-                JobFamilyModel jobFamilyModel = new JobFamilyModel(capability, jobFamilies );
+                JobFamilyModel jobFamilyModel = new JobFamilyModel(capability, jobFamilies);
                 jobFamilyModels.add(jobFamilyModel);
             }
         }
@@ -50,9 +50,9 @@ public class JobFamiliesDAO {
         while (rs.next()) {
             families.add(rs.getString("jobFamilyName"));
         }
-        if(families.isEmpty()) {
+        if (families.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return families;
         }
     }
