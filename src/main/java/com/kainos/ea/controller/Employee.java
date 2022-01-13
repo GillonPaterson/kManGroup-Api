@@ -116,8 +116,7 @@ public class Employee {
 
         if (x != 0) {
             return Response.status(HttpStatus.CREATED_201).build();
-        }
-        else {
+        } else {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
@@ -133,14 +132,14 @@ public class Employee {
     @Path("/editJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editJobRole(@PathParam("jobRoleID") int jobRoleID, AddJobRole editJobRole) {
+    public Response editJobRole(@PathParam("jobRoleID")
+                                            int jobRoleID, AddJobRole editJobRole) {
         JobRolesService jobRolesService = new JobRolesService();
         int x = jobRolesService.editJobRole(editJobRole, jobRoleID);
 
         if (x == 1) {
             return Response.status(HttpStatus.CREATED_201).build();
-        }
-        else {
+        } else {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
@@ -161,8 +160,7 @@ public class Employee {
             else {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
             }
-        } catch (SQLException e)
-         {
+        } catch (SQLException e) {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
@@ -224,7 +222,7 @@ public class Employee {
             List<String> jobCapabilities = capabiltyService.getJobCapabilities();
             return Response.ok(jobCapabilities).build();
         } catch (SQLException ex) {
-            System.out.println("SQL EXCEPTION while getting job capabilities"
+            System.out.println("SQL EXCEPTION while getting job capability"
                     + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
