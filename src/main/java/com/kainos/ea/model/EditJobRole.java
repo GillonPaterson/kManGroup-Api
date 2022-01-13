@@ -41,17 +41,13 @@ public class EditJobRole {
         this.jobRole = jobRole;
     }
 
-    public String getJobSpec() {
-        return jobSpec;
-    }
+    public String getJobSpec() { return jobSpec; }
 
     public void setJobSpec(String jobSpec) {
         this.jobSpec = jobSpec;
     }
 
-    public String getJobBandLevel() {
-        return jobBandLevel;
-    }
+    public String getJobBandLevel() { return jobBandLevel; }
 
     public void setJobBandLevel(String jobBandLevel) {
         this.jobBandLevel = jobBandLevel;

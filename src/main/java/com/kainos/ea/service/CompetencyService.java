@@ -15,7 +15,7 @@ public class CompetencyService {
 
     }
 
-    public CompetencyService(CompetencyDAO competencyDAO, DatabaseConnector databaseConnector ){
+    public CompetencyService(CompetencyDAO competencyDAO, DatabaseConnector databaseConnector) {
         this.competencyDAO = competencyDAO;
         this.databaseConnector = databaseConnector;
 
@@ -24,7 +24,7 @@ public class CompetencyService {
 
     public Competency getComp(int jobRoleID) throws SQLException {
         Connection connection = databaseConnector.getConnection();
-        return competencyDAO.getJobCompFromDatabase(connection,jobRoleID);
+        return competencyDAO.getJobCompFromDatabase(connection, jobRoleID);
     }
 
 }

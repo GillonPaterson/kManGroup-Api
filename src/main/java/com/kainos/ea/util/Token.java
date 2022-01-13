@@ -1,22 +1,24 @@
 package com.kainos.ea.util;
 
 import com.kainos.ea.model.TokenSubject;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
+
 import java.util.Base64;
 import java.util.Date;
 
 public class Token {
     private static final String SECRET_KEY = "2w0lavt3CFAAqAY1z4q+LpZfCNW5gLH+udmMfi/Tl6g=";
 
-    public String createToken(TokenSubject subject, long lifeSpan){
+    public String createToken(TokenSubject subject, long lifeSpan) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        Date exp = new Date(nowMillis+lifeSpan);
+        Date exp = new Date(nowMillis + lifeSpan);
 
         SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(SECRET_KEY));
         String jws = Jwts.builder()

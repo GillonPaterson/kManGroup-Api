@@ -2,16 +2,19 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
-import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.data.JobRolesDAO;
-import com.kainos.ea.model.*;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.RoleMatrixResponseModel;
+import com.kainos.ea.model.RoleMatrixModel;
 import com.kainos.ea.util.DatabaseConnector;
 import com.kainos.ea.validator.JobRoleValidator;
-import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class JobRolesService {
@@ -22,22 +25,22 @@ public class JobRolesService {
     DatabaseConnector databaseConnector = new DatabaseConnector();
     JobRoleValidator jobRoleValidator = new JobRoleValidator();
 
-    public JobRolesService(){
+    public JobRolesService() {
 
     }
 
-    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector){
+    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector) {
         this.jobRolesDAO = jobRolesDAO;
         this.databaseConnector = databaseConnector;
     }
 
-    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector, JobRoleValidator jobRoleValidator){
+    public JobRolesService(JobRolesDAO jobRolesDAO, DatabaseConnector databaseConnector, JobRoleValidator jobRoleValidator) {
         this.databaseConnector = databaseConnector;
         this.jobRolesDAO = jobRolesDAO;
         this.jobRoleValidator = jobRoleValidator;
     }
 
-    public JobRolesService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector){
+    public JobRolesService(JobRolesDAO jobRolesDAO, BandLevelDAO bandLevelDAO, CapabilityDAO capabilityDAO, DatabaseConnector databaseConnector) {
         this.jobRolesDAO = jobRolesDAO;
         this.databaseConnector = databaseConnector;
         this.bandLevelDAO = bandLevelDAO;
@@ -66,10 +69,10 @@ public class JobRolesService {
         Connection connection = databaseConnector.getConnection();
         String var = jobRoleValidator.addJobRoleValidator(addJobRoles);
 
-        if (var != null){
+        if (var != null) {
             System.out.println(var);
             return 0;
-        }else{
+        } else {
             return jobRolesDAO.addJobRole(connection, addJobRoles);
         }
     }
@@ -78,10 +81,10 @@ public class JobRolesService {
         Connection connection = databaseConnector.getConnection();
         String var = jobRoleValidator.addJobRoleValidator(editJobRoles);
 
-        if (var != null){
+        if (var != null) {
             System.out.println(var);
             return 0;
-        }else{
+        } else {
             return jobRolesDAO.editJobRole(connection, editJobRoles, jobRoleID);
         }
     }

@@ -32,16 +32,16 @@ public class LoginDAO {
         return true;
     }
 
-    public User getDetails(Connection connection,String username) throws SQLException{
+    public User getDetails(Connection connection,String username) throws SQLException {
         String query = "SELECT * from users where username = ?";
         PreparedStatement statement = connection.prepareStatement(query);
 
-        statement.setString(1,username);
+        statement.setString(1, username);
 
         ResultSet rs = statement.executeQuery();
         User user = new User();
 
-        if (rs.next()){
+        if (rs.next()) {
             user.setUsername(rs.getString("username"));
             user.setPasswordHash(rs.getString("passwordHash"));
             user.setSalt(rs.getString("salt"));
@@ -51,11 +51,11 @@ public class LoginDAO {
         throw new SQLException("No username in database");
     }
 
-    public void registerUser(Connection connection, User user) throws SQLException{
+    public void registerUser(Connection connection, User user) throws SQLException {
         String query = "INSERT INTO users VALUES (? ,? ,?);";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1,user.getUsername());
+        statement.setString(1, user.getUsername());
         statement.setString(2, user.getPasswordHash());
         statement.setString(3, user.getSalt());
 

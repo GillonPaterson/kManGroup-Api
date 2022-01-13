@@ -3,9 +3,12 @@ package com.kainos.ea.data;
 import com.kainos.ea.model.Capabilities;
 import com.kainos.ea.model.CapabilityLead;
 import com.kainos.ea.model.CapabilityRequest;
-import com.kainos.ea.model.Competency;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +23,14 @@ public class CapabilityDAO {
         while (rs.next()) {
             capabilities.add(rs.getString("jobCapability"));
         }
-        if(capabilities.isEmpty()) {
+        if (capabilities.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return capabilities;
         }
     }
 
-    public List<CapabilityLead> getAllCapabilityleadsFromDataBase(Connection connection) throws SQLException{
+    public List<CapabilityLead> getAllCapabilityleadsFromDataBase(Connection connection) throws SQLException {
         List<CapabilityLead> leadList = new ArrayList<>();
         String query = "Select leadID, leadFname, leadSname, leadPhoto, leadMessage, capabilities.jobCapability from capabilityLead inner join capabilities using(jobCapabilityID)";
 
@@ -35,18 +38,17 @@ public class CapabilityDAO {
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            CapabilityLead capLead = new CapabilityLead(rs.getInt("leadID"),rs.getString("leadFname"),rs.getString("leadSname"),rs.getString("leadPhoto"),rs.getString("leadMessage"), rs.getString("jobCapability"));
+            CapabilityLead capLead = new CapabilityLead(rs.getInt("leadID"), rs.getString("leadFname"), rs.getString("leadSname"), rs.getString("leadPhoto"), rs.getString("leadMessage"), rs.getString("jobCapability"));
             leadList.add(capLead);
-        }
-        if(leadList.isEmpty()){
+        } if (leadList.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return leadList;
         }
 
     }
 
-    public CapabilityLead getCapabilityleadFromDataBase(Connection connection, int leadID) throws SQLException{
+    public CapabilityLead getCapabilityleadFromDataBase(Connection connection, int leadID) throws SQLException {
         String query = "Select leadID, leadFname, leadSname, leadPhoto, leadMessage, capabilities.jobCapability from capabilityLead inner join capabilities using(jobCapabilityID) where leadID = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -62,29 +64,29 @@ public class CapabilityDAO {
         throw new SQLException();
     }
 
-    public Integer addCapabilityToDatabase(Connection connection, CapabilityRequest capabilityRequest) throws SQLException{
+    public Integer addCapabilityToDatabase(Connection connection, CapabilityRequest capabilityRequest) throws SQLException {
         String query = "Insert into capabilities(jobCapability) values(?)";
-        try{
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, capabilityRequest.getCapabilityName());
 
             preparedStatement.executeUpdate();
 
-            try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (!generatedKeys.next()) {
                     throw new SQLException("create user failed");
                 }
                 return generatedKeys.getInt(1);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
     }
 
 
-    public List<Capabilities> getAllCapabilitiesFromDataBase(Connection connection) throws SQLException{
+    public List<Capabilities> getAllCapabilitiesFromDataBase(Connection connection) throws SQLException {
         String query = "Select jobCapabilityID, jobCapability from capabilities";
         List<Capabilities> capList = new ArrayList<>();
 
@@ -94,11 +96,9 @@ public class CapabilityDAO {
         while (rs.next()) {
             Capabilities cap = new Capabilities(rs.getInt("jobCapabilityID"),rs.getString("jobCapability"));
             capList.add(cap);
-        }
-
-        if(capList.isEmpty()){
+        } if (capList.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return capList;
         }
     }

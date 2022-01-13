@@ -9,13 +9,13 @@ public class Competency {
     private String bandLevel;
     private List<String> competencyStage;
 
-    public Competency(){
+    public Competency() {
 
     }
 
     @JsonCreator
-    public Competency(@JsonProperty("bandLevel") String bandLevel,@JsonProperty("competencyStage") List competencyStage) {
-        this.bandLevel= bandLevel;
+    public Competency(@JsonProperty("bandLevel") String bandLevel, @JsonProperty("competencyStage") List competencyStage) {
+        this.bandLevel = bandLevel;
         this.competencyStage = competencyStage;
 
     }

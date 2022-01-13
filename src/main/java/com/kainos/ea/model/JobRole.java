@@ -40,7 +40,9 @@ public class JobRole {
         return jobCapability;
     }
 
-    public void setJobCapability(String jobCapability) { this.jobCapability = jobCapability; }
+    public void setJobCapability(String jobCapability) {
+        this.jobCapability = jobCapability;
+    }
 
 
     public String getJobBandLevel() {

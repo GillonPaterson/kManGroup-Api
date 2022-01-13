@@ -9,10 +9,7 @@ import com.kainos.ea.util.Hasher;
 import com.kainos.ea.util.Token;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLOutput;
 import java.util.concurrent.TimeUnit;
-
 public class LoginService {
 
     private final LoginDAO loginDAO;
@@ -27,7 +24,7 @@ public class LoginService {
         token = new Token();
     }
 
-    public LoginService(LoginDAO loginDao, DatabaseConnector connector){
+    public LoginService(LoginDAO loginDao, DatabaseConnector connector) {
         this.connector = connector;
         this.loginDAO = loginDao;
         hasher = new Hasher();
@@ -38,19 +35,18 @@ public class LoginService {
 
         Connection connection = connector.getConnection();
         User user = loginDAO.getDetails(connection, loginInfo.getUsername());
-        if(user.getUsername() != null){
+        if (user.getUsername() != null) {
             String givenPasswordHash = hasher.hashPassword(loginInfo.getPassword(), user.getSalt());
 
-            if(user.getPasswordHash().equals(givenPasswordHash)){
+            if (user.getPasswordHash().equals(givenPasswordHash)) {
                 TokenSubject tokenSubject = new TokenSubject(user.getUsername(), user.isAdmin());
                 String tokenString = token.createToken(tokenSubject, TimeUnit.HOURS.toMillis(1));
                 return tokenString;
             }
-        }
-        return null;
+        } return null;
     }
 
-    public void registerUser(UserRequestModel userInfo) throws Exception{
+    public void registerUser(UserRequestModel userInfo) throws Exception {
         Connection connection = connector.getConnection();
         User user = new User();
         user.setUsername(userInfo.getUsername());
@@ -58,9 +54,9 @@ public class LoginService {
         user.setPasswordHash(hasher.hashPassword(userInfo.getPassword(), user.getSalt()));
 
         System.out.println("Username: " + user.getUsername());
-        System.out.println("Password: "+ user.getPasswordHash());
-        System.out.println("Salt: "+ user.getSalt());
+        System.out.println("Password: " + user.getPasswordHash());
+        System.out.println("Salt: " + user.getSalt());
 
-        loginDAO.registerUser(connection,user);
+        loginDAO.registerUser(connection, user);
     }
 }

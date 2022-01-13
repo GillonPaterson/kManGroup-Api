@@ -3,7 +3,6 @@ package com.kainos.ea.util;
 import com.google.common.collect.ImmutableSet;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
-import io.dropwizard.auth.basic.BasicCredentials;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -26,11 +25,11 @@ public class OAuth2Authenticator implements Authenticator<String, User> {
                     .build()
                     .parseClaimsJws(token);
             Set<String> roles = ImmutableSet.of();
-            if(jws.getBody().get("isAdmin").equals("true")){
+            if (jws.getBody().get("isAdmin").equals("true")) {
                 roles = ImmutableSet.of("Admin");
             }
             return Optional.of(new User(jws.getBody().get("username").toString(), roles));
-        }catch (JwtException ex){
+        } catch (JwtException ex) {
             return Optional.empty();
         }
     }
