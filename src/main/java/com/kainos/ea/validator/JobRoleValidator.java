@@ -14,10 +14,10 @@ public class JobRoleValidator {
         String roleResp;
         String jobLink;
 
-            roleName = addJobRole.getJobRole();
-            roleSpec = addJobRole.getJobSpec();
-            roleResp = addJobRole.getJobResponsibilities();
-            jobLink = addJobRole.getJobLink();
+        roleName = addJobRole.getJobRole();
+        roleSpec = addJobRole.getJobSpec();
+        roleResp = addJobRole.getJobResponsibilities();
+        jobLink = addJobRole.getJobLink();
 
         if (roleName == "") {
             return "The role name must be entered";
@@ -43,8 +43,18 @@ public class JobRoleValidator {
             return "The job specification must be entered";
         }
 
-        if (roleResp == "") {
+
+        if (roleSpec.length() > 1000) {
+            return "The job specification cannot be anymore than 1000 characters";
+        }
+
+        if(roleResp == "") {
             return "The job responsibilities must be entered";
+        }
+
+
+        if (roleResp.length() > 1000) {
+            return "The job responsibilities cannot be anymore than 1000 characters";
         }
 
         if (jobLink.charAt(0) != 'h' || jobLink.charAt(1) != 't' || jobLink.charAt(2) != 't' || jobLink.charAt(3) != 'p' || jobLink.charAt(4) != 's' || jobLink.charAt(5) != ':' || jobLink.charAt(6) != '/' || jobLink.charAt(7) != '/') {
@@ -53,6 +63,10 @@ public class JobRoleValidator {
 
         if (jobLink.length() < 9) {
             return "A link must be entered";
+        }
+
+        if (jobLink.length() > 500) {
+            return "The link cannot be anymore than 500 characters";
         }
 
         return null;

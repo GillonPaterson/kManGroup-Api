@@ -300,6 +300,25 @@ class JobRolesServiceTest {
         assertEquals(0, result);
     }
 
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForSpecBeingTooLong() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestestWhat is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestest", "https://test", "test", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The job specification cannot be anymore than 1000 characters");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+
     @Test
     public void testServiceAddRoleValidatorReturnsErrorForRespNotBeingEntered() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -318,7 +337,25 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void testServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException {
+
+    public void TestServiceAddRoleValidatorReturnsErrorForRespBeingTooLong() throws SQLException {
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "test", "https://test", "What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestestWhat is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestest", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The job responsibilities cannot be anymore than 1000 characters");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -349,5 +386,22 @@ class JobRolesServiceTest {
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
         assertEquals(0, result);
+    }
+
+    @Test
+    public void TestServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException{
+        DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
+        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
+        JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
+
+        AddJobRole addJobRole = new AddJobRole("test", "test", "test", "https://What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestest", "", "test");
+        JobRolesService jobServ = new JobRolesService(jobRolesDAO, connector, jobRoleValidator);
+
+        Mockito.when(jobRoleValidator.addJobRoleValidator(addJobRole)).thenReturn("The link cannot be anymore than 500 characters");
+        int result = jobServ.addJobRole(addJobRole);
+
+        Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
+        System.out.println(result);
+        assertEquals(0,result);
     }
 }
