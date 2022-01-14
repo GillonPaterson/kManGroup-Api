@@ -52,6 +52,31 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
+    @Path("/getJobRolesFilter")
+    public Response getJobRolesFilter(
+            @QueryParam("capability") List<String> capabilityFilters,
+            @QueryParam("family") List<String> familyFilters,
+            @QueryParam("bandlevel") List<String> bandlevelFilters,
+            @QueryParam("jobrole-name") String nameFilter) {
+
+        try{
+            List<JobRole> jobRoles= jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandlevelFilters, nameFilter);
+            return Response.ok(jobRoles).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+
+
     @ApiOperation(authorizations = @Authorization("custom"),
             value = "Requires Authentication. Returns dashboard",
             response = Response.class

@@ -39,6 +39,205 @@ public class JobRolesDAO {
     }
 
 
+/*
+    public List<JobRole> getJobRolesFromDatabaseWithFilter(Connection connection, List<String> capabilityFilters, List<String> familyFilters, List<String> bandLevelFilters, String nameFilter) throws SQLException {
+        List<JobRole> jobRoles = new ArrayList<>();
+
+        String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where";
+
+        if(!capabilityFilters.isEmpty())
+        {
+            if(capabilityFilters.stream().count() > 1) {
+                for (int i = 0; i < capabilityFilters.stream().count(); i++)
+                    if(capabilityFilters.stream().count() == i + 1) {
+                        query = query + " jobCapability = '" + capabilityFilters.get(i) + "'";
+                    }else{
+                        query = query + " jobCapability = '" + capabilityFilters.get(i) + "' or";
+                    }
+            }else{
+                query = query + " jobCapability = '" + capabilityFilters.get(0) + "'";
+            }
+        }
+
+        if(!bandLevelFilters.isEmpty()) {
+            if(bandLevelFilters.stream().count() > 1) {
+                for (int i = 0; i < bandLevelFilters.stream().count(); i++)
+                    if(bandLevelFilters.stream().count() == i + 1) {
+                        query = query + " jobBandLevel = '" + bandLevelFilters.get(i) + "'";
+                    } else if(i == 0 && capabilityFilters.isEmpty()){
+                        query = query + " and jobBandLevel = '" + bandLevelFilters.get(0) + "' or";
+                    }else{
+                        query = query + " jobBandLevel = '" + bandLevelFilters.get(i) + "' or";
+                    }
+            }else{
+                if(!capabilityFilters.isEmpty()) {
+                    query = query + " and jobBandLevel = '" + bandLevelFilters.get(0) + "'";
+                }
+                else{
+                    query = query + " jobBandLevel = '" + bandLevelFilters.get(0) + "'";
+                }
+            }
+        }
+
+        if(!familyFilters.isEmpty()){
+            if(familyFilters.stream().count() > 1) {
+                for (int i = 0; i < familyFilters.stream().count(); i++)
+                    if(familyFilters.stream().count() == i + 1) {
+                        query = query + " jobFamilyName = '" + familyFilters.get(i) + "'";
+                    } else if(i == 0 && (capabilityFilters.isEmpty() || bandLevelFilters.isEmpty())){
+                        query = query + " and jobFamilyName = '" + familyFilters.get(0) + "' or";
+                    }else{
+                        query = query + " jobFamilyName = '" + familyFilters.get(i) + "' or";
+                    }
+            }else{
+                if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty()) {
+                    query = query + " and jobFamilyName = '" + familyFilters.get(0) + "'";
+                }
+                else{
+                    query = query + " jobFamilyName = '" + familyFilters.get(0) +"'";
+                }
+            }
+        }
+
+        if(nameFilter != null){
+            if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty() || !familyFilters.isEmpty()) {
+                query = query + " and jobRole LIKE '%" + nameFilter + "%'";
+            }
+            else{
+                query = query + " jobRole LIKE '%" + nameFilter + "%'";
+            }
+        }
+
+        System.out.println(query);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, "hi");
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"));
+            jobRoles.add(jobRole);
+        }
+        return jobRoles;
+    }
+
+ */
+
+
+    public List<JobRole> getJobRolesFromDatabaseWithFilter(Connection connection, List<String> capabilityFilters, List<String> familyFilters, List<String> bandLevelFilters, String nameFilter) throws SQLException {
+        List<JobRole> jobRoles = new ArrayList<>();
+
+        String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where";
+
+        if(!capabilityFilters.isEmpty())
+        {
+            if(capabilityFilters.stream().count() > 1) {
+                for (int i = 0; i < capabilityFilters.stream().count(); i++)
+                    if(capabilityFilters.stream().count() == i + 1) {
+                        query = query + " jobCapability = ?";
+                    }else{
+                        query = query + " jobCapability = ? or";
+                    }
+            }else{
+                query = query + " jobCapability = ?";
+            }
+        }
+
+        if(!bandLevelFilters.isEmpty()) {
+            if(bandLevelFilters.stream().count() > 1) {
+                for (int i = 0; i < bandLevelFilters.stream().count(); i++)
+                    if(bandLevelFilters.stream().count() == i + 1) {
+                        query = query + " jobBandLevel = ?";
+                    } else if(i == 0 && capabilityFilters.isEmpty()){
+                        query = query + " and jobBandLevel = ? or";
+                    }else{
+                        query = query + " jobBandLevel = ? or";
+                    }
+            }else{
+                if(!capabilityFilters.isEmpty()) {
+                    query = query + " and jobBandLevel = ?";
+                }
+                else{
+                    query = query + " jobBandLevel = ?";
+                }
+            }
+        }
+
+        if(!familyFilters.isEmpty()){
+            if(familyFilters.stream().count() > 1) {
+                for (int i = 0; i < familyFilters.stream().count(); i++)
+                    if(familyFilters.stream().count() == i + 1) {
+                        query = query + " jobFamilyName = ?";
+                    } else if(i == 0 && (capabilityFilters.isEmpty() || bandLevelFilters.isEmpty())){
+                        query = query + " and jobFamilyName = ? or";
+                    }else{
+                        query = query + " jobFamilyName = ? or";
+                    }
+            }else{
+                if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty()) {
+                    query = query + " and jobFamilyName = ?";
+                }
+                else{
+                    query = query + " jobFamilyName = ?";
+                }
+            }
+        }
+
+        if(nameFilter != null){
+            if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty() || !familyFilters.isEmpty()) {
+                query = query + " and jobRole LIKE ?";
+            }
+            else{
+                query = query + " jobRole LIKE ?";
+            }
+        }
+
+        System.out.println(query);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        int index =  0;
+
+        if(!capabilityFilters.isEmpty())
+        {
+            for (int i = 0; i < capabilityFilters.stream().count(); i++) {
+                index++;
+                preparedStatement.setString(index, capabilityFilters.get(i));
+            }
+        }
+
+        if(!bandLevelFilters.isEmpty())
+        {
+            for (int i = 0; i < bandLevelFilters.stream().count(); i++) {
+                index++;
+                preparedStatement.setString(index, bandLevelFilters.get(i));
+            }
+        }
+
+        if(!familyFilters.isEmpty())
+        {
+            for (int i = 0; i < familyFilters.stream().count(); i++) {
+                index++;
+                preparedStatement.setString(index, familyFilters.get(i));
+            }
+        }
+
+        if(nameFilter != null)
+        {
+            index++;
+            preparedStatement.setString(index, "%" + nameFilter + "%");
+        }
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"));
+            jobRoles.add(jobRole);
+        }
+        return jobRoles;
+    }
+
+
+
 
     public Integer addJobRole(Connection connection, AddJobRole addJobRole){
         int bandLevelID = 0;

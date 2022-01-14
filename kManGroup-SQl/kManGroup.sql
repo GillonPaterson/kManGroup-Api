@@ -261,6 +261,10 @@ insert into jobRoles(jobRole, jobBandLevelID, jobSpec, jobLink, jobResponsibilit
 
 
 select * from jobRoles;
-delete from jobRoles where jobRoleID > 64;
+delete from jobRoles where jobRoleID > 81;
+
+
+SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) 
+-- where jobCapability = 'Engineering' and jobBandLevel = 'Associate' and jobFamilyName = 'Engineering' and jobRole LIKE '%Engineer%'
 
 

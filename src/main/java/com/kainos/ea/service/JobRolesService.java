@@ -50,6 +50,12 @@ public class JobRolesService {
     }
 
 
+    public List<JobRole> getJobRolesFilter(List<String> capabilityFilters, List<String> bandLevelFilters, List<String> familyFilters, String nameFilter) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, bandLevelFilters, familyFilters, nameFilter);
+    }
+
+
     public EditJobRole getJobRole(int jobRoleID) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobRoleFromDatabase(connection, jobRoleID);
