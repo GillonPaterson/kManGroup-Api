@@ -49,7 +49,6 @@ public class JobRolesDAO {
     }
 
 
-
     public Integer addJobRole(Connection connection, AddJobRole addJobRole) {
         int bandLevelID = 0;
         int jobFamilyID = 0;
@@ -161,7 +160,7 @@ public class JobRolesDAO {
     public Integer deleteJobRole(Connection connection, int jobRoleID) {
 
         String query = "DELETE FROM jobRoles where jobRoleID = ?";
-        try  {
+        try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, jobRoleID);
 
@@ -173,7 +172,6 @@ public class JobRolesDAO {
             return -1;
         }
     }
-
 
 
     public JobSpecModel getJobSpecFromDatabase(Connection connection, int jobRoleID) throws SQLException {
@@ -209,20 +207,4 @@ public class JobRolesDAO {
             return roleMatrixModels;
         }
     }
-
-
-    public List<JobTraining> getJobTrainingFromDatabase(Connection connection, String bandLevel) throws SQLException {
-        List<JobTraining> training = new ArrayList<>();
-        String query = "SELECT bandLevels.jobBandLevel, training.trainingName, training.trainingLink, training.trainingGroup FROM bandLevels inner join bandLevelsTraining using(jobBandLevelID) inner join training using(trainingID) WHERE (bandLevels.jobBandLevel = ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, bandLevel);
-
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            JobTraining jobTraining = new JobTraining(rs.getString("jobBandLevel"), rs.getString("trainingName"), rs.getString("trainingLink"), rs.getString("trainingGroup"));
-            training.add(jobTraining);
-        }
-        return training;
-    }
-
 }
