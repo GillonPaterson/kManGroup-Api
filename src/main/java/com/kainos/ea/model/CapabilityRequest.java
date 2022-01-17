@@ -3,14 +3,12 @@ package com.kainos.ea.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class CapabilityRequest {
     private String capabilityName;
 
 
     @JsonCreator
-    public CapabilityRequest(@JsonProperty("capabiltyName") String capabiltyName) {
+    public CapabilityRequest(@JsonProperty("capabilityName") String capabilityName) {
         this.capabilityName= capabilityName;
     }
 

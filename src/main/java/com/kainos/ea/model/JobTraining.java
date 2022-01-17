@@ -10,11 +10,11 @@ public class JobTraining {
     private String trainingGroup;
 
     @JsonCreator
-    public JobTraining(@JsonProperty("jobBandLevel") String JobBandLevel, @JsonProperty("trainingName") String TrainingName, @JsonProperty("trainingLink") String TrainingLink, @JsonProperty("trainingGroup") String TrainingGroup) {
-        this.setJobBandLevel(JobBandLevel);
-        this.setTrainingName(TrainingName);
-        this.setTrainingLink(TrainingLink);
-        this.setTrainingGroup(TrainingGroup);
+    public JobTraining(@JsonProperty("jobBandLevel") String jobBandLevel, @JsonProperty("trainingName") String trainingName, @JsonProperty("trainingLink") String trainingLink, @JsonProperty("trainingGroup") String trainingGroup) {
+        this.setJobBandLevel(jobBandLevel);
+        this.setTrainingName(trainingName);
+        this.setTrainingLink(trainingLink);
+        this.setTrainingGroup(trainingGroup);
     }
 
     public String getJobBandLevel() {

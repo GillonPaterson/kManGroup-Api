@@ -1,6 +1,6 @@
 package com.kainos.ea;
 
-import com.kainos.ea.controller.Employee;
+import com.kainos.ea.controller.*;
 import com.kainos.ea.util.CoreAuthorizer;
 import com.kainos.ea.util.OAuth2Authenticator;
 import com.kainos.ea.util.User;
@@ -27,7 +27,7 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
 
     @Override
     public void initialize(final Bootstrap<WebServiceConfiguration> bootstrap) {
-        // TODO: application initialization
+        //TODO:. application initialization
         bootstrap.addBundle(new SwaggerBundle<WebServiceConfiguration>() {
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(WebServiceConfiguration configuration) {
@@ -39,7 +39,7 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
     @Override
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        //TODO:. implement application
 
         environment.jersey().register(new AuthDynamicFeature(
                 new OAuthCredentialAuthFilter.Builder<User>()
@@ -51,7 +51,14 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
         //If you want to use @Auth to inject a custom Principal type into your resource
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
-        environment.jersey().register(new Employee());
+        environment.jersey().register(new Login());
+        environment.jersey().register(new BandLevel());
+        environment.jersey().register(new Capability());
+        environment.jersey().register(new Competency());
+        environment.jersey().register(new JobFamilies());
+        environment.jersey().register(new JobRoles());
+        environment.jersey().register(new Training());
+        environment.jersey().register(new Login());
     }
 
 }

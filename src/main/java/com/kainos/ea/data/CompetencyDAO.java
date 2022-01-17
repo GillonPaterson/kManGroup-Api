@@ -1,12 +1,7 @@
 package com.kainos.ea.data;
 
-import com.kainos.ea.data.BandLevelDAO;
-import com.kainos.ea.data.CapabilityDAO;
-import com.kainos.ea.data.JobRolesDAO;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.CompetencyData;
-import com.kainos.ea.util.DatabaseConnector;
-import com.kainos.ea.validator.CapabilityValidator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,11 +25,11 @@ public class CompetencyDAO {
             System.out.println(competencyStage);
         }
 
-        Competency competency = new Competency(jobBandLevel,competencyStage);
+        Competency competency = new Competency(jobBandLevel, competencyStage);
 
-        if (competencyStage.isEmpty()){
+        if (competencyStage.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return competency;
         }
     }

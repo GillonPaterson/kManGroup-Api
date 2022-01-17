@@ -1,0 +1,4 @@
+{
+  "ignore-errors": ["Could-not-parse",
+    "unmatched-parentheses"]
+}

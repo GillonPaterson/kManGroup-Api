@@ -5,7 +5,7 @@ import com.kainos.ea.model.CapabilityRequest;
 
 public class CapabilityValidator {
 
-    public String addCapabilityValidator(CapabilityRequest capabilityRequest){
+    public String addCapabilityValidator(CapabilityRequest capabilityRequest) {
         String capName = capabilityRequest.getCapabilityName();
 
         if (capName == "" | capName.length() > 20) {
@@ -13,8 +13,8 @@ public class CapabilityValidator {
         }
         char[] chars = capName.toCharArray();
         System.out.println(chars);
-        for(int i = 0; i < chars.length; i++){
-            if(Character.isDigit(chars[i])){
+        for (int i = 0; i < chars.length; i++) {
+            if (Character.isDigit(chars[i])) {
                 return "capability name cannot contain numbers";
 
             }
@@ -27,7 +27,7 @@ public class CapabilityValidator {
 
     }
 
-    public String UpdateCapabilityValidator(Capabilities capabilities){
+    public String updateCapabilityValidator(Capabilities capabilities) {
         String capName = capabilities.getCapabilityName();
 
         if (capName == "" | capName.length() > 20) {
@@ -35,8 +35,8 @@ public class CapabilityValidator {
         }
         char[] chars = capName.toCharArray();
         System.out.println(chars);
-        for(int i = 0; i < chars.length; i++){
-            if(Character.isDigit(chars[i])){
+        for (int i = 0; i < chars.length; i++) {
+            if (Character.isDigit(chars[i])) {
                 return "capability name cannot contain numbers";
 
             }

@@ -25,7 +25,7 @@ public class CapabilityServiceTests {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        CapabilityLead lead1 = new CapabilityLead(1, "dave","boats","wow code is great","https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg","Engineering");
+        CapabilityLead lead1 = new CapabilityLead(1, "dave", "boats", "wow code is great", "https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg", "Engineering");
 
         CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
         Mockito.when(capabilityDAO.getCapabilityleadFromDataBase(connection, 1)).thenReturn(lead1);
@@ -45,8 +45,8 @@ public class CapabilityServiceTests {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        CapabilityLead lead1 = new CapabilityLead(1, "dave","boats","wow code is great","https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg","Engineering");
-        CapabilityLead lead2 = new CapabilityLead( 2, "Lee","Brown","i love Kainos ","https://cdn.vox-cdn.com/thumbor/BxA3f-dxx4UmGxOCNE_7P4V7fAs=/0x0:5157x3438/1200x800/filters:focal(880x1246:1704x2070)/cdn.vox-cdn.com/uploads/chorus_image/image/69106641/1201476988.0.jpg","Cyber Security");
+        CapabilityLead lead1 = new CapabilityLead(1, "dave", "boats", "wow code is great", "https://memegenerator.net/img/images/15109657/fat-warcraft-guy-from-south-park.jpg", "Engineering");
+        CapabilityLead lead2 = new CapabilityLead(2, "Lee", "Brown", "i love Kainos ", "https://cdn.vox-cdn.com/thumbor/BxA3f-dxx4UmGxOCNE_7P4V7fAs=/0x0:5157x3438/1200x800/filters:focal(880x1246:1704x2070)/cdn.vox-cdn.com/uploads/chorus_image/image/69106641/1201476988.0.jpg", "Cyber Security");
 
         List<CapabilityLead> leadList = new ArrayList<>();
         leadList.add(lead1);
@@ -65,7 +65,7 @@ public class CapabilityServiceTests {
     }
 
     @Test
-    public void TestServiceAddCapabilty() throws SQLException{
+    public void testServiceAddCapabilty() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -74,18 +74,18 @@ public class CapabilityServiceTests {
 
         CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
         CapabilityRequest capReq = new CapabilityRequest("Engineering");
-        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector,capabilityValidator);
+        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector, capabilityValidator);
 
         Mockito.when(capabilityValidator.addCapabilityValidator(capReq)).thenReturn(null);
         Mockito.when(capabilityDAO.addCapabilityToDatabase(connection, capReq)).thenReturn(20);
         int result = capServ.createCapability(capReq);
 
         Mockito.verify(capabilityDAO).addCapabilityToDatabase(connection, capReq);
-        assertEquals(20,result);
+        assertEquals(20, result);
     }
 
     @Test
-    public void TestServiceAddCapabiltyValidatorRetrunsErrorForNumbersInName() throws SQLException{
+    public void testServiceAddCapabiltyValidatorRetrunsErrorForNumbersInName() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -98,11 +98,11 @@ public class CapabilityServiceTests {
         int result = capServ.createCapability(capReq);
 
         Mockito.verify(capabilityValidator).addCapabilityValidator(capReq);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddCapabiltyValidatorRetrunsErrorForTooManyCharacters() throws SQLException{
+    public void testServiceAddCapabiltyValidatorRetrunsErrorForTooManyCharacters() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -115,11 +115,11 @@ public class CapabilityServiceTests {
         int result = capServ.createCapability(capReq);
 
         Mockito.verify(capabilityValidator).addCapabilityValidator(capReq);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddCapabiltyValidatorRetrunsErrorForSpaces() throws SQLException{
+    public void testServiceAddCapabiltyValidatorRetrunsErrorForSpaces() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -132,7 +132,7 @@ public class CapabilityServiceTests {
         int result = capServ.createCapability(capReq);
 
         Mockito.verify(capabilityValidator).addCapabilityValidator(capReq);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
@@ -141,8 +141,8 @@ public class CapabilityServiceTests {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        Capabilities cap1 = new Capabilities(1,"Engineering");
-        Capabilities cap2 = new Capabilities(2,"Cyber Security");
+        Capabilities cap1 = new Capabilities(1, "Engineering");
+        Capabilities cap2 = new Capabilities(2, "Cyber Security");
 
         List<Capabilities> caplist = new ArrayList<>();
         caplist.add(cap1);
@@ -161,58 +161,58 @@ public class CapabilityServiceTests {
     }
 
     @Test
-    public void TestServiceUpdateCapabiltyValidatorRetrunsErrorForNumbersInName() throws SQLException{
+    public void testServiceUpdateCapabiltyValidatorRetrunsErrorForNumbersInName() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
 
         CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
-        Capabilities capReq = new Capabilities(1,"Engineering");
+        Capabilities capReq = new Capabilities(1, "Engineering");
         CapabiltyService capServ = new CapabiltyService(capabilityValidator);
 
-        Mockito.when(capabilityValidator.UpdateCapabilityValidator(capReq)).thenReturn("capability name cannot contain numbers");
+        Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn("capability name cannot contain numbers");
         int result = capServ.updateCapability(capReq);
 
-        Mockito.verify(capabilityValidator).UpdateCapabilityValidator(capReq);
-        assertEquals(0,result);
+        Mockito.verify(capabilityValidator).updateCapabilityValidator(capReq);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceUpdateCapabiltyValidatorRetrunsErrorForTooManyCharacters() throws SQLException{
+    public void testServiceUpdateCapabiltyValidatorRetrunsErrorForTooManyCharacters() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
 
         CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
-        Capabilities capReq = new Capabilities(1,"fdnvjkfvbndfjkbngdfbvnvlkadsnfvlsdkvnsdvklsvndlsvsdklvnlskvnsdkvnsdnvklsvnksdnvkldsnvsdkvnsdlnvsd");
+        Capabilities capReq = new Capabilities(1, "fdnvjkfvbndfjkbngdfbvnvlkadsnfvlsdkvnsdvklsvndlsvsdklvnlskvnsdkvnsdnvklsvnksdnvkldsnvsdkvnsdlnvsd");
         CapabiltyService capServ = new CapabiltyService(capabilityValidator);
 
-        Mockito.when(capabilityValidator.UpdateCapabilityValidator(capReq)).thenReturn("capability name cannot be anymore than 20 characters");
+        Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn("capability name cannot be anymore than 20 characters");
         int result = capServ.updateCapability(capReq);
 
-        Mockito.verify(capabilityValidator).UpdateCapabilityValidator(capReq);
-        assertEquals(0,result);
+        Mockito.verify(capabilityValidator).updateCapabilityValidator(capReq);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceUpdateCapabiltyValidatorRetrunsErrorForSpaces() throws SQLException{
+    public void testServiceUpdateCapabiltyValidatorRetrunsErrorForSpaces() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
 
         CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
-        Capabilities capReq = new Capabilities(1," letters");
+        Capabilities capReq = new Capabilities(1, " letters");
         CapabiltyService capServ = new CapabiltyService(capabilityValidator);
 
-        Mockito.when(capabilityValidator.UpdateCapabilityValidator(capReq)).thenReturn("capability name cannot contain empty spaces");
+        Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn("capability name cannot contain empty spaces");
         int result = capServ.updateCapability(capReq);
 
-        Mockito.verify(capabilityValidator).UpdateCapabilityValidator(capReq);
-        assertEquals(0,result);
+        Mockito.verify(capabilityValidator).updateCapabilityValidator(capReq);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceUpdateCapabilty() throws SQLException{
+    public void testServiceUpdateCapabilty() throws SQLException {
 
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
@@ -220,15 +220,15 @@ public class CapabilityServiceTests {
         CapabilityValidator capabilityValidator = Mockito.mock(CapabilityValidator.class);
 
         CapabilityDAO capabilityDAO = Mockito.mock(CapabilityDAO.class);
-        Capabilities capReq = new Capabilities(1,"Engineering");
-        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector,capabilityValidator);
+        Capabilities capReq = new Capabilities(1, "Engineering");
+        CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector, capabilityValidator);
 
-        Mockito.when(capabilityValidator.UpdateCapabilityValidator(capReq)).thenReturn(null);
+        Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn(null);
         Mockito.when(capabilityDAO.updateCapability(connection, capReq)).thenReturn(20);
         int result = capServ.updateCapability(capReq);
 
         Mockito.verify(capabilityDAO).updateCapability(connection, capReq);
-        assertEquals(20,result);
+        assertEquals(20, result);
     }
 
 
