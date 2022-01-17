@@ -31,3 +31,7 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 
 1. You break it you fix it
 2. If Gillon did it and it doesn't work check his spelling
+
+### Contributing
+
+we aren't open to contributing sorry
