@@ -7,8 +7,8 @@ This is the API for the kManGroup which is an example of an API functionally it 
 ## How to start the WebService application
 
 1. Run `mvn clean install` to build your application.
-2. Start application with `java -jar target/kManGroup-Api-1.0-SNAPSHOT.jar server config.yml`
-3. To check that your application is running go to 'http://localhost:8080/swagger' that will allow you to ping your endpoints 
+2. Start application by going to the webServiceApplication and run it. 
+3. To check that your application is running go to 'http://localhost:8080/swagger' that will allow you to send requests to your endpoints 
 
 ##Testing
 
