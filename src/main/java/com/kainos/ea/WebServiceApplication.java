@@ -1,6 +1,6 @@
 package com.kainos.ea;
 
-import com.kainos.ea.controller.Employee;
+import com.kainos.ea.controller.*;
 import com.kainos.ea.util.CoreAuthorizer;
 import com.kainos.ea.util.OAuth2Authenticator;
 import com.kainos.ea.util.User;
@@ -51,7 +51,14 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
         //If you want to use @Auth to inject a custom Principal type into your resource
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
-        environment.jersey().register(new Employee());
+        environment.jersey().register(new Login());
+        environment.jersey().register(new BandLevel());
+        environment.jersey().register(new Capability());
+        environment.jersey().register(new Competency());
+        environment.jersey().register(new JobFamilies());
+        environment.jersey().register(new JobRoles());
+        environment.jersey().register(new Training());
+        environment.jersey().register(new Login());
     }
 
 }

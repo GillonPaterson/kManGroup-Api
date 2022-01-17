@@ -1,6 +1,7 @@
 package com.kainos.ea.data;
 
 import com.kainos.ea.model.Competency;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
