@@ -1,6 +1,5 @@
 package com.kainos.ea.data;
 
-import com.kainos.ea.model.UserRequestModel;
 import com.kainos.ea.model.DatabaseUserModel;
 
 import java.sql.Connection;

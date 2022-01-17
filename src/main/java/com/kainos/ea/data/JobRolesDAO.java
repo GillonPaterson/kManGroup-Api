@@ -5,7 +5,6 @@ import com.kainos.ea.model.AddJobRole;
 import com.kainos.ea.model.EditJobRole;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.model.RoleMatrixModel;
 
 import java.sql.Connection;

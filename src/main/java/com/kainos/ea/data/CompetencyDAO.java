@@ -3,7 +3,10 @@ package com.kainos.ea.data;
 import com.kainos.ea.model.Competency;
 import com.kainos.ea.model.CompetencyData;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +37,7 @@ public class CompetencyDAO {
         }
     }
 
-    public List<CompetencyData>getAllCompDataFromDatabase(Connection connection) throws SQLException {
+    public List<CompetencyData> getAllCompDataFromDatabase(Connection connection) throws SQLException {
 
         List<CompetencyData> competencyDataList = new ArrayList<>();
 
@@ -43,13 +46,13 @@ public class CompetencyDAO {
         ResultSet rs = preparedStatement.executeQuery();
 
         while (rs.next()) {
-            CompetencyData competencyData = new CompetencyData(rs.getInt("competencyDataID"),rs.getString("competencyStage"));
+            CompetencyData competencyData = new CompetencyData(rs.getInt("competencyDataID"), rs.getString("competencyStage"));
             competencyDataList.add(competencyData);
         }
         return competencyDataList;
     }
 
-    public boolean insertIntoCompetencies(Connection connection, int bandLevelID, int competencyDataID) throws SQLException{
+    public boolean insertIntoCompetencies(Connection connection, int bandLevelID, int competencyDataID) throws SQLException {
         String query = "INSERT INTO competencies (jobBandLevelID, competencyDataID) VALUES (?,?)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -57,11 +60,6 @@ public class CompetencyDAO {
         preparedStatement.setInt(2, competencyDataID);
 
         int count = preparedStatement.executeUpdate();
-        if(count > 0){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return count > 0;
     }
 }

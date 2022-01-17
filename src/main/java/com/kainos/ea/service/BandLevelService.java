@@ -6,7 +6,6 @@ import com.kainos.ea.data.TrainingDAO;
 import com.kainos.ea.model.BandLevelModel;
 import com.kainos.ea.model.CreateBandLevelRequestModel;
 import com.kainos.ea.util.DatabaseConnector;
-import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,7 +27,8 @@ public class BandLevelService {
         Connection connection = databaseConnector.getConnection();
         return bandLevelDAO.getBandLevelAndImportanceFromDatabase(connection);
     }
-    public void createBandLevel(CreateBandLevelRequestModel bandLevelInfo) throws SQLException{
+
+    public void createBandLevel(CreateBandLevelRequestModel bandLevelInfo) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         int importance = bandLevelInfo.getBandLevel().getImportance();
         int maxImportance = bandLevelDAO.getMaxImportance(connection);
@@ -39,10 +39,10 @@ public class BandLevelService {
 
         int bandLevelID = bandLevelDAO.insertBandLevelData(connection, bandLevelInfo.getBandLevel());
 
-        for (int i = 0; i < bandLevelInfo.getCompetencies().length; i ++){
-            competencyDAO.insertIntoCompetencies(connection,bandLevelID,bandLevelInfo.getCompetencies()[i]);
+        for (int i = 0; i < bandLevelInfo.getCompetencies().length; i++) {
+            competencyDAO.insertIntoCompetencies(connection, bandLevelID, bandLevelInfo.getCompetencies()[i]);
         }
-        for (int i = 0; i < bandLevelInfo.getTraining().length; i ++){
+        for (int i = 0; i < bandLevelInfo.getTraining().length; i++) {
             trainingDAO.insertIntoBandLevelsTraining(connection, bandLevelID, bandLevelInfo.getTraining()[i]);
         }
     }

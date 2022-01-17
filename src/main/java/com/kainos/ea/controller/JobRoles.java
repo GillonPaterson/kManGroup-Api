@@ -1,13 +1,27 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.model.*;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.RoleMatrixResponseModel;
 import com.kainos.ea.service.JobRolesService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;

@@ -9,7 +9,7 @@ public class CapabilityRequest {
 
     @JsonCreator
     public CapabilityRequest(@JsonProperty("capabilityName") String capabilityName) {
-        this.capabilityName= capabilityName;
+        this.capabilityName = capabilityName;
     }
 
     public String getCapabilityName() {

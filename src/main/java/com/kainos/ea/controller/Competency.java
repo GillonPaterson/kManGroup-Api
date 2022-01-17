@@ -2,7 +2,12 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.model.CompetencyData;
 import com.kainos.ea.service.CompetencyService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;
@@ -57,11 +62,11 @@ public class Competency {
     @GET
     @Path("/getAllCompetenciesData")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCompetenciesData(){
-        try{
+    public Response getAllCompetenciesData() {
+        try {
             List<CompetencyData> competencyData = competencyService.getComptencyData();
             return Response.ok(competencyData).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();

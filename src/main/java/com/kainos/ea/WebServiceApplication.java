@@ -1,6 +1,12 @@
 package com.kainos.ea;
 
-import com.kainos.ea.controller.*;
+import com.kainos.ea.controller.BandLevel;
+import com.kainos.ea.controller.Capability;
+import com.kainos.ea.controller.Competency;
+import com.kainos.ea.controller.JobFamilies;
+import com.kainos.ea.controller.JobRoles;
+import com.kainos.ea.controller.Login;
+import com.kainos.ea.controller.Training;
 import com.kainos.ea.util.CoreAuthorizer;
 import com.kainos.ea.util.OAuth2Authenticator;
 import com.kainos.ea.util.User;

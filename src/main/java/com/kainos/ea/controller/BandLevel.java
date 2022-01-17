@@ -2,12 +2,21 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.model.CreateBandLevelRequestModel;
 import com.kainos.ea.service.BandLevelService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -60,8 +69,8 @@ public class BandLevel {
         try {
             bandLevelService.createBandLevel(createBandLevelRequestModel);
             return Response.status(HttpStatus.CREATED_201).build();
-        }catch (SQLException ex) {
-            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("SQL EXECEPTION " + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
