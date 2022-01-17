@@ -1,18 +1,27 @@
 # WebService
 
-How to start the WebService application
+## Project Description 
 
+This is the API for the kManGroup which is an example of an API functionally it works but practically as a project that is useful not so much. 
 
-1. Run `mvn clean install` to build your application
-1. Start application with `java -jar target/kManGroup-Api-1.0-SNAPSHOT.jar server config.yml`
-1. To check that your application is running enter URL `http://localhost:8080`
+## How to start the WebService application
+
+1. Run `mvn clean install` to build your application.
+2. Start application with `java -jar target/kManGroup-Api-1.0-SNAPSHOT.jar server config.yml`
+3. To check that your application is running go to 'http://localhost:8080/swagger' that will allow you to ping your endpoints 
+
+##Testing
+
+java testing is kept in the tests folder and holds service and validator tests. 
 
 ## Health Check
 
-
 To see your applications health enter URL `http://localhost:8081/healthcheck`
 
-Gillon is a baddie ngl
+## WorkFlows
+
+All the config files for the CI pipeline are held in the .github/workflows and the config files for the linters are held in the .github/linters.
+
 
 ### Rules
 
