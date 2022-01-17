@@ -22,6 +22,10 @@ To see your applications health enter URL `http://localhost:8081/healthcheck`
 
 All the config files for the CI pipeline are held in the .github/workflows and the config files for the linters are held in the .github/linters.
 
+### workFlows we run
+
+1. superlinter
+2. pa11y 
 
 ### Rules
 
