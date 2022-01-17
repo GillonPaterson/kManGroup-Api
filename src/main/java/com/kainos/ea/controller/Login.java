@@ -2,7 +2,12 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.model.UserRequestModel;
 import com.kainos.ea.service.LoginService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.RolesAllowed;
