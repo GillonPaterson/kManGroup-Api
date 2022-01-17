@@ -15,6 +15,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 @SwaggerDefinition(securityDefinition = @SecurityDefinition(
         apiKeyAuthDefinitions = {
@@ -64,9 +65,10 @@ public class Employee {
             @QueryParam("capability") List<String> capabilityFilters,
             @QueryParam("family") List<String> familyFilters,
             @QueryParam("bandlevel") List<String> bandlevelFilters,
-            @QueryParam("jobrole-name") String nameFilter) {
+            @QueryParam("jobRole") String nameFilter) {
 
         try{
+            System.out.println(nameFilter);
             List<JobRole> jobRoles= jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandlevelFilters, nameFilter);
             return Response.ok(jobRoles).build();
         }catch (SQLException ex) {

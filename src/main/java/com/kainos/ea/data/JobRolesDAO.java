@@ -134,12 +134,14 @@ public class JobRolesDAO {
             if(capabilityFilters.stream().count() > 1) {
                 for (int i = 0; i < capabilityFilters.stream().count(); i++)
                     if(capabilityFilters.stream().count() == i + 1) {
-                        query = query + " jobCapability = ?";
+                        query = query + " jobCapability = ?)";
+                    }else if(i == 0){
+                        query = query + " (jobCapability = ? or";
                     }else{
                         query = query + " jobCapability = ? or";
                     }
             }else{
-                query = query + " jobCapability = ?";
+                query = query + " (jobCapability = ?)";
             }
         }
 
@@ -147,18 +149,18 @@ public class JobRolesDAO {
             if(bandLevelFilters.stream().count() > 1) {
                 for (int i = 0; i < bandLevelFilters.stream().count(); i++)
                     if(bandLevelFilters.stream().count() == i + 1) {
-                        query = query + " jobBandLevel = ?";
-                    } else if(i == 0 && capabilityFilters.isEmpty()){
-                        query = query + " and jobBandLevel = ? or";
+                        query = query + " jobBandLevel = ?)";
+                    } else if(i == 0 && !capabilityFilters.isEmpty()){
+                        query = query + " and (jobBandLevel = ? or";
                     }else{
                         query = query + " jobBandLevel = ? or";
                     }
             }else{
                 if(!capabilityFilters.isEmpty()) {
-                    query = query + " and jobBandLevel = ?";
+                    query = query + " and (jobBandLevel = ?)";
                 }
                 else{
-                    query = query + " jobBandLevel = ?";
+                    query = query + " (jobBandLevel = ?)";
                 }
             }
         }
@@ -167,32 +169,32 @@ public class JobRolesDAO {
             if(familyFilters.stream().count() > 1) {
                 for (int i = 0; i < familyFilters.stream().count(); i++)
                     if(familyFilters.stream().count() == i + 1) {
-                        query = query + " jobFamilyName = ?";
-                    } else if(i == 0 && (capabilityFilters.isEmpty() || bandLevelFilters.isEmpty())){
-                        query = query + " and jobFamilyName = ? or";
+                        query = query + " jobFamilyName = ?)";
+                    } else if(i == 0 && (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty())){
+                        query = query + " and (jobFamilyName = ? or";
                     }else{
                         query = query + " jobFamilyName = ? or";
                     }
             }else{
                 if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty()) {
-                    query = query + " and jobFamilyName = ?";
+                    query = query + " and (jobFamilyName = ?)";
                 }
                 else{
-                    query = query + " jobFamilyName = ?";
+                    query = query + " (jobFamilyName = ?)";
                 }
             }
         }
 
         if(nameFilter != null){
             if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty() || !familyFilters.isEmpty()) {
-                query = query + " and jobRole LIKE ?";
+                query = query + " and (jobRole LIKE ?)";
             }
             else{
-                query = query + " jobRole LIKE ?";
+                query = query + " (jobRole LIKE ?)";
             }
         }
 
-        System.out.println(query);
+
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -227,6 +229,8 @@ public class JobRolesDAO {
             index++;
             preparedStatement.setString(index, "%" + nameFilter + "%");
         }
+
+        System.out.println(preparedStatement);
 
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()){
