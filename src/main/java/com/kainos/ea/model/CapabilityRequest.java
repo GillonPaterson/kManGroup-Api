@@ -12,7 +12,6 @@ public class CapabilityRequest {
     @JsonCreator
     public CapabilityRequest(@JsonProperty("capabiltyName") String capabiltyName) {
         this.capabilityName= capabilityName;
-
     }
 
     public String getCapabilityName() {

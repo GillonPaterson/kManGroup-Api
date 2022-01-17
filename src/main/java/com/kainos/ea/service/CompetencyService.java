@@ -2,10 +2,12 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.model.Competency;
+import com.kainos.ea.model.CompetencyData;
 import com.kainos.ea.util.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class CompetencyService {
     CompetencyDAO competencyDAO = new CompetencyDAO();
@@ -26,5 +28,8 @@ public class CompetencyService {
         Connection connection = databaseConnector.getConnection();
         return competencyDAO.getJobCompFromDatabase(connection,jobRoleID);
     }
-
+    public List<CompetencyData> getComptencyData() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return competencyDAO.getAllCompDataFromDatabase(connection);
+    }
 }

@@ -1,14 +1,19 @@
 package com.kainos.ea.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class BandLevelModel {
     public String jobBandLevel;
     public int importance;
 
-    public BandLevelModel(String jobBandLevel, int importance) {
+    @JsonCreator
+    public BandLevelModel(@JsonProperty("jobBandLevel") String jobBandLevel,@JsonProperty("importance") int importance) {
         this.jobBandLevel = jobBandLevel;
         this.importance = importance;
     }
 
+    @JsonProperty("jobBandLevel")
     public String getJobBandLevel() {
         return jobBandLevel;
     }
@@ -17,6 +22,7 @@ public class BandLevelModel {
         this.jobBandLevel = jobBandLevel;
     }
 
+    @JsonProperty("importance")
     public int getImportance() {
         return importance;
     }

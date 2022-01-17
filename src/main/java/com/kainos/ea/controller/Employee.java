@@ -33,6 +33,7 @@ public class Employee {
     public CapabiltyService capabiltyService = new CapabiltyService();
     public CompetencyService competencyService = new CompetencyService();
     public BandLevelService bandLevelService = new BandLevelService();
+    public TrainingService trainingService = new TrainingService();
 
     @ApiOperation(authorizations = @Authorization("custom"),
             value = "Requires Authentication. Returns dashboard",
@@ -292,6 +293,25 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
+    @Path("/getTraining")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTraining(){
+        try{
+            List<TrainingAddBandResponseModel> training= trainingService.getTraining();
+            return Response.ok(training).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -458,5 +478,43 @@ public class Employee {
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
 
     }
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
+    @Path("/getAllCompetenciesData")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCompetenciesData(){
+        try{
+            List<CompetencyData> competencyData = competencyService.getComptencyData();
+            return Response.ok(competencyData).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
 
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @RolesAllowed("Admin")
+    @POST
+    @Path("/createBandLevel")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createBandLevel(CreateBandLevelRequestModel createBandLevelRequestModel) {
+        System.out.println(createBandLevelRequestModel);
+        try {
+            bandLevelService.createBandLevel(createBandLevelRequestModel);
+            return Response.status(HttpStatus.CREATED_201).build();
+        }catch (SQLException ex) {
+            System.out.println("SQL EXECEPTION "+ ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
 }
