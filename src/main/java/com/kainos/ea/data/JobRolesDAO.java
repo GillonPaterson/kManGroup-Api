@@ -5,7 +5,6 @@ import com.kainos.ea.model.AddJobRole;
 import com.kainos.ea.model.EditJobRole;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.model.RoleMatrixModel;
 
 import java.sql.Connection;
@@ -55,67 +54,66 @@ public class JobRolesDAO {
 
         String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where";
 
-        if(!capabilityFilters.isEmpty())
-        {
-            if(capabilityFilters.stream().count() > 1) {
-                for (int i = 0; i < capabilityFilters.stream().count(); i++)
-                    if(capabilityFilters.stream().count() == i + 1) {
+        if (!capabilityFilters.isEmpty()) {
+            if (capabilityFilters.stream().count() > 1) {
+                for (int i = 0; i < capabilityFilters.stream().count(); i++) {
+                    if (capabilityFilters.stream().count() == i + 1) {
                         query = query + " jobCapability = ?)";
-                    }else if(i == 0){
+                    } else if (i == 0) {
                         query = query + " (jobCapability = ? or";
-                    }else{
+                    } else {
                         query = query + " jobCapability = ? or";
                     }
-            }else{
+                }
+            } else {
                 query = query + " (jobCapability = ?)";
             }
         }
 
-        if(!bandLevelFilters.isEmpty()) {
-            if(bandLevelFilters.stream().count() > 1) {
-                for (int i = 0; i < bandLevelFilters.stream().count(); i++)
-                    if(bandLevelFilters.stream().count() == i + 1) {
+        if (!bandLevelFilters.isEmpty()) {
+            if (bandLevelFilters.stream().count() > 1) {
+                for (int i = 0; i < bandLevelFilters.stream().count(); i++) {
+                    if (bandLevelFilters.stream().count() == i + 1) {
                         query = query + " jobBandLevel = ?)";
-                    } else if(i == 0 && !capabilityFilters.isEmpty()){
+                    } else if (i == 0 && !capabilityFilters.isEmpty()) {
                         query = query + " and (jobBandLevel = ? or";
-                    }else{
+                    } else {
                         query = query + " jobBandLevel = ? or";
                     }
-            }else{
-                if(!capabilityFilters.isEmpty()) {
-                    query = query + " and (jobBandLevel = ?)";
                 }
-                else{
+            } else {
+                if (!capabilityFilters.isEmpty()) {
+                    query = query + " and (jobBandLevel = ?)";
+                } else {
                     query = query + " (jobBandLevel = ?)";
                 }
             }
         }
 
-        if(!familyFilters.isEmpty()){
-            if(familyFilters.stream().count() > 1) {
-                for (int i = 0; i < familyFilters.stream().count(); i++)
-                    if(familyFilters.stream().count() == i + 1) {
+        if (!familyFilters.isEmpty()) {
+            if (familyFilters.stream().count() > 1) {
+                for (int i = 0; i < familyFilters.stream().count(); i++) {
+                    if (familyFilters.stream().count() == i + 1) {
                         query = query + " jobFamilyName = ?)";
-                    } else if(i == 0 && (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty())){
+                    } else if (i == 0 && (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty())) {
                         query = query + " and (jobFamilyName = ? or";
-                    }else{
+                    } else {
                         query = query + " jobFamilyName = ? or";
                     }
-            }else{
-                if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty()) {
-                    query = query + " and (jobFamilyName = ?)";
                 }
-                else{
+            } else {
+                if (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty()) {
+                    query = query + " and (jobFamilyName = ?)";
+                } else {
                     query = query + " (jobFamilyName = ?)";
                 }
             }
         }
 
-        if(nameFilter != null){
-            if(!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty() || !familyFilters.isEmpty()) {
+        if (nameFilter != null) {
+            if (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty() || !familyFilters.isEmpty()) {
                 query = query + " and (jobRole LIKE ?)";
-            }
-            else{
+            } else {
                 query = query + " (jobRole LIKE ?)";
             }
         }
@@ -126,32 +124,28 @@ public class JobRolesDAO {
 
         int index =  0;
 
-        if(!capabilityFilters.isEmpty())
-        {
+        if (!capabilityFilters.isEmpty()) {
             for (int i = 0; i < capabilityFilters.stream().count(); i++) {
                 index++;
                 preparedStatement.setString(index, capabilityFilters.get(i));
             }
         }
 
-        if(!bandLevelFilters.isEmpty())
-        {
+        if (!bandLevelFilters.isEmpty()) {
             for (int i = 0; i < bandLevelFilters.stream().count(); i++) {
                 index++;
                 preparedStatement.setString(index, bandLevelFilters.get(i));
             }
         }
 
-        if(!familyFilters.isEmpty())
-        {
+        if (!familyFilters.isEmpty()) {
             for (int i = 0; i < familyFilters.stream().count(); i++) {
                 index++;
                 preparedStatement.setString(index, familyFilters.get(i));
             }
         }
 
-        if(nameFilter != null)
-        {
+        if (nameFilter != null) {
             index++;
             preparedStatement.setString(index, "%" + nameFilter + "%");
         }
@@ -159,7 +153,7 @@ public class JobRolesDAO {
         System.out.println(preparedStatement);
 
         ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             JobRole jobRole = new JobRole(rs.getInt("jobRoleID"), rs.getString("jobRole"), rs.getString("jobCapability"), rs.getString("jobBandLevel"), rs.getString("jobFamilyName"));
             jobRoles.add(jobRole);
         }

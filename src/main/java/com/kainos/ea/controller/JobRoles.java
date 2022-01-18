@@ -1,6 +1,10 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.model.*;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.RoleMatrixResponseModel;
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.*;
 import org.eclipse.jetty.http.HttpStatus;
@@ -58,11 +62,11 @@ public class JobRoles {
             @QueryParam("bandlevel") List<String> bandlevelFilters,
             @QueryParam("jobRole") String nameFilter) {
 
-        try{
+        try {
             System.out.println(nameFilter);
-            List<JobRole> jobRoles= jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandlevelFilters, nameFilter);
+            List<JobRole> jobRoles = jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandlevelFilters, nameFilter);
             return Response.ok(jobRoles).build();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
