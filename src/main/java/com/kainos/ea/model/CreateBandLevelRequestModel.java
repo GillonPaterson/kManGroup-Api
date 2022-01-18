@@ -11,7 +11,7 @@ public class CreateBandLevelRequestModel {
     private int[] competencies;
 
     @JsonCreator
-    public CreateBandLevelRequestModel(@JsonProperty("bandLevel") BandLevelModel bandLevel,@JsonProperty("training") int[] training,@JsonProperty("competencies") int[] competencies) {
+    public CreateBandLevelRequestModel(@JsonProperty("bandLevel") BandLevelModel bandLevel, @JsonProperty("training") int[] training, @JsonProperty("competencies") int[] competencies) {
         this.bandLevel = bandLevel;
         this.training = Arrays.stream(training).distinct().toArray();
         this.competencies = Arrays.stream(competencies).distinct().toArray();

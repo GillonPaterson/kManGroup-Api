@@ -31,7 +31,7 @@ public class BandLevelValidatorTest {
     CreateBandLevelRequestModel validModel;
 
     @BeforeAll
-    public static void setupTestClass() throws SQLException{
+    public static void setupTestClass() throws SQLException {
         DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
         Connection connection = Mockito.mock(Connection.class);
         Mockito.when(databaseConnector.getConnection()).thenReturn(connection);
@@ -54,10 +54,10 @@ public class BandLevelValidatorTest {
     }
 
     @Test
-    void testAddBandLevelValidatorValidIsValid() throws SQLException{
+    void testAddBandLevelValidatorValidIsValid() throws SQLException {
         try {
             bandLevelValidator.addBandLevelValidator(validModel, maxImportance);
-        }catch (ValidationException validationException){
+        } catch (ValidationException validationException) {
             fail("Valid not valid");
         }
     }
@@ -83,8 +83,8 @@ public class BandLevelValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1,4,5})
-    void testAddBandLevelValidatorImportanceValidEdgeCases(int importance) throws SQLException{
+    @ValueSource(ints = {1, 4, 5})
+    void testAddBandLevelValidatorImportanceValidEdgeCases(int importance) throws SQLException {
         validModel.getBandLevel().setImportance(importance);
         bandLevelValidator.addBandLevelValidator(validModel, maxImportance);
     }
@@ -122,7 +122,7 @@ public class BandLevelValidatorTest {
 
     @Test
     void testAddBandLevelValidatorTrainingArrayTooBig() {
-        int[] emptyArray = {1,2,3,4,5,6,7};
+        int[] emptyArray = {1, 2, 3, 4, 5, 6, 7};
         validModel.setTraining(emptyArray);
         Exception exception = assertThrows(ValidationException.class, () -> {
             bandLevelValidator.addBandLevelValidator(validModel, maxImportance);
@@ -132,7 +132,7 @@ public class BandLevelValidatorTest {
     }
 
     @Test
-        void testAddBandLevelValidatorCompetencyArrayEmpty() {
+    void testAddBandLevelValidatorCompetencyArrayEmpty() {
         int[] emptyArray = {};
         validModel.setCompetencies(emptyArray);
         Exception exception = assertThrows(ValidationException.class, () -> {
@@ -144,7 +144,7 @@ public class BandLevelValidatorTest {
 
     @Test
     void testAddBandLevelValidatorCompetencyArrayTooBig() {
-        int[] bigArray = {1,2,3,4,5,6,7};
+        int[] bigArray = {1, 2, 3, 4, 5, 6, 7};
         validModel.setCompetencies(bigArray);
         Exception exception = assertThrows(ValidationException.class, () -> {
             bandLevelValidator.addBandLevelValidator(validModel, maxImportance);

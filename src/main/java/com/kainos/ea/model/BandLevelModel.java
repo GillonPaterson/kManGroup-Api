@@ -8,7 +8,7 @@ public class BandLevelModel {
     public int importance;
 
     @JsonCreator
-    public BandLevelModel(@JsonProperty("jobBandLevel") String jobBandLevel,@JsonProperty("importance") int importance) {
+    public BandLevelModel(@JsonProperty("jobBandLevel") String jobBandLevel, @JsonProperty("importance") int importance) {
         this.jobBandLevel = jobBandLevel.trim();
         this.importance = importance;
     }

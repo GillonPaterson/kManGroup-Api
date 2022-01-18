@@ -28,6 +28,7 @@ public class CompetencyService {
         Connection connection = databaseConnector.getConnection();
         return competencyDAO.getJobCompFromDatabase(connection, jobRoleID);
     }
+
     public List<CompetencyData> getComptencyData() throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return competencyDAO.getAllCompDataFromDatabase(connection);

@@ -3,17 +3,14 @@ package service;
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
 import com.kainos.ea.data.JobRolesDAO;
-import com.kainos.ea.data.TrainingDAO;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.model.RoleMatrixModel;
 import com.kainos.ea.model.RoleMatrixResponseModel;
 import com.kainos.ea.model.AddJobRole;
 import com.kainos.ea.model.EditJobRole;
 
 import com.kainos.ea.service.JobRolesService;
-import com.kainos.ea.service.TrainingService;
 import com.kainos.ea.util.DatabaseConnector;
 import com.kainos.ea.validator.JobRoleValidator;
 import org.junit.jupiter.api.Test;
@@ -138,7 +135,6 @@ class JobRolesServiceTest {
         Mockito.verify(jobRolesDAO).addJobRole(connection, job);
         assertEquals(20, result);
     }
-
 
 
     @Test
@@ -290,7 +286,7 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
 
@@ -326,7 +322,7 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
@@ -377,6 +373,6 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 }
