@@ -4,6 +4,8 @@
 
 This is the API for the kManGroup which is an example of an API functionally it works but practically as a project that is useful not so much. Although this is the backend to the project that contains a Mysql database and a java Api.
 
+In this project we used java17
+
 ## How to start the WebService application
 
 1. Run `mvn clean install` to build your application.
