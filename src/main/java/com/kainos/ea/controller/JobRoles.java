@@ -1,6 +1,10 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.model.*;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.RoleMatrixResponseModel;
 import com.kainos.ea.service.JobRolesService;
 import io.swagger.annotations.*;
 import org.eclipse.jetty.http.HttpStatus;
@@ -38,6 +42,29 @@ public class JobRoles {
     public Response getJobRoles() {
         try {
             List<JobRole> jobRoles = jobRolesService.getJobRoles();
+            return Response.ok(jobRoles).build();
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
+    @Path("/getJobRolesFilter")
+    public Response getJobRolesFilter(
+            @QueryParam("capability") List<String> capabilityFilters,
+            @QueryParam("family") List<String> familyFilters,
+            @QueryParam("bandlevel") List<String> bandlevelFilters,
+            @QueryParam("jobRole") String nameFilter) {
+
+        try {
+            System.out.println(nameFilter);
+            List<JobRole> jobRoles = jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandlevelFilters, nameFilter);
             return Response.ok(jobRoles).build();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());

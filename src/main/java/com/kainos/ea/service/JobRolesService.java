@@ -8,7 +8,6 @@ import com.kainos.ea.model.AddJobRole;
 import com.kainos.ea.model.EditJobRole;
 import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
-import com.kainos.ea.model.JobTraining;
 import com.kainos.ea.model.RoleMatrixResponseModel;
 import com.kainos.ea.model.RoleMatrixModel;
 
@@ -52,6 +51,12 @@ public class JobRolesService {
     public List<JobRole> getJobRoles() throws SQLException {
         Connection connection = databaseConnector.getConnection();
         return jobRolesDAO.getJobRolesFromDatabase(connection);
+    }
+
+
+    public List<JobRole> getJobRolesFilter(List<String> capabilityFilters, List<String> bandLevelFilters, List<String> familyFilters, String nameFilter) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        return jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, bandLevelFilters, familyFilters, nameFilter);
     }
 
 
