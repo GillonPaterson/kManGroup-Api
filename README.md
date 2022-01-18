@@ -27,6 +27,11 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 1. superlinter -documentation-  https://github.com/github/super-linter
 2. pa11y -documentation- https://github.com/pa11y/pa11y
 
+### Projects Other Repos
+
+1. Frontend - https://github.com/GillonPaterson/kManGroupApp
+2. Performance Testing - https://github.com/GillonPaterson/gatling-tests
+
 ### Rules
 
 1. You break it you fix it
