@@ -5,13 +5,10 @@ import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.data.TrainingDAO;
 import com.kainos.ea.model.BandLevelModel;
 import com.kainos.ea.model.CreateBandLevelRequestModel;
-import com.kainos.ea.model.DatabaseUserModel;
 import com.kainos.ea.service.BandLevelService;
 import com.kainos.ea.util.DatabaseConnector;
 import com.kainos.ea.validator.BandLevelValidator;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
@@ -46,22 +43,22 @@ public class BandLevelServiceTest {
         Mockito.when(bandLevelDAO.insertBandLevelData(connection, validBandLevelModel)).thenReturn(99);
 
         CompetencyDAO competencyDAO = Mockito.mock(CompetencyDAO.class);
-        Mockito.when(competencyDAO.insertIntoCompetencies(eq(connection), eq(99),anyInt())).thenReturn(true);
+        Mockito.when(competencyDAO.insertIntoCompetencies(eq(connection), eq(99), anyInt())).thenReturn(true);
 
         TrainingDAO trainingDAO = Mockito.mock(TrainingDAO.class);
-        Mockito.when(trainingDAO.insertIntoBandLevelsTraining(eq(connection), eq(99),anyInt())).thenReturn(true);
+        Mockito.when(trainingDAO.insertIntoBandLevelsTraining(eq(connection), eq(99), anyInt())).thenReturn(true);
 
-        BandLevelService bandLevelService = new BandLevelService(bandLevelDAO,competencyDAO,trainingDAO,databaseConnector,bandLevelValidator);
+        BandLevelService bandLevelService = new BandLevelService(bandLevelDAO, competencyDAO, trainingDAO, databaseConnector, bandLevelValidator);
 
         bandLevelService.createBandLevel(validModel);
 
         Mockito.verify(databaseConnector).getConnection();
         Mockito.verify(bandLevelDAO).getMaxImportance(connection);
-        Mockito.verify(bandLevelValidator).addBandLevelValidator(validModel,4 );
+        Mockito.verify(bandLevelValidator).addBandLevelValidator(validModel, 4);
         Mockito.verify(bandLevelDAO, times(4)).updateImportance(eq(connection), anyInt());
 
         Mockito.verify(bandLevelDAO).insertBandLevelData(connection, validBandLevelModel);
-        Mockito.verify(competencyDAO, times(2)).insertIntoCompetencies(eq(connection), eq(99),anyInt());
-        Mockito.verify(trainingDAO, times(2)).insertIntoBandLevelsTraining(eq(connection), eq(99),anyInt());
+        Mockito.verify(competencyDAO, times(2)).insertIntoCompetencies(eq(connection), eq(99), anyInt());
+        Mockito.verify(trainingDAO, times(2)).insertIntoBandLevelsTraining(eq(connection), eq(99), anyInt());
     }
 }
