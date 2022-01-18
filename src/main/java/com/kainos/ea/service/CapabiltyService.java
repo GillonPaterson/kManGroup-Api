@@ -69,7 +69,6 @@ public class CapabiltyService {
     public boolean updateCapability(Capabilities capabilities) throws SQLException {
         Connection connection = databaseConnector.getConnection();
         String var = capabilityValidator.updateCapabilityValidator(capabilities);
-        System.out.println("here "+var);
         if (var == null) {
             System.out.println("in if");
             return capabilityDAO.updateCapability(connection, capabilities);

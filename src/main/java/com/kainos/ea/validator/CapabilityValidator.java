@@ -29,13 +29,11 @@ public class CapabilityValidator {
 
     public String updateCapabilityValidator(Capabilities capabilities) {
         String capName = capabilities.getCapabilityName();
-        System.out.println("val "+capName);
 
         if (capName == "" | capName.length() > 20) {
             return "capability name cannot be anymore than 20 characters";
         }
         char[] chars = capName.toCharArray();
-        System.out.println(chars);
         for (int i = 0; i < chars.length; i++) {
             if (Character.isDigit(chars[i])) {
                 return "capability name cannot contain numbers";
