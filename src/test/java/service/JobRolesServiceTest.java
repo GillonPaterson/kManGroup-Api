@@ -2,27 +2,30 @@ package service;
 
 import com.kainos.ea.data.BandLevelDAO;
 import com.kainos.ea.data.CapabilityDAO;
-import com.kainos.ea.data.CompetencyDAO;
 import com.kainos.ea.data.JobRolesDAO;
-import com.kainos.ea.model.*;
-import com.kainos.ea.service.CompetencyService;
+import com.kainos.ea.data.TrainingDAO;
+import com.kainos.ea.model.JobRole;
+import com.kainos.ea.model.JobSpecModel;
+import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.RoleMatrixModel;
+import com.kainos.ea.model.RoleMatrixResponseModel;
+import com.kainos.ea.model.AddJobRole;
+import com.kainos.ea.model.EditJobRole;
+
 import com.kainos.ea.service.JobRolesService;
+import com.kainos.ea.service.TrainingService;
 import com.kainos.ea.util.DatabaseConnector;
-import com.kainos.ea.validator.CapabilityValidator;
 import com.kainos.ea.validator.JobRoleValidator;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import com.kainos.ea.service.CapabiltyService;
 
-import javax.annotation.meta.When;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 class JobRolesServiceTest {
     @Test
@@ -31,7 +34,7 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate","Engineering");
+        JobRole jobRole1 = new JobRole(1, "Dev", "Engineering", "Associate", "Engineering");
         JobRole jobRole2 = new JobRole(2, "Tester", "Engineering", "Apprentice", "Engineering");
 
         List<JobRole> jobRoles = new ArrayList<>();
@@ -85,21 +88,21 @@ class JobRolesServiceTest {
         jobTraining.add(jt1);
         jobTraining.add(jt2);
 
-        JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobTrainingFromDatabase(connection, "Associate")).thenReturn(jobTraining);
+        TrainingDAO trainingDAO = Mockito.mock(TrainingDAO.class);
+        Mockito.when(trainingDAO.getJobTrainingFromDatabase(connection, "Associate")).thenReturn(jobTraining);
 
-        JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
-        List<JobTraining> returnedList = jobRolesService.getJobTraining("Associate");
+        TrainingService trainingService = new TrainingService(connector, trainingDAO);
+        List<JobTraining> returnedList = trainingService.getJobTraining("Associate");
 
         Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobTrainingFromDatabase(connection, "Associate");
+        Mockito.verify(trainingDAO).getJobTrainingFromDatabase(connection, "Associate");
 
         assertEquals(jobTraining, returnedList);
     }
 
 
     @Test
-    void testServiceCallsRightDAOAndReturnMatrix() throws SQLException{
+    void testServiceCallsRightDAOAndReturnMatrix() throws SQLException {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
@@ -137,14 +140,14 @@ class JobRolesServiceTest {
         Mockito.verify(jobRolesDAO).getJobRoleMatrixFromDatabase(connection);
 
         RoleMatrixResponseModel expected = new RoleMatrixResponseModel(roleMatrixModels, bandLevels, capabilities);
-        assertEquals(expected.roleMatrixModel,returnedResponse.roleMatrixModel);
-        assertEquals(expected.capability,returnedResponse.capability);
-        assertEquals(expected.bandLevel,returnedResponse.bandLevel);
+        assertEquals(expected.roleMatrixModel, returnedResponse.roleMatrixModel);
+        assertEquals(expected.capability, returnedResponse.capability);
+        assertEquals(expected.bandLevel, returnedResponse.bandLevel);
     }
 
 
     @Test
-    public void addJobRoleTest(){
+    public void addJobRoleTest() {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
@@ -160,7 +163,7 @@ class JobRolesServiceTest {
         int result = jobServ.addJobRole(job);
 
         Mockito.verify(jobRolesDAO).addJobRole(connection, job);
-        assertEquals(20,result);
+        assertEquals(20, result);
     }
 
 
@@ -171,7 +174,7 @@ class JobRolesServiceTest {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
 
-        EditJobRole jobRole1 = new EditJobRole(1, "Dev", "Engineering", "Associate","Engineering", "https://test", "test");
+        EditJobRole jobRole1 = new EditJobRole(1, "Dev", "Engineering", "Associate", "Engineering", "https://test", "test");
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         Mockito.when(jobRolesDAO.getJobRoleFromDatabase(connection, 1)).thenReturn(jobRole1);
@@ -186,7 +189,7 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void editJobRoleTest(){
+    public void editJobRoleTest() {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
@@ -207,7 +210,7 @@ class JobRolesServiceTest {
 
 
     @Test
-    public void deleteJobRoleTest(){
+    public void deleteJobRoleTest() {
         Connection connection = Mockito.mock(Connection.class);
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(connector.getConnection()).thenReturn(connection);
@@ -221,7 +224,7 @@ class JobRolesServiceTest {
 
         try {
             result = jobServ.deleteJobRole(1);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -232,7 +235,7 @@ class JobRolesServiceTest {
 
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForNumbersInName() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForNumbersInName() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -245,11 +248,11 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForTooManyCharacters() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForTooManyCharacters() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -262,11 +265,11 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForSpaces() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForSpaces() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -279,11 +282,11 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForSpecNotBeingEntered() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForSpecNotBeingEntered() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -296,12 +299,12 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForSpecBeingTooLong() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForSpecBeingTooLong() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -319,7 +322,7 @@ class JobRolesServiceTest {
 
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForRespNotBeingEntered() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForRespNotBeingEntered() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -332,11 +335,12 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForRespBeingTooLong() throws SQLException{
+
+    public void testServiceAddRoleValidatorReturnsErrorForRespBeingTooLong() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -353,7 +357,7 @@ class JobRolesServiceTest {
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForLinkNotBeingHTTPS() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -366,11 +370,11 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForLinkNotBeingLongerThan8() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForLinkNotBeingLongerThan8() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);
@@ -383,11 +387,11 @@ class JobRolesServiceTest {
 
         Mockito.verify(jobRoleValidator).addJobRoleValidator(addJobRole);
         System.out.println(result);
-        assertEquals(0,result);
+        assertEquals(0, result);
     }
 
     @Test
-    public void TestServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException{
+    public void testServiceAddRoleValidatorReturnsErrorForLinkBeingTooLong() throws SQLException {
         DatabaseConnector connector = Mockito.mock(DatabaseConnector.class);
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
         JobRoleValidator jobRoleValidator = Mockito.mock(JobRoleValidator.class);

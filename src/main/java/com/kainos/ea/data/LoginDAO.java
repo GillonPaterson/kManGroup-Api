@@ -9,39 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginDAO {
-    public Boolean checkDetails(Connection connection, UserRequestModel loginInfo) {
-//        try {
-//            PreparedStatement st = connection.prepareStatement("SELECT * FROM Details");
-//            List<Details> list = new ArrayList<>();
-//            ResultSet rs = st.executeQuery();
-//            while (rs.next()) {
-//                list.add(new Details(
-//                        rs.getString(1),
-//                        rs.getString(2)));
-//            }
-//            for (Details value : list) {
-//                if (details.equals(value)) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-        return true;
-    }
 
-    public DatabaseUserModel getDetails(Connection connection, String username) throws SQLException{
+    public DatabaseUserModel getDetails(Connection connection, String username) throws SQLException {
         String query = "SELECT * from users where username = ?";
         PreparedStatement statement = connection.prepareStatement(query);
 
-        statement.setString(1,username);
+        statement.setString(1, username);
 
         ResultSet rs = statement.executeQuery();
         DatabaseUserModel user = new DatabaseUserModel();
 
-        if (rs.next()){
+        if (rs.next()) {
             user.setUsername(rs.getString("username"));
             user.setPasswordHash(rs.getString("passwordHash"));
             user.setSalt(rs.getString("salt"));
@@ -51,11 +29,11 @@ public class LoginDAO {
         throw new SQLException("No username in database");
     }
 
-    public void registerUser(Connection connection, DatabaseUserModel user) throws SQLException{
+    public void registerUser(Connection connection, DatabaseUserModel user) throws SQLException {
         String query = "INSERT INTO users VALUES (? ,? ,?,?);";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1,user.getUsername());
+        statement.setString(1, user.getUsername());
         statement.setString(2, user.getPasswordHash());
         statement.setString(3, user.getSalt());
         statement.setBoolean(4, user.isAdmin());

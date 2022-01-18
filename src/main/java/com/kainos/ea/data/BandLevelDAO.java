@@ -18,9 +18,9 @@ public class BandLevelDAO {
         while (rs.next()) {
             bandLevels.add(rs.getString("jobBandLevel"));
         }
-        if(bandLevels.isEmpty()) {
+        if (bandLevels.isEmpty()) {
             throw new SQLException();
-        }else{
+        } else {
             return bandLevels;
         }
     }

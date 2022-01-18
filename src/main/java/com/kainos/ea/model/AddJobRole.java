@@ -12,8 +12,7 @@ public class AddJobRole {
     private String jobFamily;
 
     @JsonCreator
-    public AddJobRole()
-    {
+    public AddJobRole() {
 
     }
 
