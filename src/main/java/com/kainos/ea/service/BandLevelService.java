@@ -6,7 +6,9 @@ import com.kainos.ea.data.TrainingDAO;
 import com.kainos.ea.model.BandLevelModel;
 import com.kainos.ea.model.CreateBandLevelRequestModel;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.BandLevelValidator;
 
+import javax.validation.ValidationException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +19,18 @@ public class BandLevelService {
     CompetencyDAO competencyDAO = new CompetencyDAO();
     TrainingDAO trainingDAO = new TrainingDAO();
     DatabaseConnector databaseConnector = new DatabaseConnector();
+    BandLevelValidator validator = new BandLevelValidator();
+
+    public BandLevelService() {
+    }
+
+    public BandLevelService(BandLevelDAO bandLevelDAO, CompetencyDAO competencyDAO, TrainingDAO trainingDAO, DatabaseConnector databaseConnector, BandLevelValidator validator) {
+        this.bandLevelDAO = bandLevelDAO;
+        this.competencyDAO = competencyDAO;
+        this.trainingDAO = trainingDAO;
+        this.databaseConnector = databaseConnector;
+        this.validator = validator;
+    }
 
     public List<String> getJobBandLevels() throws SQLException {
         Connection connection = databaseConnector.getConnection();
@@ -28,10 +42,12 @@ public class BandLevelService {
         return bandLevelDAO.getBandLevelAndImportanceFromDatabase(connection);
     }
 
-    public void createBandLevel(CreateBandLevelRequestModel bandLevelInfo) throws SQLException {
+    public void createBandLevel(CreateBandLevelRequestModel bandLevelInfo) throws SQLException, ValidationException {
         Connection connection = databaseConnector.getConnection();
         int importance = bandLevelInfo.getBandLevel().getImportance();
         int maxImportance = bandLevelDAO.getMaxImportance(connection);
+
+        validator.addBandLevelValidator(bandLevelInfo, maxImportance);
 
         for (int i = maxImportance; i >= importance; i--) {
             bandLevelDAO.updateImportance(connection, i);

@@ -49,4 +49,20 @@ public class TrainingDAO {
         int count = preparedStatement.executeUpdate();
         return count > 0;
     }
+
+    public boolean checkTrainingID(Connection connection, int[] trainingIDs) throws SQLException {
+        String query = "SELECT COUNT(trainingID) from training where trainingID in (?";
+        for (int i = 1; i < trainingIDs.length; i++) {
+            query = query + ",?";
+        }
+        query = query + ")";
+        System.out.println(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (int i = 0; i < trainingIDs.length; i++) {
+            preparedStatement.setInt(i + 1, trainingIDs[i]);
+        }
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.next();
+        return rs.getInt(1) == trainingIDs.length;
+    }
 }

@@ -3,6 +3,8 @@ package com.kainos.ea.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
+
 public class CreateBandLevelRequestModel {
     private BandLevelModel bandLevel;
     private int[] training;
@@ -11,8 +13,8 @@ public class CreateBandLevelRequestModel {
     @JsonCreator
     public CreateBandLevelRequestModel(@JsonProperty("bandLevel") BandLevelModel bandLevel,@JsonProperty("training") int[] training,@JsonProperty("competencies") int[] competencies) {
         this.bandLevel = bandLevel;
-        this.training = training;
-        this.competencies = competencies;
+        this.training = Arrays.stream(training).distinct().toArray();
+        this.competencies = Arrays.stream(competencies).distinct().toArray();
     }
 
     @JsonProperty("bandLevel")

@@ -62,4 +62,21 @@ public class CompetencyDAO {
         int count = preparedStatement.executeUpdate();
         return count > 0;
     }
+
+    public boolean checkCompetencyID(Connection connection, int[] competencyIDs) throws SQLException {
+        String query = "SELECT COUNT(competencyDataID) from competenciesData where competencyDataID in (?";
+        for (int i = 1; i < competencyIDs.length; i++) {
+            query = query + ",?";
+        }
+        query = query + ")";
+        System.out.println(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (int i = 0; i < competencyIDs.length; i++) {
+            preparedStatement.setInt(i + 1, competencyIDs[i]);
+        }
+
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.next();
+        return rs.getInt(1) == competencyIDs.length;
+    }
 }

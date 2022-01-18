@@ -1,5 +1,6 @@
 package com.kainos.ea.controller;
 
+import com.kainos.ea.model.BandLevelModel;
 import com.kainos.ea.model.CreateBandLevelRequestModel;
 import com.kainos.ea.service.BandLevelService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -65,12 +67,32 @@ public class BandLevel {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBandLevel(CreateBandLevelRequestModel createBandLevelRequestModel) {
-        System.out.println(createBandLevelRequestModel);
         try {
             bandLevelService.createBandLevel(createBandLevelRequestModel);
             return Response.status(HttpStatus.CREATED_201).build();
         } catch (SQLException ex) {
             System.out.println("SQL EXECEPTION " + ex.getMessage());
+        } catch (ValidationException ex) {
+            System.out.println("Validation Exception " + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
+    @Path("/getJobBandLevelsAndImportance")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobBandLevelsAndImportance() {
+        try {
+            List<BandLevelModel> jobBandLevels = bandLevelService.getJobBandLevelsAndImportance();
+            return Response.ok(jobBandLevels).build();
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job band levels" + ex.getMessage());
         }
         return Response.status(HttpStatus.BAD_REQUEST_400).build();
     }
