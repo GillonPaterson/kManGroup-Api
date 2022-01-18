@@ -17,7 +17,7 @@ public class TokenHandlerTest {
 
         TokenHandler tokenHandler = new TokenHandler();
 
-        String token = tokenHandler.createToken(tokenSubject, 1000);
+        String token = tokenHandler.createToken(tokenSubject, 10000);
         Jws<Claims> claims = tokenHandler.decodeJWT(token);
 
         //If fails cause claims is null, means not decoding it, error, not verified or expired
