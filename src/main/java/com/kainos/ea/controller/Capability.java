@@ -2,6 +2,7 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.model.Capabilities;
 import com.kainos.ea.model.CapabilityLead;
+import com.kainos.ea.model.CapabilityName;
 import com.kainos.ea.model.CapabilityRequest;
 import com.kainos.ea.service.CapabiltyService;
 import io.swagger.annotations.*;
@@ -136,15 +137,18 @@ public class Capability {
             response = Response.class
     )
     @RolesAllowed("Admin")
-    @POST
-    @Path("/updateCapability")
+    @PUT
+    @Path("/updateCapability/{capabilityID}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateCapability(Capabilities capabilities) {
+    public Response updateCapability(@PathParam("capabilityID") int capabilityID, CapabilityName capabilityName) {
         try {
-            System.out.println(capabilities);
-            int var = capabiltyService.updateCapability(capabilities);
-            if (var == 0) {
+
+            System.out.println(capabilityName.getCapabilityname());
+            Capabilities capabilities = new Capabilities(capabilityID,capabilityName.getCapabilityname());
+
+            boolean var = capabiltyService.updateCapability(capabilities);
+            if (!var) {
                 return Response.status(HttpStatus.BAD_REQUEST_400).build();
             }
             return Response.status(HttpStatus.CREATED_201).build();

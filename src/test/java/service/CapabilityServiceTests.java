@@ -171,10 +171,10 @@ public class CapabilityServiceTests {
         CapabiltyService capServ = new CapabiltyService(capabilityValidator);
 
         Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn("capability name cannot contain numbers");
-        int result = capServ.updateCapability(capReq);
+        boolean result = capServ.updateCapability(capReq);
 
         Mockito.verify(capabilityValidator).updateCapabilityValidator(capReq);
-        assertEquals(0, result);
+        assertEquals(false, result);
     }
 
     @Test
@@ -188,10 +188,10 @@ public class CapabilityServiceTests {
         CapabiltyService capServ = new CapabiltyService(capabilityValidator);
 
         Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn("capability name cannot be anymore than 20 characters");
-        int result = capServ.updateCapability(capReq);
+        boolean result = capServ.updateCapability(capReq);
 
         Mockito.verify(capabilityValidator).updateCapabilityValidator(capReq);
-        assertEquals(0, result);
+        assertEquals(false, result);
     }
 
     @Test
@@ -205,10 +205,10 @@ public class CapabilityServiceTests {
         CapabiltyService capServ = new CapabiltyService(capabilityValidator);
 
         Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn("capability name cannot contain empty spaces");
-        int result = capServ.updateCapability(capReq);
+        boolean result = capServ.updateCapability(capReq);
 
         Mockito.verify(capabilityValidator).updateCapabilityValidator(capReq);
-        assertEquals(0, result);
+        assertEquals(false, result);
     }
 
     @Test
@@ -224,11 +224,11 @@ public class CapabilityServiceTests {
         CapabiltyService capServ = new CapabiltyService(capabilityDAO, connector, capabilityValidator);
 
         Mockito.when(capabilityValidator.updateCapabilityValidator(capReq)).thenReturn(null);
-        Mockito.when(capabilityDAO.updateCapability(connection, capReq)).thenReturn(20);
-        int result = capServ.updateCapability(capReq);
+        Mockito.when(capabilityDAO.updateCapability(connection, capReq)).thenReturn(true);
+        boolean result = capServ.updateCapability(capReq);
 
         Mockito.verify(capabilityDAO).updateCapability(connection, capReq);
-        assertEquals(20, result);
+        assertEquals(true, result);
     }
 
 
