@@ -60,6 +60,29 @@ public class JobRoles {
     )
     @PermitAll
     @GET
+    @Path("/getJobRolesFilter")
+    public Response getJobRolesFilter(
+            @QueryParam("capability") List<String> capabilityFilters,
+            @QueryParam("family") List<String> familyFilters,
+            @QueryParam("bandlevel") List<String> bandlevelFilters,
+            @QueryParam("jobRole") String nameFilter) {
+
+        try {
+            System.out.println(nameFilter);
+            List<JobRole> jobRoles = jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandlevelFilters, nameFilter);
+            return Response.ok(jobRoles).build();
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
     @Path("/getJobRole/{jobRoleID}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobRole(@PathParam("jobRoleID") int jobRoleID) {
@@ -101,7 +124,7 @@ public class JobRoles {
             response = Response.class
     )
     @RolesAllowed("Admin")
-    @POST
+    @PUT
     @Path("/editJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -122,7 +145,7 @@ public class JobRoles {
             response = Response.class
     )
     @RolesAllowed("Admin")
-    @POST
+    @DELETE
     @Path("/deleteJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

@@ -9,9 +9,9 @@ public class Capabilities {
 
 
     @JsonCreator
-    public Capabilities(@JsonProperty("capabilityID") int capabilityID, @JsonProperty("capabilityName") String capabiltyName) {
+    public Capabilities(@JsonProperty("capabilityID") int capabilityID, @JsonProperty("capabilityName") String capabilityName) {
         this.capabilityID = capabilityID;
-        this.capabilityName = capabiltyName;
+        this.capabilityName = capabilityName;
 
     }
 

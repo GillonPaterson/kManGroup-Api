@@ -107,19 +107,21 @@ public class CapabilityDAO {
     }
 
 
-    public Integer updateCapability(Connection connection, Capabilities capabilities) throws SQLException {
+    public boolean updateCapability(Connection connection, Capabilities capabilities) throws SQLException {
+        System.out.println("updating");
         String query = "Update capabilities Set jobCapability = ? Where jobCapabilityID = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, capabilities.getCapabilityName());
             preparedStatement.setInt(2, capabilities.getCapabilityID());
 
-            preparedStatement.executeUpdate();
+            int count = preparedStatement.executeUpdate();
+            return count > 0;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new SQLException("update user failed");
 
         }
 
-        return null;
     }
 }
