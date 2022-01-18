@@ -116,7 +116,7 @@ public class CapabilityDAO {
             preparedStatement.setInt(2, capabilities.getCapabilityID());
 
             int count = preparedStatement.executeUpdate();
-            return count >0;
+            return count > 0;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new SQLException("update user failed");
