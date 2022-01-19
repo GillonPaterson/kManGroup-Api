@@ -77,6 +77,8 @@ public class JobRolesDAO {
                         query = query + " jobBandLevel = ?)";
                     } else if (i == 0 && !capabilityFilters.isEmpty()) {
                         query = query + " and (jobBandLevel = ? or";
+                    } else if (i == 0 && capabilityFilters.isEmpty()) {
+                        query = query + " (jobBandLevel = ? or";
                     } else {
                         query = query + " jobBandLevel = ? or";
                     }
@@ -97,6 +99,8 @@ public class JobRolesDAO {
                         query = query + " jobFamilyName = ?)";
                     } else if (i == 0 && (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty())) {
                         query = query + " and (jobFamilyName = ? or";
+                    } else if (i == 0 && capabilityFilters.isEmpty() && bandLevelFilters.isEmpty()) {
+                        query = query + " (jobFamilyName = ? or";
                     } else {
                         query = query + " jobFamilyName = ? or";
                     }
