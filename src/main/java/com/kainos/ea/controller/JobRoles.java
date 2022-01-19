@@ -119,7 +119,7 @@ public class JobRoles {
             response = Response.class
     )
     @RolesAllowed("Admin")
-    @POST
+    @PUT
     @Path("/editJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -140,7 +140,7 @@ public class JobRoles {
             response = Response.class
     )
     @RolesAllowed("Admin")
-    @POST
+    @DELETE
     @Path("/deleteJobRole/{jobRoleID}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
