@@ -12,7 +12,7 @@ public class CapabilityLead {
     private String capability;
 
     @JsonCreator
-    public CapabilityLead(@JsonProperty("leadID") int leadID, @JsonProperty("forename") String forename, @JsonProperty("surname") String  surname, @JsonProperty("message") String message, @JsonProperty("photoUrl") String photoUrl, @JsonProperty("capability") String capability) {
+    public CapabilityLead(@JsonProperty("leadID") int leadID, @JsonProperty("forename") String forename, @JsonProperty("surname") String surname, @JsonProperty("message") String message, @JsonProperty("photoUrl") String photoUrl, @JsonProperty("capability") String capability) {
         this.leadID = leadID;
         this.forename = forename;
         this.surname = surname;

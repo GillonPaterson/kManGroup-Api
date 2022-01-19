@@ -12,6 +12,7 @@ public class WebServiceConfiguration extends Configuration {
     @Valid
     @NotNull
     private final SwaggerBundleConfiguration swagger = new SwaggerBundleConfiguration();
+
     @JsonProperty("swagger")
     public SwaggerBundleConfiguration getSwagger() {
         swagger.setResourcePackage("com.kainos.ea.controller");

@@ -5,7 +5,7 @@ import com.kainos.ea.model.AddJobRole;
 public class JobRoleValidator {
 
     public String addJobRoleValidator(AddJobRole addJobRole) {
-         return validationMethod(addJobRole);
+        return validationMethod(addJobRole);
     }
 
     public String validationMethod(AddJobRole addJobRole) {
@@ -48,7 +48,7 @@ public class JobRoleValidator {
             return "The job specification cannot be anymore than 1000 characters";
         }
 
-        if(roleResp == "") {
+        if (roleResp == "") {
             return "The job responsibilities must be entered";
         }
 

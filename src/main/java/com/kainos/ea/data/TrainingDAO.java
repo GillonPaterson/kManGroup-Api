@@ -1,6 +1,7 @@
 package com.kainos.ea.data;
 
 import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.TrainingAddBandResponseModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,5 +24,45 @@ public class TrainingDAO {
             training.add(jobTraining);
         }
         return training;
+    }
+
+    public List<TrainingAddBandResponseModel> getTrainingFromDatabase(Connection connection) throws SQLException {
+        List<TrainingAddBandResponseModel> training = new ArrayList<>();
+        String query = "SELECT trainingID, trainingName, trainingLink FROM training";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            TrainingAddBandResponseModel trainingAddBandResponseModel = new TrainingAddBandResponseModel(rs.getInt("trainingID"), rs.getString("trainingName"), rs.getString("trainingLink"));
+            training.add(trainingAddBandResponseModel);
+        }
+        return training;
+    }
+
+    public boolean insertIntoBandLevelsTraining(Connection connection, int bandLevelID, int trainingID) throws SQLException {
+        String query = "INSERT INTO bandLevelsTraining (jobBandLevelID, trainingID) VALUES (?,?)";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, bandLevelID);
+        preparedStatement.setInt(2, trainingID);
+
+        int count = preparedStatement.executeUpdate();
+        return count > 0;
+    }
+
+    public boolean checkTrainingID(Connection connection, int[] trainingIDs) throws SQLException {
+        String query = "SELECT COUNT(trainingID) from training where trainingID in (?";
+        for (int i = 1; i < trainingIDs.length; i++) {
+            query = query + ",?";
+        }
+        query = query + ")";
+        System.out.println(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (int i = 0; i < trainingIDs.length; i++) {
+            preparedStatement.setInt(i + 1, trainingIDs[i]);
+        }
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.next();
+        return rs.getInt(1) == trainingIDs.length;
     }
 }

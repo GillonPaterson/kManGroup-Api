@@ -9,6 +9,7 @@ public class DatabaseUserModel {
     public DatabaseUserModel() {
 
     }
+
     public DatabaseUserModel(String username, String passwordHash, String salt, boolean isAdmin) {
         this.username = username;
         this.passwordHash = passwordHash;

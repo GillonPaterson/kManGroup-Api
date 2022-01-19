@@ -6,7 +6,12 @@ import com.kainos.ea.model.JobRole;
 import com.kainos.ea.model.JobSpecModel;
 import com.kainos.ea.model.RoleMatrixResponseModel;
 import com.kainos.ea.service.JobRolesService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;

@@ -1,8 +1,14 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.model.JobTraining;
+import com.kainos.ea.model.TrainingAddBandResponseModel;
 import com.kainos.ea.service.TrainingService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.SecurityDefinition;
+import io.swagger.annotations.SwaggerDefinition;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.annotation.security.PermitAll;
@@ -42,6 +48,25 @@ public class Training {
         try {
             List<JobTraining> jobTraining = trainingService.getJobTraining(bandLevel);
             return Response.ok(jobTraining).build();
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
+        }
+        return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    }
+
+    @ApiOperation(authorizations = @Authorization("custom"),
+            value = "Requires Authentication. Returns dashboard",
+            notes = "Requires Authentication. Returns dashboard",
+            response = Response.class
+    )
+    @PermitAll
+    @GET
+    @Path("/getTraining")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTraining() {
+        try {
+            List<TrainingAddBandResponseModel> training = trainingService.getTraining();
+            return Response.ok(training).build();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION while getting job roles" + ex.getMessage());
         }
