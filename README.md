@@ -27,7 +27,10 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 ### workFlows we run
 
 1. superlinter -documentation-  https://github.com/github/super-linter
-2. pa11y -documentation- https://github.com/pa11y/pa11y
+
+#### Cofiguring the Linter
+
+In the .github/Linters there is a sunchecks file that holds all the checks that are completed by the linter are in this file.
 
 ### Projects Other Repos
 
