@@ -63,19 +63,23 @@ class JobRolesServiceTest {
         jobRoles.add(jobRole1);
         jobRoles.add(jobRole2);
 
-        List<String> capabilityFilters = null;
-        List<String> familyFilters = null;
-        List<String> bandLevelFilters = null;
+        List<String> capabilityFilters = new ArrayList<>();
+        capabilityFilters.add("Engineering");
+        List<String> familyFilters = new ArrayList<>();
+        familyFilters.add("Engineering");
+        List<String> bandLevelFilters = new ArrayList<>();
+        bandLevelFilters.add("Associate");
         String nameFilter = "";
+        String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where (jobCapability = ?) and (jobBandLevel = ?) and (jobFamilyName = ?) and (jobRole LIKE ?)";
 
         JobRolesDAO jobRolesDAO = Mockito.mock(JobRolesDAO.class);
-        Mockito.when(jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, familyFilters, bandLevelFilters, nameFilter)).thenReturn(jobRoles);
+        Mockito.when(jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, familyFilters, bandLevelFilters, nameFilter, query)).thenReturn(jobRoles);
 
         JobRolesService jobRolesService = new JobRolesService(jobRolesDAO, connector);
         List<JobRole> returnedList = jobRolesService.getJobRolesFilter(capabilityFilters, familyFilters, bandLevelFilters, nameFilter);
 
         Mockito.verify(connector).getConnection();
-        Mockito.verify(jobRolesDAO).getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, familyFilters, bandLevelFilters, nameFilter);
+        Mockito.verify(jobRolesDAO).getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, familyFilters, bandLevelFilters, nameFilter, query);
 
         assertEquals(jobRoles, returnedList);
     }

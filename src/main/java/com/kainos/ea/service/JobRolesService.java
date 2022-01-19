@@ -56,7 +56,78 @@ public class JobRolesService {
 
     public List<JobRole> getJobRolesFilter(List<String> capabilityFilters, List<String> bandLevelFilters, List<String> familyFilters, String nameFilter) throws SQLException {
         Connection connection = databaseConnector.getConnection();
-        return jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, bandLevelFilters, familyFilters, nameFilter);
+
+        String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where";
+
+        if (!capabilityFilters.isEmpty()) {
+            if (capabilityFilters.stream().count() > 1) {
+                for (int i = 0; i < capabilityFilters.stream().count(); i++) {
+                    if (capabilityFilters.stream().count() == i + 1) {
+                        query = query + " jobCapability = ?)";
+                    } else if (i == 0) {
+                        query = query + " (jobCapability = ? or";
+                    } else {
+                        query = query + " jobCapability = ? or";
+                    }
+                }
+            } else {
+                query = query + " (jobCapability = ?)";
+            }
+        }
+
+        if (!bandLevelFilters.isEmpty()) {
+            if (bandLevelFilters.stream().count() > 1) {
+                for (int i = 0; i < bandLevelFilters.stream().count(); i++) {
+                    if (bandLevelFilters.stream().count() == i + 1) {
+                        query = query + " jobBandLevel = ?)";
+                    } else if (i == 0 && !capabilityFilters.isEmpty()) {
+                        query = query + " and (jobBandLevel = ? or";
+                    } else if (i == 0 && capabilityFilters.isEmpty()) {
+                        query = query + " (jobBandLevel = ? or";
+                    } else {
+                        query = query + " jobBandLevel = ? or";
+                    }
+                }
+            } else {
+                if (!capabilityFilters.isEmpty()) {
+                    query = query + " and (jobBandLevel = ?)";
+                } else {
+                    query = query + " (jobBandLevel = ?)";
+                }
+            }
+        }
+
+        if (!familyFilters.isEmpty()) {
+            if (familyFilters.stream().count() > 1) {
+                for (int i = 0; i < familyFilters.stream().count(); i++) {
+                    if (familyFilters.stream().count() == i + 1) {
+                        query = query + " jobFamilyName = ?)";
+                    } else if (i == 0 && (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty())) {
+                        query = query + " and (jobFamilyName = ? or";
+                    } else if (i == 0 && capabilityFilters.isEmpty() && bandLevelFilters.isEmpty()) {
+                        query = query + " (jobFamilyName = ? or";
+                    } else {
+                        query = query + " jobFamilyName = ? or";
+                    }
+                }
+            } else {
+                if (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty()) {
+                    query = query + " and (jobFamilyName = ?)";
+                } else {
+                    query = query + " (jobFamilyName = ?)";
+                }
+            }
+        }
+
+        if (nameFilter != null) {
+            if (!capabilityFilters.isEmpty() || !bandLevelFilters.isEmpty() || !familyFilters.isEmpty()) {
+                query = query + " and (jobRole LIKE ?)";
+            } else {
+                query = query + " (jobRole LIKE ?)";
+            }
+        }
+
+        return jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, bandLevelFilters, familyFilters, nameFilter, query);
     }
 
 

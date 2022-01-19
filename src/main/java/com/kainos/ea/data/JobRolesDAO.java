@@ -49,9 +49,9 @@ public class JobRolesDAO {
 
 
 
-    public List<JobRole> getJobRolesFromDatabaseWithFilter(Connection connection, List<String> capabilityFilters, List<String> familyFilters, List<String> bandLevelFilters, String nameFilter) throws SQLException {
+    public List<JobRole> getJobRolesFromDatabaseWithFilter(Connection connection, List<String> capabilityFilters, List<String> familyFilters, List<String> bandLevelFilters, String nameFilter, String query) throws SQLException {
         List<JobRole> jobRoles = new ArrayList<>();
-
+/*
         String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where";
 
         if (!capabilityFilters.isEmpty()) {
@@ -121,6 +121,8 @@ public class JobRolesDAO {
                 query = query + " (jobRole LIKE ?)";
             }
         }
+
+ */
 
 
 
