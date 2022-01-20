@@ -54,7 +54,7 @@ public class JobRolesService {
     }
 
 
-    public List<JobRole> getJobRolesFilter(List<String> capabilityFilters, List<String> bandLevelFilters, List<String> familyFilters, String nameFilter) throws SQLException {
+    public List<JobRole> getJobRolesFilter(List<String> capabilityFilters, List<String> familyFilters, List<String> bandLevelFilters, String nameFilter) throws SQLException {
         Connection connection = databaseConnector.getConnection();
 
         String query = "SELECT jobRoleID, jobRole, jobFamilyName, jobCapability, jobBandLevel FROM jobRoles Inner join jobFamilies using(jobFamilyID) inner join capabilities using(jobCapabilityID) inner join bandLevels using (jobBandLevelID) where";
@@ -90,7 +90,7 @@ public class JobRolesService {
                 }
             } else {
                 if (!capabilityFilters.isEmpty()) {
-                    query = query + " and (jobBandLevel = ?)";
+                    query = query + " or (jobBandLevel = ?)";
                 } else {
                     query = query + " (jobBandLevel = ?)";
                 }
@@ -127,7 +127,7 @@ public class JobRolesService {
             }
         }
 
-        return jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, bandLevelFilters, familyFilters, nameFilter, query);
+        return jobRolesDAO.getJobRolesFromDatabaseWithFilter(connection, capabilityFilters, familyFilters, bandLevelFilters, nameFilter, query);
     }
 
 
